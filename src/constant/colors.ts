@@ -1,4 +1,4 @@
-const COLORS = {
+const Colors = {
   primary: {
     main: '#494746',
     light: '#313137',
@@ -31,4 +31,4 @@ const COLORS = {
   active: '#EEFCF8',
 }
 
-export default COLORS
+export default Colors
