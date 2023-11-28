@@ -1,4 +1,4 @@
-import COLORS from 'constant/colors'
+import { COLORS } from '@muc/constant'
 import { PaletteOptions } from '@mui/material/styles'
 
 export const palette: PaletteOptions = {
