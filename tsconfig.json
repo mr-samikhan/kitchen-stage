@@ -10,6 +10,7 @@
       "@muc/core" : ["core/core.ts"],
       "@muc/styles": ["styles/styles.ts"],
       "@muc/screens": ["screens/screens.ts"],
+      "@muc/modules": ["modules/modules.ts"],
       "@muc/constant": ["constant/constant.ts"],
       "@muc/providers": ["providers/providers.ts"],
       "@muc/components": ["components/components.ts"],
