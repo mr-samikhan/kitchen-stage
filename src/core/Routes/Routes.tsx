@@ -18,9 +18,9 @@ const Routes = () => {
     <Route path={ROUTES.DASHBOARD}  element={<Box bgcolor="primary.main">
       <Typography>HOME</Typography>
     </Box>} />
-    <Route path="*" element={<h1>Sorry, No Page Found!</h1>} />
     </ReactRoutes>
    </ProtectedRoute>
+   
   </React.Fragment>
   )
 }
