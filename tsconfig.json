@@ -8,8 +8,11 @@
     "baseUrl": "./src",
     "paths": {
       "@muc/core" : ["core/core.ts"],
+      "@muc/types": ["types/types.ts"],
+      "@muc/utils": ["utils/utils.ts"],
       "@muc/styles": ["styles/styles.ts"],
       "@muc/screens": ["screens/screens.ts"],
+      "@muc/modules": ["modules/modules.ts"],
       "@muc/constant": ["constant/constant.ts"],
       "@muc/providers": ["providers/providers.ts"],
       "@muc/components": ["components/components.ts"],
