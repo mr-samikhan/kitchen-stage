@@ -29,6 +29,7 @@ const Colors = {
   },
   success: '#24CB99',
   active: '#EEFCF8',
+  white: '#FFFFFF',
 }
 
 export default Colors

@@ -1,25 +1,23 @@
 import React from 'react'
-import { Route, Routes as ReactRoutes } from "react-router-dom";
-
-import { ROUTES } from '@muc/constant';
-import { Dashboard, Login } from '@muc/screens';
-import { ProtectedRoute } from './components/components';
+import { ROUTES } from '@muc/constant'
+import { Dashboard, Login } from '@muc/screens'
+import { ProtectedRoute } from './components/components'
+import { Route, Routes as ReactRoutes } from 'react-router-dom'
 
 const Routes = () => {
-    
   return (
-  <React.Fragment>
-   <ReactRoutes>
-    <Route path={ROUTES.LOGIN_ACCOUNT} element={<Login />} />
-   </ReactRoutes>
+    <React.Fragment>
+      <ReactRoutes>
+        <Route path={ROUTES.LOGIN_ACCOUNT} element={<Login />} />
+        <Route path={ROUTES.FORGOT_PASSWORD} element={<Login />} />
+      </ReactRoutes>
 
-   <ProtectedRoute isAuthenticated={false}>
-    <ReactRoutes>
-    <Route path={ROUTES.DASHBOARD}  element={<Dashboard />} />
-    </ReactRoutes>
-   </ProtectedRoute>
-   
-  </React.Fragment>
+      {/* <ProtectedRoute isAuthenticated={false}> */}
+      <ReactRoutes>
+        <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+      </ReactRoutes>
+      {/* </ProtectedRoute> */}
+    </React.Fragment>
   )
 }
 

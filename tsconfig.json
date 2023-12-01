@@ -8,6 +8,7 @@
     "baseUrl": "./src",
     "paths": {
       "@muc/core" : ["core/core.ts"],
+      "@muc/hooks":["hooks/hooks.ts"],
       "@muc/types": ["types/types.ts"],
       "@muc/utils": ["utils/utils.ts"],
       "@muc/styles": ["styles/styles.ts"],

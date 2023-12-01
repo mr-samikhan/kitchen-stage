@@ -52,6 +52,12 @@ export const typography: TypographyOptions = {
     wordWrap: 'break-word',
   },
 
+  body1: {
+    fontWeight: 600,
+    fontSize: '0.75rem',
+    wordWrap: 'break-word',
+  },
+
   button: {
     fontFamily: 'Nunito',
   },

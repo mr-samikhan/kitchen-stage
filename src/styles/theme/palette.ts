@@ -20,6 +20,7 @@ export const palette: PaletteOptions = {
     200: '#F6F6F6',
     300: '#808080',
     400: '#9D9DAA',
+    500: '#E5E5E5',
   },
   error: {
     main: COLORS.error.main,
