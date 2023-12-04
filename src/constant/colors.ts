@@ -30,6 +30,7 @@ const Colors = {
   success: '#24CB99',
   active: '#EEFCF8',
   white: '#FFFFFF',
+  background: '#F7F7F7',
 }
 
 export default Colors

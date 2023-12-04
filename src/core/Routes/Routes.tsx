@@ -10,6 +10,7 @@ const Routes = () => {
       <ReactRoutes>
         <Route path={ROUTES.LOGIN_ACCOUNT} element={<Login />} />
         <Route path={ROUTES.FORGOT_PASSWORD} element={<Login />} />
+        <Route path={ROUTES.RESET_PASSWORD} element={<Login />} />
       </ReactRoutes>
 
       {/* <ProtectedRoute isAuthenticated={false}> */}

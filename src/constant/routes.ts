@@ -3,6 +3,7 @@ const Routes = {
   USERS: '/users',
   LOGIN_ACCOUNT: '/login',
   DASHBOARD: '/dashboard',
+  RESET_PASSWORD: '/reset_password',
   FORGOT_PASSWORD: '/forgot_password',
 }
 

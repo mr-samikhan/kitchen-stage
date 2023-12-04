@@ -2,6 +2,9 @@ import { COLORS } from '@muc/constant'
 import { PaletteOptions } from '@mui/material/styles'
 
 export const palette: PaletteOptions = {
+  background: {
+    default: COLORS.background,
+  },
   primary: {
     main: COLORS.primary.main,
     light: COLORS.primary.light,
