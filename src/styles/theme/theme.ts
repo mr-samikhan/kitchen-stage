@@ -1,4 +1,5 @@
 import { palette } from './palette'
+import { COLORS } from '@muc/constant'
 import { typography } from './typography'
 import { BoxProps } from '@mui/material/Box'
 import { MuiTextField } from './overrides/MuiTextField'
@@ -68,6 +69,29 @@ let theme = createTheme({
           fontWeight: 500,
           color: '#808080',
           fontSize: '0.9375rem',
+        },
+      },
+    },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backdropFilter: 'blur(2px)',
+          background: 'rgba(49, 49, 55, .7)',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontSize: 16,
+          width: '205px',
+          height: '60px',
+          fontWeight: 600,
+          textTransform: 'capitalize',
+          background: COLORS.secondary.light,
+          '&.MuiButton-outlined': {
+            background: 'transparent',
+          },
         },
       },
     },
