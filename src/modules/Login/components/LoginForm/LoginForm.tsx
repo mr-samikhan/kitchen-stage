@@ -5,33 +5,39 @@ import { Box, Grid, IconButton, Link, Typography } from '@mui/material'
 
 interface LoginFormProps {
   pathname?: string
+  isError?: boolean
   isDisable?: boolean
   onForgotPassword?: void | any
 }
 
 export const LoginForm = (props: LoginFormProps) => {
-  const { isDisable, onForgotPassword, pathname } = props || {}
+  const { isDisable, onForgotPassword, pathname, isError } = props || {}
 
   let PATH_CHECK = pathname === ROUTES.FORGOT_PASSWORD
+  let RESET_PATH_CHECK = pathname === ROUTES.RESET_PASSWORD
 
   return (
     <React.Fragment>
       <Grid item md={5} sm={10} xs={10}>
-        <Box mb={2}>
-          <Typography
-            variant="body1"
-            textAlign="start"
-            color={COLORS.input.main}
-          >
-            EMAIL ADDRESS
-          </Typography>
-        </Box>
-        <CustomTextField
-          fullWidth
-          name="email"
-          className="auth"
-          placeholder="example@email.com"
-        />
+        {RESET_PATH_CHECK ? null : (
+          <>
+            <Box mb={2}>
+              <Typography
+                variant="body1"
+                textAlign="start"
+                color={COLORS.input.main}
+              >
+                EMAIL ADDRESS
+              </Typography>
+            </Box>
+            <CustomTextField
+              fullWidth
+              name="email"
+              className="auth"
+              placeholder="example@email.com"
+            />
+          </>
+        )}
         {PATH_CHECK ? null : (
           <>
             <Box mt={4}>
@@ -50,15 +56,41 @@ export const LoginForm = (props: LoginFormProps) => {
                 name="password"
                 className="auth"
                 placeholder="********"
+                icon={isError ? 'assets/icons/login-error.svg' : ''}
               />
             </Box>
-            <Box>
-              <Box textAlign="end" mt={2}>
-                <Link onClick={() => onForgotPassword()}>Forgot Password</Link>
+            {!RESET_PATH_CHECK && (
+              <Box>
+                <Box textAlign="end" mt={2}>
+                  <Link onClick={() => onForgotPassword()}>
+                    Forgot Password
+                  </Link>
+                </Box>
               </Box>
-            </Box>
+            )}
           </>
         )}
+        {RESET_PATH_CHECK ? (
+          <Box mt={4}>
+            <Box mb={2}>
+              <Typography
+                variant="body1"
+                textAlign="start"
+                color={COLORS.input.main}
+              >
+                CONFIRM PASSWORD
+              </Typography>
+            </Box>
+            <CustomTextField
+              fullWidth
+              type="password"
+              className="auth"
+              name="confirmPassword"
+              placeholder="********"
+              icon={isError ? 'assets/icons/login-error.svg' : ''}
+            />
+          </Box>
+        ) : null}
       </Grid>
       <Grid item md={12} sm={10} mt={5}>
         <Box textAlign="center">
