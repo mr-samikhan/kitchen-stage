@@ -6,3 +6,8 @@ export type ILoginFormResolver = {
 export type IForgotPasswordFormResolver = {
   email: string | undefined
 }
+
+export type IResetPasswordFormResolver = {
+  password: string
+  confirmPassword: string
+}
