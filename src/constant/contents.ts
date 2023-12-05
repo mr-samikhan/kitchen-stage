@@ -1,0 +1,51 @@
+export let SIDEBAR_ARRAY = [
+  {
+    active: false,
+    path: '/dashboard',
+    title: 'Perfomance Analytics',
+    icon: 'assets/icons/statistics.svg',
+    activeIcon: 'assets/icons/statistics_active.svg',
+  },
+  {
+    active: false,
+    path: '/admins',
+    title: 'Manage Admins',
+    icon: 'assets/icons/edit.svg',
+    activeIcon: 'assets/icons/ad_active.svg',
+  },
+  {
+    active: false,
+    path: '/groups',
+    title: 'Manage Groups',
+    icon: 'assets/icons/group.svg',
+    activeIcon: 'assets/icons/ad_active.svg',
+  },
+  {
+    path: '/ads',
+    active: false,
+    title: 'Manage Ads',
+    icon: 'assets/icons/ad.svg',
+    activeIcon: 'assets/icons/ad_active.svg',
+  },
+  {
+    active: false,
+    path: '/books',
+    title: 'Manage Books',
+    icon: 'assets/icons/book_open.svg',
+    activeIcon: 'assets/icons/customersupport_active.svg',
+  },
+  {
+    active: false,
+    path: '/customersupport',
+    title: 'Customer Support',
+    icon: 'assets/icons/customersupport.svg',
+    activeIcon: 'assets/icons/customersupport_active.svg',
+  },
+  {
+    active: false,
+    path: '/users',
+    title: 'Manage Users',
+    icon: 'assets/icons/admin.svg',
+    activeIcon: 'assets/icons/customersupport_active.svg',
+  },
+]

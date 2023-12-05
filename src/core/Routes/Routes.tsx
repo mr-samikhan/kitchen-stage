@@ -1,6 +1,13 @@
 import React from 'react'
 import { ROUTES } from '@muc/constant'
-import { Dashboard, Login } from '@muc/screens'
+import {
+  Admins,
+  Ads,
+  CustomerSupport,
+  Dashboard,
+  Login,
+  Users,
+} from '@muc/screens'
 import { ProtectedRoute } from './components/components'
 import { Route, Routes as ReactRoutes } from 'react-router-dom'
 
@@ -15,7 +22,11 @@ const Routes = () => {
 
       {/* <ProtectedRoute isAuthenticated={false}> */}
       <ReactRoutes>
+        <Route path={ROUTES.ADS} element={<Ads />} />
+        <Route path={ROUTES.USERS} element={<Users />} />
+        <Route path={ROUTES.ADMINS} element={<Admins />} />
         <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+        <Route path={ROUTES.CUSTOMER_SUPPORT} element={<CustomerSupport />} />
       </ReactRoutes>
       {/* </ProtectedRoute> */}
     </React.Fragment>
