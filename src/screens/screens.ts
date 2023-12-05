@@ -1,3 +1,7 @@
+export { default as Ads } from './Ads/Ads'
 export { default as Login } from './Login/Login'
+export { default as Users } from './Users/Users'
+export { default as Admins } from './Admins/Admins'
 export { default as NotFound } from './NotFound/NotFound'
 export { default as Dashboard } from './Dashboard/Dashboard'
+export { default as CustomerSupport } from './CustomerSupport/CustomerSupport'
