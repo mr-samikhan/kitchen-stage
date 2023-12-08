@@ -1,24 +1,36 @@
 import React from 'react'
 import { COLORS } from '@muc/constant'
+import { useBreakpints } from '@muc/hooks'
 import { useNavigate } from 'react-router-dom'
+import CloseIcon from '@mui/icons-material/Close'
 import { Avatar, Box, IconButton } from '@mui/material'
 
 interface SidebarProps {
   sideBarOptions?: any
+  toggleSidebar?: () => void
 }
 
 export const Sidebar = (props: SidebarProps) => {
-  const { sideBarOptions } = props || {}
+  const { sideBarOptions, toggleSidebar } = props || {}
+
   const navigate = useNavigate()
+  const { mobileMode } = useBreakpints()
 
   return (
     <React.Fragment>
+      {mobileMode && (
+        <Box position="absolute" right={0} onClick={toggleSidebar}>
+          <IconButton>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+      )}
       <Box
         p={3}
         height="100vh"
         display="flex"
-        flexDirection="column"
         alignItems="center"
+        flexDirection="column"
         justifyContent="space-between"
       >
         <Box>
@@ -31,11 +43,11 @@ export const Sidebar = (props: SidebarProps) => {
                 <IconButton
                   onClick={() => navigate(item.path)}
                   sx={{
-                    borderRadius: 2,
                     zIndex: 10000,
-                    position: 'relative',
                     width: '56px',
                     height: '56px',
+                    borderRadius: 2,
+                    position: 'relative',
                     bgcolor: item.active ? 'secondary.light' : 'trasparent',
                   }}
                 >

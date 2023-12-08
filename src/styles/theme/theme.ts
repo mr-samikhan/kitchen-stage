@@ -84,14 +84,47 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: 16,
-          width: '205px',
-          height: '60px',
+          // width: '205px',
+          // height: '60px',
           fontWeight: 600,
           textTransform: 'capitalize',
           background: COLORS.secondary.light,
           '&.MuiButton-outlined': {
             background: 'transparent',
           },
+        },
+        sizeSmall: {
+          fontSize: 16,
+          borderRadius: '38px',
+          padding: '15px 20px 15px 20px',
+          '&.MuiButton-outlinedSizeSmall': {
+            border: `1.3px solid ${COLORS.secondary.light}`,
+          },
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          '&.custom-tab': {
+            width: 245,
+            borderRadius: '57px',
+            background: COLORS.white,
+            color: COLORS.primary.main,
+            '& .Mui-selected': {
+              margin: 5,
+              height: 55,
+              width: 128,
+              fontSize: 16,
+              fontWeight: 600,
+              borderRadius: '50px',
+              color: COLORS.white,
+              background: COLORS.secondary.light,
+            },
+          },
+        },
+        indicator: {
+          display: 'none',
         },
       },
     },

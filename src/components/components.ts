@@ -1,4 +1,8 @@
 export { default as Form } from './Form/Form'
 export { default as Layout } from './Layout/layout'
+export { default as MuiCustomTab } from './MuiCustomTab/MuiCustomTab'
 export { default as CustomDialog } from './CustomDialog/CustomDialog'
+export { default as NavigationBar } from './NavigationBar/NavigationBar'
+export { default as MuiSmallButton } from './MuiSmallButton/MuiSmallButton'
 export { default as CustomTextField } from './CustomTextField/CustomTextField'
+export { default as MuiCustomSearchInput } from './MuiCustomSearchInput/MuiCustomSearchInput'
