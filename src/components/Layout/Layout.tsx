@@ -1,20 +1,42 @@
 import React from 'react'
 import Header from './Header/Header'
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import Sidebar from './Sidebar/Sidebar'
 import { useBreakpints } from '@muc/hooks'
 import { useLocation } from 'react-router-dom'
 import { COLORS, SIDEBAR_ARRAY } from '@muc/constant'
 
 interface LayoutProps {
+  isTabs?: boolean
+  isTitle?: boolean
+  onGoBack?: () => void
+  isDeleteBtn?: boolean
+  isNavigation?: boolean
+  isSearchInput?: boolean
+  navigationTitle?: string
+  isAddNewAdminBtn?: boolean
   children?: React.ReactNode
+  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend'
 }
 
 export const Layout = (props: LayoutProps) => {
-  const { children } = props || {}
+  const {
+    isTabs,
+    isTitle,
+    onGoBack,
+    children,
+    isDeleteBtn,
+    isSuspendBtn,
+    isNavigation,
+    isSearchInput,
+    navigationTitle,
+    isAddNewAdminBtn,
+  } = props || {}
 
-  const { mobileMode } = useBreakpints()
   const { pathname } = useLocation()
+  const { mobileMode } = useBreakpints()
+
+  const [isSideBar, setIsSideBar] = React.useState(false)
 
   let ARRAY = SIDEBAR_ARRAY
   let SELECTED_TITLE = ''
@@ -27,16 +49,44 @@ export const Layout = (props: LayoutProps) => {
       return { ...item, active: false }
     }
   })
+
+  const handleSideBar = () => setIsSideBar && setIsSideBar(!isSideBar)
   return (
     <React.Fragment>
       <Grid container minHeight={'100vh'}>
-        {mobileMode ? null : (
-          <Grid item md={1} bgcolor={COLORS.background}>
+        {mobileMode ? (
+          isSideBar && (
+            <Box position="absolute" bgcolor={COLORS.background} zIndex={1000}>
+              <Sidebar sideBarOptions={ARRAY} toggleSidebar={handleSideBar} />
+            </Box>
+          )
+        ) : (
+          <Grid item md={1} sm={1} bgcolor={COLORS.background}>
             <Sidebar sideBarOptions={ARRAY} />
           </Grid>
         )}
-        <Grid item md={11} bgcolor={COLORS.white} px={4}>
-          <Header title={SELECTED_TITLE && SELECTED_TITLE} />
+        <Grid
+          item
+          md={11}
+          xs={12}
+          sm={11}
+          // bgcolor={COLORS.white}
+          px={{
+            xs: 0,
+            md: 4,
+          }}
+        >
+          <Header
+            isTabs={isTabs}
+            isDeleteBtn={isDeleteBtn}
+            isSuspendBtn={isSuspendBtn}
+            isNavigation={isNavigation}
+            isSearchInput={isSearchInput}
+            toggleSidebar={handleSideBar}
+            navigationTitle={navigationTitle}
+            isAddNewAdminBtn={isAddNewAdminBtn}
+            title={isTitle ? SELECTED_TITLE && SELECTED_TITLE : null}
+          />
           <main>{children}</main>
         </Grid>
       </Grid>
