@@ -9,8 +9,17 @@ interface MuiSmallButtonProps {
 export const MuiSmallButton = (props: MuiSmallButtonProps) => {
   const { btnText, variant } = props || {}
 
+  let ICON_CHECK = btnText === 'Create Ad' && (
+    <img src="assets/icons/add_square.svg" alt="add_square" />
+  )
+
   return (
-    <Button variant={variant || 'contained'} color="error" size="small">
+    <Button
+      color="error"
+      size="small"
+      endIcon={ICON_CHECK}
+      variant={variant || 'contained'}
+    >
       {btnText}
     </Button>
   )

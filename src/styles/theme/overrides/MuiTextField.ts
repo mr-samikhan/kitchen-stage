@@ -46,6 +46,38 @@ export const MuiTextField: Components['MuiTextField'] = {
           border: 'none',
         },
       },
+      //filter
+      '&.filter': {
+        '& .MuiOutlinedInput-root': {
+          width: '125px',
+          fontSize: '16px',
+          fontWeight: 500,
+          borderRadius: '38px',
+          background: COLORS.white,
+          border: '1px solid #EDEDED',
+          '&.Mui-focused': {
+            color: COLORS.primary.main,
+          },
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: `1px solid ${COLORS.primary.main}`,
+        },
+      },
+      '&.filter-filled': {
+        '& .MuiOutlinedInput-root': {
+          fontSize: '16px',
+          fontWeight: 500,
+          borderRadius: '38px',
+          background: COLORS.white,
+          border: '1px solid #EDEDED',
+          '&.Mui-focused': {
+            color: COLORS.primary.main,
+          },
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: `1px solid ${COLORS.primary.main}`,
+        },
+      },
     },
   },
 }

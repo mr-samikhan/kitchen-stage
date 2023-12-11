@@ -4,10 +4,13 @@ import { Layout } from '@muc/components'
 export const Users = () => {
   return (
     <Layout
-      isDeleteBtn
-      isNavigation
-      isSuspendBtn="Suspend"
-      navigationTitle="Emma Gosling"
+      isTitle
+      isTabs
+      isAddNewAdminBtn
+      // isDeleteBtn
+      // isNavigation
+      // isSuspendBtn="Suspend"
+      // navigationTitle="Emma Gosling"
     >
       Users
     </Layout>

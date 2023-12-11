@@ -5,12 +5,14 @@ import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 import {
   MuiCustomTab,
   NavigationBar,
-  MuiCustomSearchInput,
   MuiSmallButton,
+  CustomFilterButton,
+  MuiCustomSearchInput,
 } from '@muc/components'
 
 interface HeaderProps {
   isTabs?: boolean
+  isSort?: boolean
   isDeleteBtn?: boolean
   onGoBack?: () => void
   isNavigation?: boolean
@@ -19,13 +21,14 @@ interface HeaderProps {
   toggleSidebar?: () => void
   isAddNewAdminBtn?: boolean
   title?: string | null | undefined
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend'
+  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad'
 }
 
 export const Header = (props: HeaderProps) => {
   const {
     title,
     isTabs,
+    isSort,
     onGoBack,
     isDeleteBtn,
     isNavigation,
@@ -100,6 +103,7 @@ export const Header = (props: HeaderProps) => {
             }}
           >
             <Box display="flex" width="100%" justifyContent="center">
+              {isSort && <CustomFilterButton />}
               {isAddNewAdminBtn && (
                 <Button variant="contained" color="primary">
                   Add New Admin
