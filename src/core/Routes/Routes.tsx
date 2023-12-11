@@ -1,15 +1,18 @@
 import React from 'react'
 import { ROUTES } from '@muc/constant'
-import {
-  Admins,
-  Ads,
-  CustomerSupport,
-  Dashboard,
-  Login,
-  Users,
-} from '@muc/screens'
 import { ProtectedRoute } from './components/components'
 import { Route, Routes as ReactRoutes } from 'react-router-dom'
+import {
+  Ads,
+  Login,
+  Users,
+  Admins,
+  Groups,
+  Bookings,
+  Dashboard,
+  CustomerSupport,
+  Editors,
+} from '@muc/screens'
 
 const Routes = () => {
   return (
@@ -25,7 +28,11 @@ const Routes = () => {
         <Route path={ROUTES.ADS} element={<Ads />} />
         <Route path={ROUTES.USERS} element={<Users />} />
         <Route path={ROUTES.ADMINS} element={<Admins />} />
-        <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+        <Route path={ROUTES.GROUPS} element={<Groups />} />
+        <Route path={ROUTES.EDIT} element={<Editors />} />
+        <Route path={ROUTES.ROOT} element={<Dashboard />} />
+        <Route path={ROUTES.BOOKINGS} element={<Bookings />} />
+        <Route path={ROUTES.ANALYTICS} element={<Dashboard />} />
         <Route path={ROUTES.CUSTOMER_SUPPORT} element={<CustomerSupport />} />
       </ReactRoutes>
       {/* </ProtectedRoute> */}

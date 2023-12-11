@@ -16,7 +16,7 @@ interface LayoutProps {
   navigationTitle?: string
   isAddNewAdminBtn?: boolean
   children?: React.ReactNode
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend'
+  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad'
 }
 
 export const Layout = (props: LayoutProps) => {

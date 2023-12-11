@@ -4,7 +4,7 @@ import { Layout } from '@muc/components'
 export const DashboardContainer = () => {
   return (
     <React.Fragment>
-      <Layout>Hello</Layout>
+      <Layout isTitle>Analytics</Layout>
     </React.Fragment>
   )
 }

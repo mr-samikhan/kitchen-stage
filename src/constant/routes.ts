@@ -4,6 +4,8 @@ const Routes = {
   USERS: '/users',
   ADMINS: '/admins',
   GROUPS: '/groups',
+  EDIT: '/edit',
+  BOOKINGS: '/bookings',
   LOGIN_ACCOUNT: '/login',
   DASHBOARD: '/dashboard',
   ANALYTICS: '/analytics',

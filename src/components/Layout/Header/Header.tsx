@@ -19,7 +19,7 @@ interface HeaderProps {
   toggleSidebar?: () => void
   isAddNewAdminBtn?: boolean
   title?: string | null | undefined
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend'
+  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad'
 }
 
 export const Header = (props: HeaderProps) => {
