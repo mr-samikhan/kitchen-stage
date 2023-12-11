@@ -8,6 +8,7 @@ import { COLORS, SIDEBAR_ARRAY } from '@muc/constant'
 
 interface LayoutProps {
   isTabs?: boolean
+  isSort?: boolean
   isTitle?: boolean
   onGoBack?: () => void
   isDeleteBtn?: boolean
@@ -22,6 +23,7 @@ interface LayoutProps {
 export const Layout = (props: LayoutProps) => {
   const {
     isTabs,
+    isSort,
     isTitle,
     onGoBack,
     children,
@@ -77,6 +79,7 @@ export const Layout = (props: LayoutProps) => {
           }}
         >
           <Header
+            isSort={isSort}
             isTabs={isTabs}
             isDeleteBtn={isDeleteBtn}
             isSuspendBtn={isSuspendBtn}

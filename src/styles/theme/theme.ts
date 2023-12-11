@@ -2,6 +2,7 @@ import { palette } from './palette'
 import { COLORS } from '@muc/constant'
 import { typography } from './typography'
 import { BoxProps } from '@mui/material/Box'
+import { MuiPaper } from './overrides/MuiPaper'
 import { MuiTextField } from './overrides/MuiTextField'
 import createTheme from '@mui/material/styles/createTheme'
 import { responsiveFontSizes } from '@mui/material/styles'
@@ -62,6 +63,7 @@ let theme = createTheme({
   typography,
   components: {
     MuiTextField,
+    MuiPaper,
     MuiLink: {
       styleOverrides: {
         root: {

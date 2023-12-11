@@ -51,3 +51,94 @@ export let SIDEBAR_ARRAY = [
     activeIcon: 'assets/icons/customersupport_active.svg',
   },
 ]
+
+export const DASHBOARD_USERS = [
+  {
+    counter: 159,
+    percentage: +4.5,
+    duration: 'last week',
+    navigate: ROUTES.USERS,
+    title: 'Registered Users',
+  },
+  {
+    counter: 98,
+    percentage: -1.8,
+    duration: 'last week',
+    navigate: ROUTES.USERS,
+    title: 'Personal Accounts',
+  },
+  {
+    counter: 159,
+    percentage: 4.5,
+    duration: 'last week',
+    navigate: ROUTES.USERS,
+    title: 'Business Accounts',
+  },
+  {
+    counter: 159,
+    percentage: 4.5,
+    duration: 'last week',
+    navigate: ROUTES.USERS,
+    title: 'Deactivated Users',
+  },
+]
+
+export const DASHBOARD_ACTIVITES = [
+  {
+    counter: 159,
+    percentage: +4.5,
+    duration: 'last week',
+    title: 'Uploaded Videos',
+  },
+  {
+    counter: 98,
+    percentage: -1.8,
+    duration: 'last week',
+    title: 'Uploaded Stories',
+  },
+  {
+    title: 'Ads',
+    counter: 159,
+    percentage: 4.5,
+    navigate: ROUTES.ADS,
+    duration: 'last week',
+  },
+]
+
+export const DASHBOARD_POPULAR_RECIPE = [
+  {
+    title: 'Lasagna',
+    counterWithText: 159,
+  },
+  {
+    title: 'Steak',
+    counterWithText: 98,
+  },
+  {
+    title: 'Apple Pie',
+    counterWithText: 159,
+  },
+  {
+    title: 'Pancake',
+    counterWithText: 159,
+  },
+]
+
+export const DASHBOARD_POPULAR_RESTAURANTS = [
+  {
+    counterWithText: 159,
+    title: 'Penfolds',
+  },
+  {
+    counterWithText: 98,
+    title: 'Marchesi Antinori',
+  },
+  {
+    counterWithText: 159,
+    title: 'Louis Roederer',
+  },
+  {
+    counterWithText: 159,
+    title: 'Harlan Estate',
+  },
+]

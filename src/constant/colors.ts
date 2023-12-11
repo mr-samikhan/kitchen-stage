@@ -31,6 +31,7 @@ const Colors = {
   active: '#EEFCF8',
   white: '#FFFFFF',
   background: '#F7F7F7',
+  black: '#000000',
 }
 
 export default Colors
