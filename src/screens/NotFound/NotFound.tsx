@@ -1,9 +1,9 @@
-import React from "react";
-import {Box} from "@mui/material";
-import { ROUTES } from "@muc/constant";
-import { Link } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
+import React from 'react'
+import { Box } from '@mui/material'
+import { ROUTES } from '@cookup/constant'
+import { Link } from 'react-router-dom'
+import Typography from '@mui/material/Typography'
+import ArrowBackIcon from '@mui/icons-material/ArrowBackIos'
 
 export const NotFound = () => {
   return (
@@ -11,7 +11,7 @@ export const NotFound = () => {
       <Box
         display="flex"
         flexDirection="column"
-        height={"80vh"}
+        height={'80vh'}
         alignItems="center"
         justifyContent="center"
       >
@@ -32,7 +32,7 @@ export const NotFound = () => {
         </Link>
       </Box>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

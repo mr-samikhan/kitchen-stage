@@ -1,4 +1,4 @@
-import { Layout } from '@muc/components'
+import { Layout } from '@cookup/components'
 import React from 'react'
 
 export const Groups = () => {

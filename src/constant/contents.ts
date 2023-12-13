@@ -1,4 +1,5 @@
 import ROUTES from './routes'
+import { ISortItem } from '@cookup/types'
 
 export let SIDEBAR_ARRAY = [
   {
@@ -140,5 +141,20 @@ export const DASHBOARD_POPULAR_RESTAURANTS = [
   {
     counterWithText: 159,
     title: 'Harlan Estate',
+  },
+]
+
+export const SORT_MODAL_ARRAY: ISortItem[] = [
+  {
+    title: 'Today',
+    value: 'Jul 9',
+  },
+  {
+    title: 'Last Week',
+    value: 'June 27 - July 3',
+  },
+  {
+    title: 'Last Month',
+    value: 'June 1 - June 30',
   },
 ]

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { COLORS } from '@muc/constant'
+import { COLORS } from '@cookup/constant'
 import { Tabs, Tab, Box } from '@mui/material'
 
 interface MuiCustomTabProps {
@@ -22,7 +22,7 @@ export const MuiCustomTab = (props: MuiCustomTabProps) => {
         className="custom-tab"
         value={value}
         onChange={handleChange}
-        textColor={COLORS.white}
+        // textColor={COLORS.white}
       >
         <Tab value="one" label="Personal" />
         <Tab value="two" label="Business" />

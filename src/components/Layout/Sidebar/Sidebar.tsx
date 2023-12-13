@@ -1,6 +1,6 @@
 import React from 'react'
-import { COLORS } from '@muc/constant'
-import { useBreakpints } from '@muc/hooks'
+import { COLORS } from '@cookup/constant'
+import { useBreakpints } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import { Avatar, Box, IconButton } from '@mui/material'

@@ -1,6 +1,6 @@
 import React from 'react'
-import { COLORS, ROUTES } from '@muc/constant'
-import { CustomTextField } from '@muc/components'
+import { COLORS, ROUTES } from '@cookup/constant'
+import { CustomTextField } from '@cookup/components'
 import { Box, Grid, IconButton, Link, Typography } from '@mui/material'
 
 interface LoginFormProps {

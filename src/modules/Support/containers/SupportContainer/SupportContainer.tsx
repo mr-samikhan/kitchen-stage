@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from '@muc/components'
+import { Layout } from '@cookup/components'
 
 export const SupportContainer = () => {
   return <Layout isTitle>SupportContainer</Layout>

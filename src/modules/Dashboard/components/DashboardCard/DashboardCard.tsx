@@ -1,6 +1,6 @@
 import React from 'react'
-import { COLORS } from '@muc/constant'
-import { useBreakpints } from '@muc/hooks'
+import { COLORS } from '@cookup/constant'
+import { useBreakpints } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { Box, IconButton, Paper, Typography } from '@mui/material'

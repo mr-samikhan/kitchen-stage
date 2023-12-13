@@ -2,9 +2,9 @@ import React from 'react'
 import Header from './Header/Header'
 import { Box, Grid } from '@mui/material'
 import Sidebar from './Sidebar/Sidebar'
-import { useBreakpints } from '@muc/hooks'
+import { useBreakpints } from '@cookup/hooks'
 import { useLocation } from 'react-router-dom'
-import { COLORS, SIDEBAR_ARRAY } from '@muc/constant'
+import { COLORS, SIDEBAR_ARRAY } from '@cookup/constant'
 
 interface LayoutProps {
   isTabs?: boolean

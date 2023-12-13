@@ -1,15 +1,16 @@
-import { Routes } from "@muc/core";
-import { CssBaseline } from "@mui/material";
-import {ThemeProvider} from "@muc/providers"
+import { Routes } from '@cookup/core'
+import { CssBaseline } from '@mui/material'
+import { ReduxProvider, ThemeProvider } from '@cookup/providers'
 
 const App = () => {
-
   return (
-    <ThemeProvider>
-      <CssBaseline />
-      <Routes />
-    </ThemeProvider>
-  );
-};
+    <ReduxProvider>
+      <ThemeProvider>
+        <CssBaseline />
+        <Routes />
+      </ThemeProvider>
+    </ReduxProvider>
+  )
+}
 
-export default App;
+export default App

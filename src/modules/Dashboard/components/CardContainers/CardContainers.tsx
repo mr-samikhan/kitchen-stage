@@ -1,5 +1,5 @@
 import React from 'react'
-import { COLORS } from '@muc/constant'
+import { COLORS } from '@cookup/constant'
 import { Grid, Typography } from '@mui/material'
 import { DashboardCard } from '../../components/components'
 

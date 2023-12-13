@@ -1,5 +1,5 @@
 import React from 'react'
-import { ROUTES } from '@muc/constant'
+import { ROUTES } from '@cookup/constant'
 import { ProtectedRoute } from './components/components'
 import { Route, Routes as ReactRoutes } from 'react-router-dom'
 import {
@@ -12,7 +12,7 @@ import {
   Dashboard,
   CustomerSupport,
   Editors,
-} from '@muc/screens'
+} from '@cookup/screens'
 
 const Routes = () => {
   return (

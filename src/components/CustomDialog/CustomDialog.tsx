@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 
 interface CustomDialogProps {
+  sx?: any
   title?: string
   icon?: string
   text?: string
@@ -40,6 +41,7 @@ export const CustomDialog = (props: CustomDialogProps) => {
     isOpen = false,
     isCancleButton,
     cancelButtonText,
+    sx,
     setOpen = () => {},
   } = props || {}
 
@@ -50,15 +52,19 @@ export const CustomDialog = (props: CustomDialogProps) => {
   return (
     <Dialog open={isOpen} onClose={onCloseModal}>
       <Box
-        sx={{
-          p: 5,
-          textAlign: 'center',
-          width: { xs: '320px', md: '456px' },
-        }}
+        sx={
+          sx || {
+            p: 5,
+            textAlign: 'center',
+            width: { xs: '320px', md: '456px' },
+          }
+        }
       >
-        <Box>
-          <img src={icon} alt="modal-icon" />
-        </Box>
+        {icon && (
+          <Box>
+            <img src={icon} alt="modal-icon" />
+          </Box>
+        )}
         <DialogTitle variant={titleVariant || 'body2'}>{title}</DialogTitle>
         <Typography variant="subtitle1" color="grey.50">
           {subTitle}

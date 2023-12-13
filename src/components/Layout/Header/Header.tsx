@@ -1,5 +1,5 @@
 import React from 'react'
-import { useBreakpints } from '@muc/hooks'
+import { useBreakpints } from '@cookup/hooks'
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
 import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 import {
@@ -8,7 +8,9 @@ import {
   MuiSmallButton,
   CustomFilterButton,
   MuiCustomSearchInput,
-} from '@muc/components'
+} from '@cookup/components'
+import { useDispatch } from 'react-redux'
+import { OPEN_SORT_MODAL } from '@cookup/redux'
 
 interface HeaderProps {
   isTabs?: boolean
@@ -40,6 +42,8 @@ export const Header = (props: HeaderProps) => {
   } = props || {}
 
   const { mobileMode, tabMode } = useBreakpints()
+
+  const dispatch = useDispatch()
 
   return (
     <React.Fragment>
@@ -103,7 +107,11 @@ export const Header = (props: HeaderProps) => {
             }}
           >
             <Box display="flex" width="100%" justifyContent="center">
-              {isSort && <CustomFilterButton />}
+              {isSort && (
+                <CustomFilterButton
+                  onClick={() => dispatch(OPEN_SORT_MODAL())}
+                />
+              )}
               {isAddNewAdminBtn && (
                 <Button variant="contained" color="primary">
                   Add New Admin
