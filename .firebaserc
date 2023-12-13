@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "cook-up-1a676"
+  },
+  "targets": {
+    "cook-up-1a676": {
+      "hosting": {
+        "web": [
+          "cook-up-admin"
+        ]
+      }
+    }
+  }
+}
