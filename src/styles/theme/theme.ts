@@ -1,5 +1,5 @@
 import { palette } from './palette'
-import { COLORS } from '@muc/constant'
+import { COLORS } from '@cookup/constant'
 import { typography } from './typography'
 import { BoxProps } from '@mui/material/Box'
 import { MuiPaper } from './overrides/MuiPaper'

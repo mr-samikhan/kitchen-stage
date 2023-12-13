@@ -1,5 +1,5 @@
 import React from 'react'
-import { ROUTES } from '@muc/constant'
+import { ROUTES } from '@cookup/constant'
 import { useForm } from 'react-hook-form'
 import { ILoginFormResolver } from 'types/FormResolvers'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -7,7 +7,7 @@ import {
   LoginFormResolver,
   ForgotPasswordFormResolver,
   ResetPasswordFormResolver,
-} from '@muc/utils'
+} from '@cookup/utils'
 
 export default function useLoginForm() {
   const navigate = useNavigate()

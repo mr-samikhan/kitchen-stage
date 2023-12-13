@@ -1,4 +1,4 @@
-import { COLORS } from '@muc/constant'
+import { COLORS } from '@cookup/constant'
 import { PaletteOptions } from '@mui/material/styles'
 
 export const palette: PaletteOptions = {

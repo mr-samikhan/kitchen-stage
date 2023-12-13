@@ -1,4 +1,4 @@
-import { COLORS } from '@muc/constant'
+import { COLORS } from '@cookup/constant'
 import { Components } from '@mui/material'
 
 export const MuiTextField: Components['MuiTextField'] = {
@@ -76,6 +76,23 @@ export const MuiTextField: Components['MuiTextField'] = {
         },
         '& .MuiOutlinedInput-notchedOutline': {
           border: `1px solid ${COLORS.primary.main}`,
+        },
+      },
+      //start & end_date
+      '&.start-end-date': {
+        '& .MuiOutlinedInput-root': {
+          height: 48,
+          fontWeight: 500,
+          fontSize: '16px',
+          borderRadius: '8px',
+          border: '1px solid #EDEDED',
+          background: COLORS.grey.dark,
+          '&.Mui-focused': {
+            color: COLORS.primary.main,
+          },
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: 'none',
         },
       },
     },

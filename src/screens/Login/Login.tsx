@@ -1,10 +1,8 @@
 import React from 'react'
-import { LoginContainer } from '@muc/modules'
+import { LoginContainer } from '@cookup/modules'
 
 export const Login = () => {
-  return (
-    <LoginContainer />
-  )
+  return <LoginContainer />
 }
 
 export default Login

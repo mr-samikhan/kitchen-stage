@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { FormProvider } from 'react-hook-form'
 import useLoginForm from '../../hooks/useLoginForm'
-import { CustomDialog, Form } from '@muc/components'
+import { CustomDialog, Form } from '@cookup/components'
 import { SnackBar } from '../../components/SnackBar/SnackBar'
 import { LoginForm } from '../../components/LoginForm/LoginForm'
 import { BrandImage } from '../../components/BrandImage/BrandImage'

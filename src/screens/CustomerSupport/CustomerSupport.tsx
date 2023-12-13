@@ -1,6 +1,6 @@
 import React from 'react'
-import { Layout } from '@muc/components'
-import { SupportContainer } from '@muc/modules'
+import { Layout } from '@cookup/components'
+import { SupportContainer } from '@cookup/modules'
 
 export const CustomerSupport = () => {
   return <SupportContainer />

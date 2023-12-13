@@ -4,12 +4,14 @@ import {
   DASHBOARD_ACTIVITES,
   DASHBOARD_POPULAR_RECIPE,
   DASHBOARD_POPULAR_RESTAURANTS,
-} from '@muc/constant'
+} from '@cookup/constant'
 import { Box } from '@mui/material'
-import { Layout } from '@muc/components'
+import { useSelector } from 'react-redux'
+import { CustomSortModal, Layout } from '@cookup/components'
 import { CardContainers } from '../../components/components'
 
 export const DashboardContainer = () => {
+  const { isSortModal } = useSelector((state: any) => state.header)
   return (
     <React.Fragment>
       <Layout isTitle isSort>
@@ -31,6 +33,7 @@ export const DashboardContainer = () => {
             title="Most Popular Restaurants (added to cellar)"
           />
         </Box>
+        {isSortModal && <CustomSortModal />}
       </Layout>
     </React.Fragment>
   )
