@@ -10,7 +10,7 @@ import {
   MuiCustomSearchInput,
 } from '@cookup/components'
 import { useDispatch } from 'react-redux'
-import { OPEN_SORT_MODAL } from '@cookup/redux'
+import { OPEN_ADMIN_MODAL, OPEN_SORT_MODAL } from '@cookup/redux'
 
 interface HeaderProps {
   isTabs?: boolean
@@ -113,7 +113,11 @@ export const Header = (props: HeaderProps) => {
                 />
               )}
               {isAddNewAdminBtn && (
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => dispatch(OPEN_ADMIN_MODAL())}
+                >
                   Add New Admin
                 </Button>
               )}

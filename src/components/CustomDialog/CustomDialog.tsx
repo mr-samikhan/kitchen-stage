@@ -50,7 +50,7 @@ export const CustomDialog = (props: CustomDialogProps) => {
   }
 
   return (
-    <Dialog open={isOpen} onClose={onCloseModal}>
+    <Dialog open={isOpen} onClose={onClose}>
       <Box
         sx={
           sx || {

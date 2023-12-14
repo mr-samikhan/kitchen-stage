@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 import { Resolver } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { VALIDATION_PATTERNS, VALIDATION_MESSAGES } from '@muc/constant'
+import { VALIDATION_PATTERNS, VALIDATION_MESSAGES } from '@cookup/constant'
 import {
   ILoginFormResolver,
   IForgotPasswordFormResolver,
   IResetPasswordFormResolver,
-} from '@muc/types'
+} from '@cookup/types'
 
 export const LoginFormResolver: any | Resolver<ILoginFormResolver> =
   yupResolver(
@@ -54,3 +54,17 @@ export const ResetPasswordFormResolver:
       .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
   })
 )
+
+export const AdminsFormResolver: any | Resolver<ILoginFormResolver> =
+  yupResolver(
+    yup.object().shape({
+      name: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+
+      email: yup
+        .string()
+        .matches(VALIDATION_PATTERNS.EMAIL, VALIDATION_MESSAGES.INVALID_EMAIL)
+        .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+
+      role: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    })
+  )
