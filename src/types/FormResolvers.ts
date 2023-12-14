@@ -16,3 +16,9 @@ export type ISortItem = {
   value: string
   title: string
 }
+
+export type IAdminsFormResolver = {
+  name: string
+  email: string
+  role: string
+}

@@ -1,12 +1,8 @@
 import React from 'react'
-import { Layout } from '@cookup/components'
+import { AdminContainer } from '@cookup/modules'
 
 export const Admins = () => {
-  return (
-    <Layout isTitle isAddNewAdminBtn>
-      Admins
-    </Layout>
-  )
+  return <AdminContainer />
 }
 
 export default Admins

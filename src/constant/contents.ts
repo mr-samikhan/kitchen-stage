@@ -158,3 +158,22 @@ export const SORT_MODAL_ARRAY: ISortItem[] = [
     value: 'June 1 - June 30',
   },
 ]
+
+export const ADMINS_DATA = [
+  {
+    name: 'Zack Summers',
+    email: 'zech@cookup.com',
+    role: 'Super Admin',
+  },
+  {
+    name: 'Jef Gellis',
+    email: 'jeff.g@cookup.com',
+    role: 'Super Admin',
+  },
+  {
+    name: 'Jack Sparrow',
+    email: 'jack.s@cookup.com',
+    role: 'Admin',
+  },
+]
+export const ADMINS_HEADER = ['NAME', 'EMAIL ADDRESS', 'ROLE']

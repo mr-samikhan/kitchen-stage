@@ -72,10 +72,10 @@ export const Layout = (props: LayoutProps) => {
           md={11}
           xs={12}
           sm={11}
-          // bgcolor={COLORS.white}
+          bgcolor={COLORS.white}
           px={{
             xs: 0,
-            md: 4,
+            md: 2,
           }}
         >
           <Header

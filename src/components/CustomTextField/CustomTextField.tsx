@@ -36,12 +36,17 @@ export const CustomTextField = (props: CustomTextFieldProps) => {
             {...field}
             className={className}
             error={!!errors[name]}
+            sx={{
+              textAlign: 'left',
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
-                    <img src={icon || 'assets/icons/check.svg'} alt="eye" />
-                  </IconButton>
+                  {icon && (
+                    <IconButton>
+                      <img src={icon || 'assets/icons/check.svg'} alt="eye" />
+                    </IconButton>
+                  )}
                 </InputAdornment>
               ),
             }}
