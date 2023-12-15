@@ -9,18 +9,24 @@ import {
   CLOSE_ADMIN_SUCCESS,
   CLOSE_EDIT_ADMIN_MODAL,
   CLOSE_ADMIN_EDIT_SUCCESS,
+  CLOSE_DELETE_ADMIN_MODAL,
+  OPEN_DELETE_ADMIN_SUCCESS,
 } from '@cookup/redux'
 
 export const AdminContainer = () => {
   const dispatch = useDispatch()
 
-  const { methods, onSubmit, isValid } = useAdmins()
+  const { methods, onSubmit, isValid, onDelete, delAdminName } = useAdmins()
 
   const { isOpenAdminModal } = useSelector((state: any) => state.header)
 
-  const { isAdminSuccess, isAdminEditModal, isAdminEditSuccess } = useSelector(
-    (state: any) => state.admin
-  )
+  const {
+    isAdminSuccess,
+    isAdminEditModal,
+    isAdminEditSuccess,
+    isDeleteAdminModal,
+    isDeleteAdminSuccess,
+  } = useSelector((state: any) => state.admin)
 
   let MODAL_CHECK = isOpenAdminModal || isAdminEditModal
 
@@ -30,6 +36,7 @@ export const AdminContainer = () => {
     <Layout isTitle isAddNewAdminBtn>
       <CustomList
         isActionButtons
+        onDelete={onDelete}
         data={ADMINS_DATA}
         headerData={ADMINS_HEADER}
       />
@@ -79,6 +86,43 @@ export const AdminContainer = () => {
           okButtonStyle={{
             p: 2,
             width: 205,
+          }}
+        />
+      )}
+      {isDeleteAdminModal && (
+        <CustomDialog
+          isOkButton
+          isCancleButton
+          title={'Delete Admin'}
+          cancelButtonText="Cancel"
+          isOpen={isDeleteAdminModal}
+          okButtonText="Yes, I confirm"
+          icon="assets/icons/warn-icon.svg"
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+          onConfirm={() => {
+            dispatch(CLOSE_DELETE_ADMIN_MODAL())
+            dispatch(OPEN_DELETE_ADMIN_SUCCESS(true))
+          }}
+          onClose={() => dispatch(CLOSE_DELETE_ADMIN_MODAL())}
+          text={`Are you sure you want to delete the admin “${delAdminName}”? Actions are not reversable.`}
+        />
+      )}
+      {isDeleteAdminSuccess && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          title={'Admin Deleted'}
+          isOpen={isDeleteAdminSuccess}
+          icon="assets/icons/delete.svg"
+          onClose={() => dispatch(OPEN_DELETE_ADMIN_SUCCESS(false))}
+          onConfirm={() => dispatch(OPEN_DELETE_ADMIN_SUCCESS(false))}
+          text={`“${delAdminName}” has been removed from the system successfully.`}
+          okButtonStyle={{
+            width: 205,
+            p: 2,
           }}
         />
       )}

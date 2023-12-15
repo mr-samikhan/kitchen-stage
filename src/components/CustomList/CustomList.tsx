@@ -9,13 +9,20 @@ interface CustomListProps {
   data?: any[]
   headerData?: string[]
   isBgColor?: boolean
+  onDelete?: (name: string) => void
   isActionButtons?: boolean
   isActionButton?: boolean
 }
 
 export const CustomList = (props: CustomListProps) => {
-  const { data, headerData, isBgColor, isActionButtons, isActionButton } =
-    props || {}
+  const {
+    data,
+    onDelete,
+    isBgColor,
+    headerData,
+    isActionButtons,
+    isActionButton,
+  } = props || {}
 
   const dispatch = useDispatch()
   const { mobileMode } = useBreakpints()
@@ -87,7 +94,9 @@ export const CustomList = (props: CustomListProps) => {
                       >
                         <img src="assets/icons/edit-icon.svg" alt="edit" />
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => onDelete && onDelete(admin?.name)}
+                      >
                         <img src="assets/icons/delete-icon.svg" alt="delete" />
                       </IconButton>
                     </>

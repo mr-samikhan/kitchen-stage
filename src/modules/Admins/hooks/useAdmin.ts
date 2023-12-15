@@ -1,3 +1,4 @@
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { AdminsFormResolver } from '@cookup/utils'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,10 +8,13 @@ import {
   OPEN_ADMIN_SUCCESS,
   OPEN_ADMIN_EDIT_SUCCESS,
   CLOSE_EDIT_ADMIN_MODAL,
+  OPEN_DELETE_ADMIN_MODAL,
 } from '@cookup/redux'
 
 export const useAdmins = () => {
   const dispatch = useDispatch()
+
+  const [delAdminName, setDelAdminName] = React.useState<string | null>(null)
 
   const methods = useForm<IAdminsFormResolver>({
     resolver: AdminsFormResolver,
@@ -30,7 +34,12 @@ export const useAdmins = () => {
       dispatch(OPEN_ADMIN_SUCCESS())
     }
   }
-  return { methods, onSubmit, isValid }
+
+  const onDelete = (name: string) => {
+    setDelAdminName(name)
+    dispatch(OPEN_DELETE_ADMIN_MODAL())
+  }
+  return { methods, onSubmit, isValid, onDelete, delAdminName }
 }
 
 export default useAdmins

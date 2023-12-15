@@ -4,12 +4,16 @@ interface IAdminSlice {
   isAdminSuccess: boolean
   isAdminEditModal: boolean
   isAdminEditSuccess: boolean
+  isDeleteAdminModal: boolean
+  isDeleteAdminSuccess?: boolean
 }
 
 const initialState: IAdminSlice = {
   isAdminSuccess: false,
   isAdminEditModal: false,
   isAdminEditSuccess: false,
+  isDeleteAdminModal: false,
+  isDeleteAdminSuccess: false,
 }
 
 const adminSlice = createSlice({
@@ -34,6 +38,15 @@ const adminSlice = createSlice({
     CLOSE_ADMIN_EDIT_SUCCESS: (state) => {
       state.isAdminEditSuccess = false
     },
+    OPEN_DELETE_ADMIN_MODAL: (state) => {
+      state.isDeleteAdminModal = true
+    },
+    CLOSE_DELETE_ADMIN_MODAL: (state) => {
+      state.isDeleteAdminModal = false
+    },
+    OPEN_DELETE_ADMIN_SUCCESS: (state, action: PayloadAction<boolean>) => {
+      state.isDeleteAdminSuccess = action.payload
+    },
   },
 })
 
@@ -43,6 +56,9 @@ export const {
   OPEN_EDIT_ADMIN_MODAL,
   CLOSE_EDIT_ADMIN_MODAL,
   OPEN_ADMIN_EDIT_SUCCESS,
+  OPEN_DELETE_ADMIN_MODAL,
+  CLOSE_DELETE_ADMIN_MODAL,
   CLOSE_ADMIN_EDIT_SUCCESS,
+  OPEN_DELETE_ADMIN_SUCCESS,
 } = adminSlice.actions
 export default adminSlice.reducer

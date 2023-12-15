@@ -16,6 +16,7 @@ interface CustomDialogProps {
   subTitle?: string
   isOpen?: boolean
   onClose?: () => void
+  onCancel?: () => void
   children?: ReactNode
   isOkButton?: boolean
   okButtonStyle?: {}
@@ -36,6 +37,7 @@ export const CustomDialog = (props: CustomDialogProps) => {
     onClose,
     children,
     subTitle,
+    onCancel,
     onConfirm,
     isOkButton,
     okButtonText,
@@ -82,7 +84,11 @@ export const CustomDialog = (props: CustomDialogProps) => {
             </Button>
           )}
           {isCancleButton && (
-            <Button variant="outlined" sx={{ width: 130 }}>
+            <Button
+              variant="outlined"
+              sx={{ width: 130 }}
+              onClick={onCancel || onClose}
+            >
               {cancelButtonText}
             </Button>
           )}
