@@ -25,14 +25,14 @@ export const AdminFormsUI = () => {
           />
         </Box>
         <Box mt={1}>
+          <CustomTextField fullWidth name="name" placeholder="Admin Name" />
+        </Box>
+        <Box mt={1}>
           <CustomTextField
             fullWidth
             name="email"
             placeholder="Admin Email Address"
           />
-        </Box>
-        <Box mt={1}>
-          <CustomTextField fullWidth name="name" placeholder="Admin Name" />
         </Box>
         <Box mt={2} display="flex" gap={2} justifyContent="center">
           <Button
