@@ -1,6 +1,8 @@
 import React from 'react'
 import { COLORS } from '@cookup/constant'
+import { useDispatch } from 'react-redux'
 import { useBreakpints } from '@cookup/hooks'
+import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
 import { Box, Grid, IconButton, Typography } from '@mui/material'
 
 interface CustomListProps {
@@ -14,6 +16,8 @@ interface CustomListProps {
 export const CustomList = (props: CustomListProps) => {
   const { data, headerData, isBgColor, isActionButtons, isActionButton } =
     props || {}
+
+  const dispatch = useDispatch()
   const { mobileMode } = useBreakpints()
 
   return (
@@ -78,7 +82,9 @@ export const CustomList = (props: CustomListProps) => {
                 <Box display="flex" justifyContent="flex-end">
                   {isActionButtons && (
                     <>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => dispatch(OPEN_EDIT_ADMIN_MODAL())}
+                      >
                         <img src="assets/icons/edit-icon.svg" alt="edit" />
                       </IconButton>
                       <IconButton>
