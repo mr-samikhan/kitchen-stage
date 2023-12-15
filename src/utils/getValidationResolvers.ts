@@ -62,7 +62,10 @@ export const AdminsFormResolver: any | Resolver<ILoginFormResolver> =
 
       email: yup
         .string()
-        .matches(VALIDATION_PATTERNS.EMAIL, VALIDATION_MESSAGES.INVALID_EMAIL)
+        .matches(
+          VALIDATION_PATTERNS.EMAIL,
+          'Email address invalid, please type again'
+        )
         .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
 
       role: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),

@@ -16,8 +16,10 @@ interface CustomDialogProps {
   subTitle?: string
   isOpen?: boolean
   onClose?: () => void
+  onCancel?: () => void
   children?: ReactNode
   isOkButton?: boolean
+  okButtonStyle?: {}
   okButtonText?: string
   onConfirm?: () => void
   cancelButtonText?: string
@@ -28,20 +30,22 @@ interface CustomDialogProps {
 
 export const CustomDialog = (props: CustomDialogProps) => {
   const {
+    sx,
     text,
     icon,
     title,
     onClose,
     children,
-    titleVariant,
     subTitle,
+    onCancel,
     onConfirm,
     isOkButton,
     okButtonText,
+    titleVariant,
+    okButtonStyle,
     isOpen = false,
     isCancleButton,
     cancelButtonText,
-    sx,
     setOpen = () => {},
   } = props || {}
 
@@ -75,12 +79,16 @@ export const CustomDialog = (props: CustomDialogProps) => {
         <DialogContent>{children}</DialogContent>
         <Box display="flex" gap={2} justifyContent="center">
           {isOkButton && (
-            <Button variant="contained" onClick={onConfirm}>
+            <Button variant="contained" onClick={onConfirm} sx={okButtonStyle}>
               {okButtonText}
             </Button>
           )}
           {isCancleButton && (
-            <Button variant="outlined" sx={{ width: 130 }}>
+            <Button
+              variant="outlined"
+              sx={{ width: 130 }}
+              onClick={onCancel || onClose}
+            >
               {cancelButtonText}
             </Button>
           )}

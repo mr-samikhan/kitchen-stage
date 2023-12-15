@@ -1,19 +1,30 @@
 import React from 'react'
 import { COLORS } from '@cookup/constant'
+import { useDispatch } from 'react-redux'
 import { useBreakpints } from '@cookup/hooks'
+import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
 import { Box, Grid, IconButton, Typography } from '@mui/material'
 
 interface CustomListProps {
   data?: any[]
   headerData?: string[]
   isBgColor?: boolean
+  onDelete?: (name: string) => void
   isActionButtons?: boolean
   isActionButton?: boolean
 }
 
 export const CustomList = (props: CustomListProps) => {
-  const { data, headerData, isBgColor, isActionButtons, isActionButton } =
-    props || {}
+  const {
+    data,
+    onDelete,
+    isBgColor,
+    headerData,
+    isActionButtons,
+    isActionButton,
+  } = props || {}
+
+  const dispatch = useDispatch()
   const { mobileMode } = useBreakpints()
 
   return (
@@ -78,10 +89,14 @@ export const CustomList = (props: CustomListProps) => {
                 <Box display="flex" justifyContent="flex-end">
                   {isActionButtons && (
                     <>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => dispatch(OPEN_EDIT_ADMIN_MODAL())}
+                      >
                         <img src="assets/icons/edit-icon.svg" alt="edit" />
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => onDelete && onDelete(admin?.name)}
+                      >
                         <img src="assets/icons/delete-icon.svg" alt="delete" />
                       </IconButton>
                     </>

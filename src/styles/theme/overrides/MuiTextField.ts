@@ -20,6 +20,10 @@ export const MuiTextField: Components['MuiTextField'] = {
         '&.Mui-focused': {
           color: COLORS.primary.main,
         },
+        '&.Mui-error': {
+          color: COLORS.error.main,
+          borderColor: COLORS.error.main,
+        },
       },
       '& .MuiOutlinedInput-notchedOutline': {
         border: 'none',
