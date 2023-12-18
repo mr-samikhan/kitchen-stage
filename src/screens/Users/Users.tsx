@@ -1,20 +1,9 @@
 import React from 'react'
-import { Layout } from '@cookup/components'
+
+import { UserContainer } from '@cookup/modules'
 
 export const Users = () => {
-  return (
-    <Layout
-      isTitle
-      isTabs
-      isAddNewAdminBtn
-      // isDeleteBtn
-      // isNavigation
-      // isSuspendBtn="Suspend"
-      // navigationTitle="Emma Gosling"
-    >
-      Users
-    </Layout>
-  )
+  return <UserContainer />
 }
 
 export default Users

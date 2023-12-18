@@ -1,5 +1,6 @@
 export { default as Form } from './Form/Form'
 export { default as Layout } from './Layout/Layout'
+export { default as SubHeader } from './SubHeader/SubHeader'
 export { default as CustomList } from './CustomList/CustomList'
 export { default as MuiCustomTab } from './MuiCustomTab/MuiCustomTab'
 export { default as CustomDialog } from './CustomDialog/CustomDialog'
