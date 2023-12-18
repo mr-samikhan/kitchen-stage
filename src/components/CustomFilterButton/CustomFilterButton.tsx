@@ -3,6 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 
 interface CustomFilterButtonProps {
+  icon?: string
   value?: string
   className?: string
   placeholder?: string
@@ -10,7 +11,7 @@ interface CustomFilterButtonProps {
 }
 
 export const CustomFilterButton = (props: CustomFilterButtonProps) => {
-  const { placeholder, onClick, className, value } = props || {}
+  const { placeholder, onClick, className, value, icon } = props || {}
 
   return (
     <TextField
@@ -22,7 +23,11 @@ export const CustomFilterButton = (props: CustomFilterButtonProps) => {
         endAdornment: (
           <InputAdornment position="end" onClick={onClick}>
             <IconButton>
-              <ExpandMoreIcon color="primary" />
+              {icon ? (
+                <img src={icon} alt="" />
+              ) : (
+                <ExpandMoreIcon color="primary" />
+              )}
             </IconButton>
           </InputAdornment>
         ),

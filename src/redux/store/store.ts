@@ -1,8 +1,9 @@
-import { adminSlice, headerSlice } from '@cookup/redux'
 import { configureStore } from '@reduxjs/toolkit'
+import { adminSlice, headerSlice, userSlice } from '@cookup/redux'
 
 const store = configureStore({
   reducer: {
+    user: userSlice,
     admin: adminSlice,
     header: headerSlice,
   },

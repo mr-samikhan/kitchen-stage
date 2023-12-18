@@ -3,15 +3,18 @@ import { COLORS } from '@cookup/constant'
 import { useDispatch } from 'react-redux'
 import { useBreakpints } from '@cookup/hooks'
 import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
-import { Box, Grid, IconButton, Typography } from '@mui/material'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
+import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 
 interface CustomListProps {
   data?: any[]
   headerData?: string[]
-  isBgColor?: boolean
-  onDelete?: (name: string) => void
-  isActionButtons?: boolean
+  isPagination?: boolean
   isActionButton?: boolean
+  isActionButtons?: boolean
+  isBgColor?: string | undefined
+  onDelete?: (name: string) => void
+  iconPosition?: 'flex-start' | 'flex-end' | 'center'
 }
 
 export const CustomList = (props: CustomListProps) => {
@@ -20,8 +23,10 @@ export const CustomList = (props: CustomListProps) => {
     onDelete,
     isBgColor,
     headerData,
-    isActionButtons,
+    isPagination,
+    iconPosition,
     isActionButton,
+    isActionButtons,
   } = props || {}
 
   const dispatch = useDispatch()
@@ -46,8 +51,8 @@ export const CustomList = (props: CustomListProps) => {
         ))}
         <Grid item xs={3}></Grid>
       </Grid>
-      <Grid item md={12} xs={12} my={1}>
-        {data?.map((admin, index) => (
+      <Grid item md={12} xs={12} my={1} minHeight={'50vh'}>
+        {data?.slice(0, 8).map((admin, index) => (
           <>
             <Grid
               item
@@ -59,16 +64,28 @@ export const CustomList = (props: CustomListProps) => {
               display="flex"
               alignItems="center"
               borderRadius="8px"
-              bgcolor={COLORS.grey.dark}
+              bgcolor={isBgColor || COLORS.grey.dark}
             >
-              <Grid item xs={3}>
-                <Typography
-                  variant={mobileMode ? 'body1' : 'subtitle1'}
-                  color="secondary"
-                >
-                  {admin.name}
-                </Typography>
-              </Grid>
+              {admin.name && (
+                <Grid item xs={3}>
+                  <Typography
+                    variant={mobileMode ? 'body1' : 'subtitle1'}
+                    color="secondary"
+                  >
+                    {admin.name}
+                  </Typography>
+                </Grid>
+              )}
+              {admin.businessName && (
+                <Grid item xs={3}>
+                  <Typography
+                    variant={mobileMode ? 'body1' : 'subtitle1'}
+                    color="secondary"
+                  >
+                    {admin.businessName}
+                  </Typography>
+                </Grid>
+              )}
               <Grid item xs={3}>
                 <Typography
                   variant={mobileMode ? 'body1' : 'subtitle1'}
@@ -77,16 +94,55 @@ export const CustomList = (props: CustomListProps) => {
                   {admin.email}
                 </Typography>
               </Grid>
+              {admin.type && (
+                <Grid item xs={3}>
+                  <Typography
+                    variant={mobileMode ? 'body1' : 'subtitle1'}
+                    color="secondary"
+                  >
+                    {admin.type}
+                  </Typography>
+                </Grid>
+              )}
+              {admin.role && (
+                <Grid item xs={3}>
+                  <Typography
+                    variant={mobileMode ? 'body1' : 'subtitle1'}
+                    color="secondary"
+                  >
+                    {admin.role}
+                  </Typography>
+                </Grid>
+              )}
+              {admin.state && (
+                <Grid item xs={3}>
+                  <Typography
+                    variant={mobileMode ? 'body1' : 'subtitle1'}
+                    color="secondary"
+                  >
+                    {admin.city}
+                  </Typography>
+                </Grid>
+              )}
+              {admin.state && (
+                <Grid item xs={3}>
+                  <Typography
+                    variant={mobileMode ? 'body1' : 'subtitle1'}
+                    color="secondary"
+                  >
+                    {admin.city}
+                  </Typography>
+                </Grid>
+              )}
               <Grid item xs={3}>
-                <Typography
-                  variant={mobileMode ? 'body1' : 'subtitle1'}
-                  color="secondary"
+                <Box
+                  display="flex"
+                  justifyContent={
+                    isActionButton
+                      ? iconPosition || 'flex-start'
+                      : iconPosition || 'flex-end'
+                  }
                 >
-                  {admin.role}
-                </Typography>
-              </Grid>
-              <Grid item xs={3}>
-                <Box display="flex" justifyContent="flex-end">
                   {isActionButtons && (
                     <>
                       <IconButton
@@ -101,12 +157,53 @@ export const CustomList = (props: CustomListProps) => {
                       </IconButton>
                     </>
                   )}
+                  {isActionButton && (
+                    <IconButton>
+                      <ChevronRight color="error" />
+                    </IconButton>
+                  )}
                 </Box>
               </Grid>
             </Grid>
           </>
         ))}
       </Grid>
+      {isPagination && (
+        <React.Fragment>
+          <Grid
+            item
+            md={6}
+            xs={6}
+            display="flex"
+            justifyContent="center"
+            flexDirection="column"
+          >
+            <Box display="flex" gap={3} justifyContent="flex-end">
+              <IconButton>
+                <ChevronLeft
+                  sx={{
+                    color: COLORS.grey.main,
+                  }}
+                />
+              </IconButton>
+              <IconButton>
+                <ChevronRight color="error" />
+              </IconButton>
+            </Box>
+          </Grid>
+          <Grid item md={6} xs={6} textAlign="end">
+            <Box>
+              <Button
+                color="primary"
+                variant="contained"
+                sx={{ p: 1.5, borderRadius: '12px' }}
+              >
+                EXPORT CSV
+              </Button>
+            </Box>
+          </Grid>
+        </React.Fragment>
+      )}
     </Grid>
   )
 }
