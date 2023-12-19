@@ -34,7 +34,7 @@ export const Sidebar = (props: SidebarProps) => {
         justifyContent="space-between"
       >
         <Box>
-          <img src="assets/icons/logo.svg" alt="logo" width={72} height={72} />
+          <img src="/assets/icons/logo.svg" alt="logo" width={72} height={72} />
         </Box>
         <Box display="flex" flexDirection="column" mb={12}>
           {sideBarOptions.map((item: any, index: number) => {

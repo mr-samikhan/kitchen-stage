@@ -10,7 +10,7 @@ export const MuiSmallButton = (props: MuiSmallButtonProps) => {
   const { btnText, variant } = props || {}
 
   let ICON_CHECK = btnText === 'Create Ad' && (
-    <img src="assets/icons/add_square.svg" alt="add_square" />
+    <img src="/assets/icons/add_square.svg" alt="add_square" />
   )
 
   return (

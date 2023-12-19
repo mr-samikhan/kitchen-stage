@@ -148,12 +148,12 @@ export const CustomList = (props: CustomListProps) => {
                       <IconButton
                         onClick={() => dispatch(OPEN_EDIT_ADMIN_MODAL())}
                       >
-                        <img src="assets/icons/edit-icon.svg" alt="edit" />
+                        <img src="/assets/icons/edit-icon.svg" alt="edit" />
                       </IconButton>
                       <IconButton
                         onClick={() => onDelete && onDelete(admin?.name)}
                       >
-                        <img src="assets/icons/delete-icon.svg" alt="delete" />
+                        <img src="/assets/icons/delete-icon.svg" alt="delete" />
                       </IconButton>
                     </>
                   )}

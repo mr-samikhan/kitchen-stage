@@ -48,7 +48,7 @@ export const LoginContainer = () => {
             isOpen={isPasswordSent}
             setOpen={setIsPasswordSent}
             onConfirm={onResetPassword}
-            icon="assets/icons/mail.svg"
+            icon="/assets/icons/mail.svg"
             title="Email Sucessfully Sent"
             onClose={() => setIsPasswordSent(false)}
             subTitle="Check your email to reset your password"
@@ -60,7 +60,7 @@ export const LoginContainer = () => {
             okButtonText="Okay"
             onConfirm={onResetSuccess}
             isOpen={isPasswordResetModal}
-            icon="assets/icons/ok-icon.svg"
+            icon="/assets/icons/ok-icon.svg"
             setOpen={setIsPasswordResetModal}
             title="Your password has been changed"
             onClose={() => setIsPasswordResetModal(false)}

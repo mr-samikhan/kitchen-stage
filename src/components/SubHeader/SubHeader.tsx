@@ -8,7 +8,7 @@ export const SubHeader = () => {
       <CustomFilterButton />
       <CustomFilterButton
         placeholder="Filter"
-        icon="assets/icons/filter_alt.svg"
+        icon="/assets/icons/filter_alt.svg"
       />
     </Box>
   )

@@ -16,7 +16,7 @@ export const MuiCustomSearchInput = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <img src="assets/icons/search.svg" alt="search-icon" />
+              <img src="/assets/icons/search.svg" alt="search-icon" />
             </InputAdornment>
           ),
         }}

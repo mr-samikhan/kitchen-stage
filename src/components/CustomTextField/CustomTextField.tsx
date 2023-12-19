@@ -44,7 +44,7 @@ export const CustomTextField = (props: CustomTextFieldProps) => {
                 <InputAdornment position="end">
                   {icon && (
                     <IconButton>
-                      <img src={icon || 'assets/icons/check.svg'} alt="eye" />
+                      <img src={icon || '/assets/icons/check.svg'} alt="eye" />
                     </IconButton>
                   )}
                 </InputAdornment>

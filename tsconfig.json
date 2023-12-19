@@ -12,6 +12,7 @@
       "@cookup/types": ["types/types.ts"],
       "@cookup/utils": ["utils/utils.ts"],
       "@cookup/redux": ["redux/redux.ts"],
+      "@cookup/assets": ["public/assets/*"],
       "@cookup/styles": ["styles/styles.ts"],
       "@cookup/screens": ["screens/screens.ts"],
       "@cookup/modules": ["modules/modules.ts"],
