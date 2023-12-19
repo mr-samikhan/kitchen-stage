@@ -1,16 +1,21 @@
 import * as React from 'react'
-import { COLORS } from '@cookup/constant'
 import { Tabs, Tab, Box } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
 import { SET_TAB_VALUE } from '@cookup/redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface MuiCustomTabProps {
+  labels?: {
+    label: string
+    value: string
+  }[]
+  width?: any
   value?: string
+  className?: string
   setValue?: (newValue: string) => void
 }
 
 export const MuiCustomTab = (props: MuiCustomTabProps) => {
-  const {} = props || {}
+  const { labels, className, width } = props || {}
 
   const dispatch = useDispatch()
   const { tabValue } = useSelector((state: any) => state.user)
@@ -22,16 +27,36 @@ export const MuiCustomTab = (props: MuiCustomTabProps) => {
     dispatch(SET_TAB_VALUE(newValue))
   }
 
+  let ARRAY_CHECK = labels || [
+    {
+      label: 'Personal',
+      value: 'personal',
+    },
+    {
+      label: 'Business',
+      value: 'business',
+    },
+  ]
+
   return (
     <React.Fragment>
       <Tabs
         value={tabValue}
-        className="custom-tab"
         onChange={handleChange}
+        className={className || 'custom-tab'}
         // textColor={COLORS.white}
       >
-        <Tab value="personal" label="Personal" />
-        <Tab value="business" label="Business" />
+        {ARRAY_CHECK.map((item, index) => (
+          <Tab
+            key={index}
+            value={item.value}
+            label={item.label}
+            sx={{
+              textTransform: 'capitalize',
+              width: width,
+            }}
+          />
+        ))}
       </Tabs>
     </React.Fragment>
   )

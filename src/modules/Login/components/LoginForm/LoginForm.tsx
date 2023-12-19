@@ -56,7 +56,7 @@ export const LoginForm = (props: LoginFormProps) => {
                 name="password"
                 className="auth"
                 placeholder="********"
-                icon={isError ? 'assets/icons/login-error.svg' : ''}
+                icon={isError ? '/assets/icons/login-error.svg' : ''}
               />
             </Box>
             {!RESET_PATH_CHECK && (
@@ -87,7 +87,7 @@ export const LoginForm = (props: LoginFormProps) => {
               className="auth"
               name="confirmPassword"
               placeholder="********"
-              icon={isError ? 'assets/icons/login-error.svg' : ''}
+              icon={isError ? '/assets/icons/login-error.svg' : ''}
             />
           </Box>
         ) : null}
@@ -96,9 +96,9 @@ export const LoginForm = (props: LoginFormProps) => {
         <Box textAlign="center">
           <IconButton type="submit">
             {!isDisable ? (
-              <img src="assets/icons/login-disable-btn.svg" alt="eye" />
+              <img src="/assets/icons/login-disable-btn.svg" alt="eye" />
             ) : (
-              <img src="assets/icons/login-btn.svg" alt="eye" />
+              <img src="/assets/icons/login-btn.svg" alt="eye" />
             )}
           </IconButton>
         </Box>

@@ -22,3 +22,7 @@ export type IAdminsFormResolver = {
   email: string
   role: string
 }
+
+export type IUserEmailresolver = {
+  email: string
+}

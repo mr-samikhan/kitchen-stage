@@ -12,7 +12,7 @@ export const NavigationBar = (props: NavigationBarProps) => {
     <React.Fragment>
       <Box display="flex" gap={1} alignItems="center">
         <IconButton onClick={onGoBack}>
-          <img src="assets/icons/chevron-left.svg" alt="chevron" />
+          <img src="/assets/icons/chevron-left.svg" alt="chevron" />
         </IconButton>
         <Typography variant="h3" color="secondary.light">
           {navigationTitle}

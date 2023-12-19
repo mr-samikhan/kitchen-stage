@@ -63,7 +63,7 @@ export const AdminContainer = () => {
           okButtonText="Okay"
           title={'New Admin Added'}
           isOpen={isAdminSuccess}
-          icon="assets/icons/user_circle.svg"
+          icon="/assets/icons/user_circle.svg"
           onConfirm={() => dispatch(CLOSE_ADMIN_SUCCESS())}
           onClose={() => dispatch(CLOSE_ADMIN_SUCCESS())}
           text={`Congratulations! “${adminName}” has been successfully added as an Admin. We have sent them a new invite email with a one-time usage password included.`}
@@ -79,7 +79,7 @@ export const AdminContainer = () => {
           okButtonText="Okay"
           title={'Admin Updated'}
           isOpen={isAdminEditSuccess}
-          icon="assets/icons/user_circle.svg"
+          icon="/assets/icons/user_circle.svg"
           onConfirm={() => dispatch(CLOSE_ADMIN_EDIT_SUCCESS())}
           onClose={() => dispatch(CLOSE_ADMIN_EDIT_SUCCESS())}
           text={`Congratulations! “${adminName}” has been updated successfully.`}
@@ -97,7 +97,7 @@ export const AdminContainer = () => {
           cancelButtonText="Cancel"
           isOpen={isDeleteAdminModal}
           okButtonText="Yes, I confirm"
-          icon="assets/icons/warn-icon.svg"
+          icon="/assets/icons/warn-icon.svg"
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -116,7 +116,7 @@ export const AdminContainer = () => {
           okButtonText="Okay"
           title={'Admin Deleted'}
           isOpen={isDeleteAdminSuccess}
-          icon="assets/icons/delete.svg"
+          icon="/assets/icons/delete.svg"
           onClose={() => dispatch(OPEN_DELETE_ADMIN_SUCCESS(false))}
           onConfirm={() => dispatch(OPEN_DELETE_ADMIN_SUCCESS(false))}
           text={`“${delAdminName}” has been removed from the system successfully.`}

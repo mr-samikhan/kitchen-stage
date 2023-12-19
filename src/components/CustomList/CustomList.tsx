@@ -2,8 +2,9 @@ import React from 'react'
 import { COLORS } from '@cookup/constant'
 import { useDispatch } from 'react-redux'
 import { useBreakpints } from '@cookup/hooks'
+import { TableFooter } from '@cookup/components'
+import { ChevronRight } from '@mui/icons-material'
 import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
-import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 
 interface CustomListProps {
@@ -12,6 +13,7 @@ interface CustomListProps {
   isPagination?: boolean
   isActionButton?: boolean
   isActionButtons?: boolean
+  onNavigation?: () => void
   isBgColor?: string | undefined
   onDelete?: (name: string) => void
   iconPosition?: 'flex-start' | 'flex-end' | 'center'
@@ -24,6 +26,7 @@ export const CustomList = (props: CustomListProps) => {
     isBgColor,
     headerData,
     isPagination,
+    onNavigation,
     iconPosition,
     isActionButton,
     isActionButtons,
@@ -148,17 +151,17 @@ export const CustomList = (props: CustomListProps) => {
                       <IconButton
                         onClick={() => dispatch(OPEN_EDIT_ADMIN_MODAL())}
                       >
-                        <img src="assets/icons/edit-icon.svg" alt="edit" />
+                        <img src="/assets/icons/edit-icon.svg" alt="edit" />
                       </IconButton>
                       <IconButton
                         onClick={() => onDelete && onDelete(admin?.name)}
                       >
-                        <img src="assets/icons/delete-icon.svg" alt="delete" />
+                        <img src="/assets/icons/delete-icon.svg" alt="delete" />
                       </IconButton>
                     </>
                   )}
                   {isActionButton && (
-                    <IconButton>
+                    <IconButton onClick={onNavigation}>
                       <ChevronRight color="error" />
                     </IconButton>
                   )}
@@ -168,42 +171,7 @@ export const CustomList = (props: CustomListProps) => {
           </>
         ))}
       </Grid>
-      {isPagination && (
-        <React.Fragment>
-          <Grid
-            item
-            md={6}
-            xs={6}
-            display="flex"
-            justifyContent="center"
-            flexDirection="column"
-          >
-            <Box display="flex" gap={3} justifyContent="flex-end">
-              <IconButton>
-                <ChevronLeft
-                  sx={{
-                    color: COLORS.grey.main,
-                  }}
-                />
-              </IconButton>
-              <IconButton>
-                <ChevronRight color="error" />
-              </IconButton>
-            </Box>
-          </Grid>
-          <Grid item md={6} xs={6} textAlign="end">
-            <Box>
-              <Button
-                color="primary"
-                variant="contained"
-                sx={{ p: 1.5, borderRadius: '12px' }}
-              >
-                EXPORT CSV
-              </Button>
-            </Box>
-          </Grid>
-        </React.Fragment>
-      )}
+      {isPagination && <TableFooter isExportCSV isPaginationIcons />}
     </Grid>
   )
 }

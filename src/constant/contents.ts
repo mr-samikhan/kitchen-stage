@@ -6,50 +6,50 @@ export let SIDEBAR_ARRAY = [
     active: false,
     title: 'Perfomance Analytics',
     path: ROUTES.ROOT || ROUTES.ANALYTICS,
-    icon: 'assets/icons/statistics.svg',
-    activeIcon: 'assets/icons/statistics_active.svg',
+    icon: '/assets/icons/statistics.svg',
+    activeIcon: '/assets/icons/statistics_active.svg',
   },
   {
     active: false,
     path: ROUTES.ADMINS,
     title: 'Manage Admins',
-    icon: 'assets/icons/admin.svg',
-    activeIcon: 'assets/icons/customersupport_active.svg',
+    icon: '/assets/icons/admin.svg',
+    activeIcon: '/assets/icons/customersupport_active.svg',
   },
   {
     active: false,
-    path: ROUTES.USERS,
+    path: ROUTES.USERS || ROUTES.SINGLE_USER,
     title: 'Manage Users',
-    icon: 'assets/icons/group.svg',
-    activeIcon: 'assets/icons/ad_active.svg',
+    icon: '/assets/icons/group.svg',
+    activeIcon: '/assets/icons/ad_active.svg',
   },
   {
     active: false,
     path: ROUTES.EDIT,
     title: 'Manage Editors',
-    icon: 'assets/icons/edit.svg',
-    activeIcon: 'assets/icons/ad_active.svg',
+    icon: '/assets/icons/edit.svg',
+    activeIcon: '/assets/icons/ad_active.svg',
   },
   {
     active: false,
     path: ROUTES.BOOKINGS,
     title: 'Manage Books',
-    icon: 'assets/icons/book_open.svg',
-    activeIcon: 'assets/icons/customersupport_active.svg',
+    icon: '/assets/icons/book_open.svg',
+    activeIcon: '/assets/icons/customersupport_active.svg',
   },
   {
     active: false,
     path: ROUTES.ADS,
     title: 'Manage Ads',
-    icon: 'assets/icons/ad.svg',
-    activeIcon: 'assets/icons/ad_active.svg',
+    icon: '/assets/icons/ad.svg',
+    activeIcon: '/assets/icons/ad_active.svg',
   },
   {
     active: false,
     title: 'Customer Support',
     path: ROUTES.CUSTOMER_SUPPORT,
-    icon: 'assets/icons/customersupport.svg',
-    activeIcon: 'assets/icons/customersupport_active.svg',
+    icon: '/assets/icons/customersupport.svg',
+    activeIcon: '/assets/icons/customersupport_active.svg',
   },
 ]
 
@@ -176,4 +176,152 @@ export const ADMINS_DATA = [
     role: 'Admin',
   },
 ]
+
 export const ADMINS_HEADER = ['NAME', 'EMAIL ADDRESS', 'ROLE']
+
+export const PERSONAL_USERS_DATA = [
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+]
+export const PERSONAL_USERS_HEADER = [
+  'NAME',
+  'EMAIL',
+  'CITY',
+  'STATE, ZIP CODE',
+]
+
+export const BUSINESS_USERS_DATA = [
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+]
+
+export const BUSINESS_USERS_HEADER = [
+  'BUSNIESS NAME',
+  'EMAIL',
+  'TYPE',
+  'CITY',
+  'STATE, ZIP CODE',
+]
+
+export const USER_TAB_OPTIONS = [
+  {
+    label: 'Account Info',
+    value: 'account-info',
+  },
+  {
+    label: 'Profile Info',
+    value: 'profile-info',
+  },
+  {
+    label: 'Uploaded Media',
+    value: 'uploaded-media',
+  },
+]
