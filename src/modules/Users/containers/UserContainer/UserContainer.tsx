@@ -1,7 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Box, Grid } from '@mui/material'
+import { SET_TAB_VALUE } from '@cookup/redux'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { CustomList, Layout, SubHeader } from '@cookup/components'
 import {
   ROUTES,
@@ -13,9 +14,15 @@ import {
 
 export const UserContainer = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const { tabValue } = useSelector((state: any) => state.user)
   const { isSearchFocus } = useSelector((state: any) => state.header)
+
+  React.useEffect(() => {
+    dispatch(SET_TAB_VALUE('personal'))
+  }, [])
+
   return (
     <Layout isTitle isTabs isSearchInput>
       <Box my={3} mt={2}>

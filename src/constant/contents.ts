@@ -310,3 +310,18 @@ export const BUSINESS_USERS_HEADER = [
   'CITY',
   'STATE, ZIP CODE',
 ]
+
+export const USER_TAB_OPTIONS = [
+  {
+    label: 'Account Info',
+    value: 'account-info',
+  },
+  {
+    label: 'Profile Info',
+    value: 'profile-info',
+  },
+  {
+    label: 'Uploaded Media',
+    value: 'uploaded-media',
+  },
+]

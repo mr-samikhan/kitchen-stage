@@ -124,6 +124,20 @@ let theme = createTheme({
               background: COLORS.secondary.light,
             },
           },
+          '&.custom-tabs': {
+            borderRadius: '57px',
+            background: COLORS.white,
+            color: COLORS.primary.main,
+            '& .Mui-selected': {
+              margin: 5,
+              height: 55,
+              fontSize: 16,
+              fontWeight: 600,
+              borderRadius: '50px',
+              color: COLORS.white,
+              background: COLORS.secondary.light,
+            },
+          },
         },
         indicator: {
           display: 'none',

@@ -71,3 +71,16 @@ export const AdminsFormResolver: any | Resolver<ILoginFormResolver> =
       role: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
     })
   )
+
+export const UserPasswordResetResolver: any | Resolver<ILoginFormResolver> =
+  yupResolver(
+    yup.object().shape({
+      email: yup
+        .string()
+        .matches(
+          VALIDATION_PATTERNS.EMAIL,
+          'Email address invalid, please type again'
+        )
+        .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    })
+  )

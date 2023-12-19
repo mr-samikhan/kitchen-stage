@@ -15,10 +15,12 @@ export const MuiSmallButton = (props: MuiSmallButtonProps) => {
 
   return (
     <Button
-      color="error"
       size="small"
       endIcon={ICON_CHECK}
       variant={variant || 'contained'}
+      sx={{
+        bgcolor: 'secondary.main',
+      }}
     >
       {btnText}
     </Button>
