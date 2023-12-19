@@ -81,6 +81,7 @@ export const Layout = (props: LayoutProps) => {
           <Header
             isSort={isSort}
             isTabs={isTabs}
+            onGoBack={onGoBack}
             isDeleteBtn={isDeleteBtn}
             isSuspendBtn={isSuspendBtn}
             isNavigation={isNavigation}

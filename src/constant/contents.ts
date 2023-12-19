@@ -176,4 +176,137 @@ export const ADMINS_DATA = [
     role: 'Admin',
   },
 ]
+
 export const ADMINS_HEADER = ['NAME', 'EMAIL ADDRESS', 'ROLE']
+
+export const PERSONAL_USERS_DATA = [
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+  {
+    name: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+  },
+]
+export const PERSONAL_USERS_HEADER = [
+  'NAME',
+  'EMAIL',
+  'CITY',
+  'STATE, ZIP CODE',
+]
+
+export const BUSINESS_USERS_DATA = [
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+  {
+    businessName: 'Emma Gosling',
+    email: 'sam@sam.com',
+    city: 'New York',
+    state: 'NY, 123456',
+    type: 'admin',
+  },
+]
+
+export const BUSINESS_USERS_HEADER = [
+  'BUSNIESS NAME',
+  'EMAIL',
+  'TYPE',
+  'CITY',
+  'STATE, ZIP CODE',
+]
