@@ -10,7 +10,12 @@ import {
   MuiCustomSearchInput,
 } from '@cookup/components'
 import { useDispatch } from 'react-redux'
-import { OPEN_ADMIN_MODAL, OPEN_SORT_MODAL } from '@cookup/redux'
+import {
+  OPEN_ADMIN_MODAL,
+  OPEN_SORT_MODAL,
+  SET_DELETE_MODAL,
+  SET_SUSPEND_MODAL,
+} from '@cookup/redux'
 
 interface HeaderProps {
   isTabs?: boolean
@@ -126,10 +131,19 @@ export const Header = (props: HeaderProps) => {
                   <MuiCustomSearchInput />
                 </Box>
               )}
-              {isSuspendBtn && <MuiSmallButton btnText={isSuspendBtn} />}
+              {isSuspendBtn && (
+                <MuiSmallButton
+                  btnText={isSuspendBtn}
+                  onClick={() => dispatch(SET_SUSPEND_MODAL(true))}
+                />
+              )}
               {isDeleteBtn && (
                 <Box ml={2}>
-                  <MuiSmallButton btnText="Delete" variant="outlined" />
+                  <MuiSmallButton
+                    btnText="Delete"
+                    variant="outlined"
+                    onClick={() => dispatch(SET_DELETE_MODAL(true))}
+                  />
                 </Box>
               )}
             </Box>

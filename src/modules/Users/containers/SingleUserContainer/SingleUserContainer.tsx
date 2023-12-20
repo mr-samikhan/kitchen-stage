@@ -1,11 +1,17 @@
 import React from 'react'
-import { Box, Grid } from '@mui/material'
 import useUser from '../../hooks/useUser'
 import { FormProvider } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { Box, Button, Grid } from '@mui/material'
 import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_TAB_VALUE, USER_ACCOUNT_UPDATED } from '@cookup/redux'
+import {
+  SET_TAB_VALUE,
+  SET_DELETE_MODAL,
+  SET_SUSPEND_MODAL,
+  SET_SUCCESS_DELETE,
+  USER_ACCOUNT_UPDATED,
+} from '@cookup/redux'
 import {
   Form,
   Layout,
@@ -24,6 +30,9 @@ export const SingleUserContainer = () => {
   const dispatch = useDispatch()
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
+  const { isDeleteModal, isDeleteSuccess, isSuspendModal } = useSelector(
+    (state: any) => state.header
+  )
 
   const { methods, onSubmit, isValid, onUpdateUser } = useUser()
 
@@ -94,6 +103,60 @@ export const SingleUserContainer = () => {
           onClose={() => dispatch(USER_ACCOUNT_UPDATED(false))}
           onConfirm={() => dispatch(USER_ACCOUNT_UPDATED(false))}
           text="Account info of “Emma Gosling” has been succesfully updated."
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+        />
+      )}
+      {isSuspendModal && (
+        <CustomDialog
+          isOpen={isSuspendModal}
+          title="Suspend User"
+          icon="/assets/icons/suspend-icon.svg"
+          onClose={() => dispatch(SET_SUSPEND_MODAL(false))}
+          text="Please select a time range for suspending the selected user."
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+        >
+          <Button variant="contained" color="primary" fullWidth>
+            Suspend 7 days
+          </Button>
+        </CustomDialog>
+      )}
+      {isDeleteModal && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Yes, I Confirm"
+          isCancleButton
+          cancelButtonText="No"
+          isOpen={isDeleteModal}
+          title="Delete User"
+          icon="/assets/icons/warn-icon.svg"
+          onClose={() => dispatch(SET_DELETE_MODAL(false))}
+          onConfirm={() => {
+            dispatch(SET_DELETE_MODAL(false))
+            dispatch(SET_SUCCESS_DELETE(true))
+          }}
+          text="Are you sure you want to delete the user “Emma Gosling”? Actions are not reversable."
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+        />
+      )}
+      {isDeleteSuccess && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          isOpen={isDeleteSuccess}
+          title="User Deleted"
+          icon="/assets/icons/warn-icon.svg"
+          onClose={() => dispatch(SET_SUCCESS_DELETE(false))}
+          onConfirm={() => dispatch(SET_SUCCESS_DELETE(false))}
+          text="“Emma Gosling” has been removed from the system successfully. "
           okButtonStyle={{
             p: 2,
             width: 205,
