@@ -29,5 +29,5 @@ export default defineConfig({
     },
   },
   plugins: [react()],
-  base: 'https://cook-up-admin.web.app',
+  base: 'https://kitchen-stage.web.app',
 })

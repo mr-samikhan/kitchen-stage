@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "cook-up-1a676"
+    "default": "kitchen-stage"
   },
   "targets": {
-    "cook-up-1a676": {
+    "kitchen-stage": {
       "hosting": {
         "web": [
-          "cook-up-admin"
+          "kitchen-stage"
         ]
       }
     }

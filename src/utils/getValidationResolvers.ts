@@ -50,7 +50,7 @@ export const ResetPasswordFormResolver:
 
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password'), null], VALIDATION_MESSAGES.PASSWORD_MISMATCH)
+      .oneOf([yup.ref('password')], VALIDATION_MESSAGES.PASSWORD_MISMATCH)
       .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
   })
 )
