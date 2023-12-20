@@ -9,8 +9,14 @@ import {
   CustomFilterButton,
   MuiCustomSearchInput,
 } from '@cookup/components'
-import { useDispatch } from 'react-redux'
-import { OPEN_ADMIN_MODAL, OPEN_SORT_MODAL } from '@cookup/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  OPEN_ADMIN_MODAL,
+  OPEN_SORT_MODAL,
+  SET_DELETE_MODAL,
+  SET_SUSPEND_MODAL,
+  SET_UNSUSPEND_USER,
+} from '@cookup/redux'
 
 interface HeaderProps {
   isTabs?: boolean
@@ -44,6 +50,7 @@ export const Header = (props: HeaderProps) => {
   const { mobileMode, tabMode } = useBreakpints()
 
   const dispatch = useDispatch()
+  const { isUserSuspened } = useSelector((state: any) => state.header)
 
   return (
     <React.Fragment>
@@ -126,10 +133,25 @@ export const Header = (props: HeaderProps) => {
                   <MuiCustomSearchInput />
                 </Box>
               )}
-              {isSuspendBtn && <MuiSmallButton btnText={isSuspendBtn} />}
+              {isSuspendBtn && (
+                <MuiSmallButton
+                  btnText={isSuspendBtn}
+                  onClick={() =>
+                    dispatch(
+                      isUserSuspened
+                        ? SET_UNSUSPEND_USER(true)
+                        : SET_SUSPEND_MODAL(true)
+                    )
+                  }
+                />
+              )}
               {isDeleteBtn && (
                 <Box ml={2}>
-                  <MuiSmallButton btnText="Delete" variant="outlined" />
+                  <MuiSmallButton
+                    btnText="Delete"
+                    variant="outlined"
+                    onClick={() => dispatch(SET_DELETE_MODAL(true))}
+                  />
                 </Box>
               )}
             </Box>

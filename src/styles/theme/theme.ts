@@ -85,11 +85,13 @@ let theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          fontSize: 16,
           // width: '205px',
           // height: '60px',
+          fontSize: 16,
           fontWeight: 600,
+          borderRadius: '8px',
           textTransform: 'capitalize',
+          padding: '15px 20px 15px 20px',
           background: COLORS.secondary.light,
           '&.MuiButton-outlined': {
             background: 'transparent',

@@ -32,6 +32,7 @@ const Colors = {
   white: '#FFFFFF',
   background: '#F7F7F7',
   black: '#000000',
+  transparentOrange: '#FFEEEE',
 }
 
 export default Colors

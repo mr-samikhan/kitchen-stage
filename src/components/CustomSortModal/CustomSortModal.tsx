@@ -25,6 +25,7 @@ export const CustomSortModal = () => {
   }
 
   let CHECK = mobileMode || tabMode
+  const shouldTranslate = mobileMode && CHECK
 
   return (
     <Paper
@@ -34,11 +35,11 @@ export const CustomSortModal = () => {
         height: 'auto',
         position: 'absolute',
         borderRadius: '20px',
-        left: mobileMode && '50%',
         right: { xs: 0, sm: 0, md: 150 },
         top: { xs: '50%', sm: '50%', md: 50 },
-        transform: CHECK && 'translate(-50%, -50%)',
+        left: shouldTranslate ? '50%' : undefined,
         dropShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        transform: shouldTranslate ? 'translate(-50%, -50%)' : undefined,
       }}
     >
       <Box
