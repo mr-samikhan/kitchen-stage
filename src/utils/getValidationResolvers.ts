@@ -84,3 +84,14 @@ export const UserPasswordResetResolver: any | Resolver<ILoginFormResolver> =
         .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
     })
   )
+
+export const SuspendUserResolver: any | Resolver<any> = yupResolver(
+  yup.object().shape({
+    days: yup
+      .number()
+      .max(365, 'Days must be less than 365')
+      .min(1, 'Days must be greater than 0')
+      .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    reason: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+  })
+)

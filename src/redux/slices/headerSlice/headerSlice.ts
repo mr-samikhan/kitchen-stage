@@ -5,8 +5,12 @@ interface IHeaderSlice {
   isSearchFocus: boolean
   isDeleteModal: boolean
   isSuspendModal: boolean
+  isUserSuspened: boolean
   isDeleteSuccess: boolean
   isOpenAdminModal: boolean
+  isUserSuspension: boolean
+  unsuspenedUser?: boolean
+  isSuspensionSuccess: boolean
 }
 
 const initialState: IHeaderSlice = {
@@ -16,6 +20,10 @@ const initialState: IHeaderSlice = {
   isSuspendModal: false,
   isDeleteSuccess: false,
   isOpenAdminModal: false,
+  isUserSuspened: false,
+  unsuspenedUser: false,
+  isUserSuspension: false,
+  isSuspensionSuccess: false,
 }
 
 const headerSlice = createSlice({
@@ -46,6 +54,17 @@ const headerSlice = createSlice({
     SET_SUCCESS_DELETE: (state, action: PayloadAction<boolean>) => {
       state.isDeleteSuccess = action.payload
     },
+    SET_USER_SUSPENSION: (state, action: PayloadAction<boolean>) => {
+      state.isUserSuspension = action.payload
+    },
+    SET_SUSPENSION_SUCCESS: (state, action: PayloadAction<boolean>) => {
+      state.isSuspensionSuccess = action.payload
+      state.isUserSuspened = true
+    },
+    SET_UNSUSPEND_USER: (state, action: PayloadAction<boolean>) => {
+      state.unsuspenedUser = action.payload
+      state.isUserSuspened = false
+    },
   },
 })
 
@@ -58,5 +77,8 @@ export const {
   SET_SUSPEND_MODAL,
   SET_DELETE_MODAL,
   SET_SUCCESS_DELETE,
+  SET_USER_SUSPENSION,
+  SET_UNSUSPEND_USER,
+  SET_SUSPENSION_SUCCESS,
 } = headerSlice.actions
 export default headerSlice.reducer

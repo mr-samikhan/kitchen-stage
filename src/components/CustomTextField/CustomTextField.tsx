@@ -37,6 +37,7 @@ export const CustomTextField = (props: CustomTextFieldProps) => {
             className={className}
             error={!!errors[name]}
             sx={{
+              ...inputStyle,
               textAlign: 'left',
             }}
             InputProps={{
@@ -66,3 +67,10 @@ export const CustomTextField = (props: CustomTextFieldProps) => {
 }
 
 export default CustomTextField
+const inputStyle = {
+  '& input[type="number"]::-webkit-inner-spin-button, & input[type="number"]::-webkit-outer-spin-button':
+    {
+      '-webkit-appearance': 'none',
+      margin: 0,
+    },
+}

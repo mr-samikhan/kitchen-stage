@@ -1,8 +1,8 @@
 import React from 'react'
 import useUser from '../../hooks/useUser'
+import { Box, Grid } from '@mui/material'
 import { FormProvider } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, Grid } from '@mui/material'
 import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -11,6 +11,9 @@ import {
   SET_SUSPEND_MODAL,
   SET_SUCCESS_DELETE,
   USER_ACCOUNT_UPDATED,
+  SET_USER_SUSPENSION,
+  SET_SUSPENSION_SUCCESS,
+  SET_UNSUSPEND_USER,
 } from '@cookup/redux'
 import {
   Form,
@@ -20,6 +23,8 @@ import {
   MuiCustomTab,
 } from '@cookup/components'
 import {
+  SuspendModalUI,
+  SuspensionAlert,
   UserAccountInfo,
   UserProfileInfo,
   UserUploadedMedia,
@@ -30,11 +35,24 @@ export const SingleUserContainer = () => {
   const dispatch = useDispatch()
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
-  const { isDeleteModal, isDeleteSuccess, isSuspendModal } = useSelector(
-    (state: any) => state.header
-  )
+  const {
+    isDeleteModal,
+    isSuspendModal,
+    isDeleteSuccess,
+    isUserSuspened,
+    unsuspenedUser,
+    isUserSuspension,
+    isSuspensionSuccess,
+  } = useSelector((state: any) => state.header)
 
-  const { methods, onSubmit, isValid, onUpdateUser } = useUser()
+  const {
+    methods,
+    onSubmit,
+    isValid,
+    onUpdateUser,
+    onSubmitSuspension,
+    onSevenDaysSuspend,
+  } = useUser()
 
   const { tabValue } = useSelector((state: any) => state.user)
 
@@ -71,9 +89,9 @@ export const SingleUserContainer = () => {
     <Layout
       isDeleteBtn
       isNavigation
-      isSuspendBtn="Suspend"
       navigationTitle="Emma Gosling"
       onGoBack={() => navigate(-1)}
+      isSuspendBtn={isUserSuspened ? 'Unsuspend' : 'Suspend'}
     >
       <Box
         display="flex"
@@ -109,23 +127,7 @@ export const SingleUserContainer = () => {
           }}
         />
       )}
-      {isSuspendModal && (
-        <CustomDialog
-          isOpen={isSuspendModal}
-          title="Suspend User"
-          icon="/assets/icons/suspend-icon.svg"
-          onClose={() => dispatch(SET_SUSPEND_MODAL(false))}
-          text="Please select a time range for suspending the selected user."
-          okButtonStyle={{
-            p: 2,
-            width: 205,
-          }}
-        >
-          <Button variant="contained" color="primary" fullWidth>
-            Suspend 7 days
-          </Button>
-        </CustomDialog>
-      )}
+
       {isDeleteModal && (
         <CustomDialog
           isOkButton
@@ -162,6 +164,73 @@ export const SingleUserContainer = () => {
             width: 205,
           }}
         />
+      )}
+      {isSuspendModal && (
+        <CustomDialog
+          isOpen={isSuspendModal}
+          title="Suspend User"
+          icon="/assets/icons/suspend-icon.svg"
+          onClose={() => dispatch(SET_SUSPEND_MODAL(false))}
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+        >
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(onSubmitSuspension)}>
+              <SuspendModalUI
+                methods={methods}
+                onSevenDaysSuspend={onSevenDaysSuspend}
+              />
+            </Form>
+          </FormProvider>
+        </CustomDialog>
+      )}
+      {isUserSuspension && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          title="User Suspended"
+          isOpen={isUserSuspension}
+          icon="/assets/icons/suspend-icon.svg"
+          onClose={() => dispatch(SET_USER_SUSPENSION(false))}
+          text="“Emma Gosling” has been suspended for 7 days."
+          onConfirm={() => {
+            dispatch(SET_SUSPEND_MODAL(false))
+            dispatch(SET_USER_SUSPENSION(false))
+            dispatch(SET_SUSPENSION_SUCCESS(true))
+          }}
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+        />
+      )}
+      {unsuspenedUser && (
+        <CustomDialog
+          isOkButton
+          isCancleButton
+          cancelButtonText="No"
+          title="Unsuspend User"
+          isOpen={unsuspenedUser}
+          okButtonText="Yes, I Confirm"
+          icon="/assets/icons/suspend-icon.svg"
+          onClose={() => dispatch(SET_UNSUSPEND_USER(false))}
+          text="Are you sure you want to unsuspend the user “Emma Gosling”?"
+          onConfirm={() => {
+            dispatch(SET_UNSUSPEND_USER(false))
+            dispatch(SET_SUSPENSION_SUCCESS(true))
+          }}
+          okButtonStyle={{
+            p: 2,
+            width: 205,
+          }}
+        />
+      )}
+      {isSuspensionSuccess && (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <SuspensionAlert />
+        </Box>
       )}
     </Layout>
   )
