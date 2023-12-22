@@ -28,6 +28,7 @@ import {
   UserAccountInfo,
   UserProfileInfo,
   UserUploadedMedia,
+  ViewAds,
 } from '@cookup/modules'
 
 export const SingleUserContainer = () => {
@@ -76,6 +77,8 @@ export const SingleUserContainer = () => {
         return <UserProfileInfo isBusinessType={state.type ? true : false} />
       case 'uploaded-media':
         return <UserUploadedMedia />
+      case 'ads':
+        return <ViewAds />
       default:
         return (
           <FormProvider {...methods}>
@@ -89,6 +92,7 @@ export const SingleUserContainer = () => {
 
   return (
     <Layout
+      bgcolor="#F5F5F5"
       isDeleteBtn
       isNavigation
       onGoBack={() => navigate(-1)}
@@ -107,6 +111,7 @@ export const SingleUserContainer = () => {
               className="custom-tabs"
               labels={USER_TAB_OPTIONS}
               width={{ xs: '100px', md: '188px' }}
+              isBusinessType={state.type ? true : false}
             />
           </Grid>
           <RenderUserSteps />

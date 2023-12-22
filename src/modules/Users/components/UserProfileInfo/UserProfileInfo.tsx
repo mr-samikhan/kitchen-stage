@@ -23,8 +23,8 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
           <Avatar
             src="/assets/images/profile-image.svg"
             sx={{
-              width: '150px',
-              height: '150px',
+              width: { xs: 'auto', md: '150px' },
+              height: { xs: 'auto', md: '150px' },
             }}
           />
         </Grid>
