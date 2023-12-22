@@ -23,6 +23,12 @@ export const UserContainer = () => {
     dispatch(SET_TAB_VALUE('personal'))
   }, [])
 
+  const onNavigation = (item: any) => {
+    navigate(`${ROUTES.USERS}/1`, {
+      state: { ...item },
+    })
+  }
+
   return (
     <Layout isTitle isTabs isSearchInput>
       <Box my={3} mt={2}>
@@ -45,7 +51,7 @@ export const UserContainer = () => {
             isBgColor="white"
             data={PERSONAL_USERS_DATA}
             headerData={PERSONAL_USERS_HEADER}
-            onNavigation={() => navigate(`${ROUTES.USERS}/1`)}
+            onNavigation={onNavigation}
           />
         )}
         {!isSearchFocus && tabValue === 'business' && (
@@ -54,8 +60,8 @@ export const UserContainer = () => {
             isActionButton
             iconPosition="flex-end"
             data={BUSINESS_USERS_DATA}
+            onNavigation={onNavigation}
             headerData={BUSINESS_USERS_HEADER}
-            onNavigation={() => navigate(`${ROUTES.USERS}/1`)}
           />
         )}
       </Box>

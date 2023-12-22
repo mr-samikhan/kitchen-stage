@@ -13,9 +13,9 @@ interface CustomListProps {
   isPagination?: boolean
   isActionButton?: boolean
   isActionButtons?: boolean
-  onNavigation?: () => void
   isBgColor?: string | undefined
   onDelete?: (name: string) => void
+  onNavigation?: (item: any) => void
   iconPosition?: 'flex-start' | 'flex-end' | 'center'
 }
 
@@ -55,7 +55,7 @@ export const CustomList = (props: CustomListProps) => {
         <Grid item xs={3}></Grid>
       </Grid>
       <Grid item md={12} xs={12} my={1} minHeight={'50vh'}>
-        {data?.slice(0, 8).map((admin, index) => (
+        {data?.slice(0, 8).map((user, index) => (
           <>
             <Grid
               item
@@ -69,23 +69,23 @@ export const CustomList = (props: CustomListProps) => {
               borderRadius="8px"
               bgcolor={isBgColor || COLORS.grey.dark}
             >
-              {admin.name && (
+              {user.name && (
                 <Grid item xs={3}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {admin.name}
+                    {user.name}
                   </Typography>
                 </Grid>
               )}
-              {admin.businessName && (
+              {user.businessName && (
                 <Grid item xs={3}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {admin.businessName}
+                    {user.businessName}
                   </Typography>
                 </Grid>
               )}
@@ -94,46 +94,46 @@ export const CustomList = (props: CustomListProps) => {
                   variant={mobileMode ? 'body1' : 'subtitle1'}
                   color="secondary"
                 >
-                  {admin.email}
+                  {user.email}
                 </Typography>
               </Grid>
-              {admin.type && (
+              {user.type && (
                 <Grid item xs={3}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {admin.type}
+                    {user.type}
                   </Typography>
                 </Grid>
               )}
-              {admin.role && (
+              {user.role && (
                 <Grid item xs={3}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {admin.role}
+                    {user.role}
                   </Typography>
                 </Grid>
               )}
-              {admin.state && (
+              {user.state && (
                 <Grid item xs={3}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {admin.city}
+                    {user.city}
                   </Typography>
                 </Grid>
               )}
-              {admin.state && (
+              {user.state && (
                 <Grid item xs={3}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {admin.city}
+                    {user.city}
                   </Typography>
                 </Grid>
               )}
@@ -154,14 +154,16 @@ export const CustomList = (props: CustomListProps) => {
                         <img src="/assets/icons/edit-icon.svg" alt="edit" />
                       </IconButton>
                       <IconButton
-                        onClick={() => onDelete && onDelete(admin?.name)}
+                        onClick={() => onDelete && onDelete(user?.name)}
                       >
                         <img src="/assets/icons/delete-icon.svg" alt="delete" />
                       </IconButton>
                     </>
                   )}
                   {isActionButton && (
-                    <IconButton onClick={onNavigation}>
+                    <IconButton
+                      onClick={() => onNavigation && onNavigation(user)}
+                    >
                       <ChevronRight color="error" />
                     </IconButton>
                   )}

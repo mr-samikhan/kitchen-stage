@@ -2,18 +2,18 @@ import React from 'react'
 import useUser from '../../hooks/useUser'
 import { Box, Grid } from '@mui/material'
 import { FormProvider } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   SET_TAB_VALUE,
   SET_DELETE_MODAL,
   SET_SUSPEND_MODAL,
   SET_SUCCESS_DELETE,
-  USER_ACCOUNT_UPDATED,
-  SET_USER_SUSPENSION,
-  SET_SUSPENSION_SUCCESS,
   SET_UNSUSPEND_USER,
+  SET_USER_SUSPENSION,
+  USER_ACCOUNT_UPDATED,
+  SET_SUSPENSION_SUCCESS,
 } from '@cookup/redux'
 import {
   Form,
@@ -33,6 +33,8 @@ import {
 export const SingleUserContainer = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const { state } = useLocation()
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
   const {
@@ -71,7 +73,7 @@ export const SingleUserContainer = () => {
           </FormProvider>
         )
       case 'profile-info':
-        return <UserProfileInfo />
+        return <UserProfileInfo isBusinessType={state.type ? true : false} />
       case 'uploaded-media':
         return <UserUploadedMedia />
       default:
@@ -89,8 +91,8 @@ export const SingleUserContainer = () => {
     <Layout
       isDeleteBtn
       isNavigation
-      navigationTitle="Emma Gosling"
       onGoBack={() => navigate(-1)}
+      navigationTitle={state.name || state.businessName}
       isSuspendBtn={isUserSuspened ? 'Unsuspend' : 'Suspend'}
     >
       <Box

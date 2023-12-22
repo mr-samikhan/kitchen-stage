@@ -325,3 +325,73 @@ export const USER_TAB_OPTIONS = [
     value: 'uploaded-media',
   },
 ]
+
+export const PERSONAL_USER_PROFILE_DATA = [
+  {
+    key: 'Name',
+    value: 'Emma Gosling',
+  },
+  {
+    key: 'Username',
+    value: 'tipsyemma',
+  },
+  {
+    key: 'Age Range',
+    value: '28-35',
+  },
+  {
+    key: 'Gender',
+    value: 'Non-Binary',
+  },
+  {
+    key: 'City',
+    value: 'Costa Mesa',
+  },
+  {
+    key: 'State',
+    value: 'California',
+  },
+  {
+    key: 'Zip Code',
+    value: '92626',
+  },
+]
+export const BUSINESS_USER_PROFILE_DATA = [
+  {
+    key: 'Name',
+    value: 'Emma Gosling',
+  },
+  {
+    key: 'Type',
+    value: 'Restaurant',
+  },
+  {
+    key: 'Username',
+    value: 'tipsyemma',
+  },
+  {
+    key: 'Age Range',
+    value: '28-35',
+  },
+  {
+    key: 'Gender',
+    value: 'Non-Binary',
+  },
+  {
+    key: 'City',
+    value: 'Costa Mesa',
+  },
+  {
+    key: 'State',
+    value: 'California',
+  },
+  {
+    key: 'Zip Code',
+    value: '92626',
+  },
+  {
+    key: 'About',
+    value:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit',
+  },
+]
