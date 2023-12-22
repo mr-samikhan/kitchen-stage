@@ -239,7 +239,7 @@ export const PERSONAL_USERS_HEADER = [
 
 export const BUSINESS_USERS_DATA = [
   {
-    businessName: 'Emma Gosling',
+    businessName: 'Shakespeare & Company Cafe',
     email: 'sam@sam.com',
     city: 'New York',
     state: 'NY, 123456',
@@ -323,5 +323,122 @@ export const USER_TAB_OPTIONS = [
   {
     label: 'Uploaded Media',
     value: 'uploaded-media',
+  },
+  {
+    label: 'Ads',
+    value: 'ads',
+  },
+]
+
+export const PERSONAL_USER_PROFILE_DATA = [
+  {
+    key: 'Name',
+    value: 'Emma Gosling',
+  },
+  {
+    key: 'Username',
+    value: 'tipsyemma',
+  },
+  {
+    key: 'Age Range',
+    value: '28-35',
+  },
+  {
+    key: 'Gender',
+    value: 'Non-Binary',
+  },
+  {
+    key: 'City',
+    value: 'Costa Mesa',
+  },
+  {
+    key: 'State',
+    value: 'California',
+  },
+  {
+    key: 'Zip Code',
+    value: '92626',
+  },
+]
+
+export const BUSINESS_USER_PROFILE_DATA = [
+  {
+    key: 'Name',
+    value: 'Emma Gosling',
+  },
+  {
+    key: 'Type',
+    value: 'Restaurant',
+  },
+  {
+    key: 'Username',
+    value: 'tipsyemma',
+  },
+  {
+    key: 'Age Range',
+    value: '28-35',
+  },
+  {
+    key: 'Gender',
+    value: 'Non-Binary',
+  },
+  {
+    key: 'City',
+    value: 'Costa Mesa',
+  },
+  {
+    key: 'State',
+    value: 'California',
+  },
+  {
+    key: 'Zip Code',
+    value: '92626',
+  },
+  {
+    key: 'About',
+    value:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit',
+  },
+]
+
+export const IMAGES_ARRAY = [
+  '/assets/images/food/food-1.svg',
+  '/assets/images/food/food-2.svg',
+  '/assets/images/food/food-2.svg',
+  '/assets/images/food/food-2.svg',
+  '/assets/images/food/food-3.svg',
+  '/assets/images/food/food-4.png',
+  '/assets/images/food/food-5.svg',
+  '/assets/images/food/food-5.svg',
+  '/assets/images/food/food-4.png',
+  '/assets/images/food/food-3.svg',
+  '/assets/images/food/food-4.png',
+  '/assets/images/food/food-5.svg',
+  '/assets/images/food/food-5.svg',
+  '/assets/images/food/food-4.png',
+  '/assets/images/food/food-3.svg',
+]
+
+export const USER_ADS_DATA = [
+  {
+    key: 'Budget',
+    value: '$400.00',
+  },
+  {
+    key: 'Start Date',
+    value: 'July 9, 2021',
+  },
+  {
+    key: 'End Date',
+    value: 'July 13, 2021',
+  },
+  {
+    key: 'Description',
+    value:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit. Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit.',
+  },
+  {
+    key: 'Website',
+    value: 'shakespeareandcompanycafe',
   },
 ]

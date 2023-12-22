@@ -29,7 +29,7 @@ const useUser = () => {
   const onSubmit = (data: any) => {
     console.log(data)
     dispatch(USER_RESET_PASSWORD(true))
-    methods.reset()
+    // methods.reset()
   }
 
   const onSubmitSuspension = (data: any) => {

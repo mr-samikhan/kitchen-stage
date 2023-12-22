@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Tabs, Tab, Box } from '@mui/material'
 import { SET_TAB_VALUE } from '@cookup/redux'
+import { Tabs, Tab, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 
 interface MuiCustomTabProps {
@@ -11,11 +11,12 @@ interface MuiCustomTabProps {
   width?: any
   value?: string
   className?: string
+  isBusinessType?: boolean | undefined
   setValue?: (newValue: string) => void
 }
 
 export const MuiCustomTab = (props: MuiCustomTabProps) => {
-  const { labels, className, width } = props || {}
+  const { labels, className, width, isBusinessType } = props || {}
 
   const dispatch = useDispatch()
   const { tabValue } = useSelector((state: any) => state.user)
@@ -46,7 +47,14 @@ export const MuiCustomTab = (props: MuiCustomTabProps) => {
         className={className || 'custom-tab'}
         // textColor={COLORS.white}
       >
-        {ARRAY_CHECK.map((item, index) => (
+        {ARRAY_CHECK.slice(
+          0,
+          isBusinessType === undefined || false
+            ? ARRAY_CHECK.length
+            : isBusinessType
+            ? ARRAY_CHECK.length
+            : ARRAY_CHECK.length - 1
+        ).map((item, index) => (
           <Tab
             key={index}
             value={item.value}

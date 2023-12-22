@@ -7,6 +7,7 @@ interface IUserSlice {
     | 'account-info'
     | 'profile-info'
     | 'uploaded-media'
+    | 'ads'
   isPasswordSent?: boolean
   isUserUpdateModal?: boolean
 }
@@ -29,6 +30,7 @@ const userSlice = createSlice({
         | 'account-info'
         | 'profile-info'
         | 'uploaded-media'
+        | 'ads'
       >
     ) => {
       state.tabValue = action.payload

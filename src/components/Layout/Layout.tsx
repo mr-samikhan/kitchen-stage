@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom'
 import { COLORS, SIDEBAR_ARRAY } from '@cookup/constant'
 
 interface LayoutProps {
+  bgcolor?: string
   isTabs?: boolean
   isSort?: boolean
   isTitle?: boolean
@@ -24,6 +25,7 @@ export const Layout = (props: LayoutProps) => {
   const {
     isTabs,
     isSort,
+    bgcolor,
     isTitle,
     onGoBack,
     children,
@@ -72,7 +74,7 @@ export const Layout = (props: LayoutProps) => {
           md={11}
           xs={12}
           sm={11}
-          bgcolor={COLORS.white}
+          bgcolor={bgcolor || COLORS.white}
           px={{
             xs: 0,
             md: 2,
