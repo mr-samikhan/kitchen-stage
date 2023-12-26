@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IHeaderSlice {
   isSortModal: boolean
+  isFilterModal: boolean
   isSearchFocus: boolean
   isDeleteModal: boolean
   isSuspendModal: boolean
@@ -15,14 +16,15 @@ interface IHeaderSlice {
 
 const initialState: IHeaderSlice = {
   isSortModal: false,
+  isFilterModal: false,
   isSearchFocus: false,
   isDeleteModal: false,
-  isSuspendModal: false,
-  isDeleteSuccess: false,
-  isOpenAdminModal: false,
-  isUserSuspened: false,
   unsuspenedUser: false,
+  isSuspendModal: false,
+  isUserSuspened: false,
+  isDeleteSuccess: false,
   isUserSuspension: false,
+  isOpenAdminModal: false,
   isSuspensionSuccess: false,
 }
 
@@ -65,6 +67,9 @@ const headerSlice = createSlice({
       state.unsuspenedUser = action.payload
       state.isUserSuspened = false
     },
+    SET_FILTER_MODAL: (state, action: PayloadAction<boolean>) => {
+      state.isFilterModal = action.payload
+    },
   },
 })
 
@@ -72,13 +77,14 @@ export const {
   OPEN_SORT_MODAL,
   CLOSE_SORT_MODAL,
   OPEN_ADMIN_MODAL,
-  CLOSE_ADMIN_MODAL,
   SET_SEARCH_FOCUS,
-  SET_SUSPEND_MODAL,
   SET_DELETE_MODAL,
+  SET_FILTER_MODAL,
+  SET_SUSPEND_MODAL,
+  CLOSE_ADMIN_MODAL,
+  SET_UNSUSPEND_USER,
   SET_SUCCESS_DELETE,
   SET_USER_SUSPENSION,
-  SET_UNSUSPEND_USER,
   SET_SUSPENSION_SUCCESS,
 } = headerSlice.actions
 export default headerSlice.reducer

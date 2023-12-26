@@ -146,6 +146,23 @@ let theme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+          '&.selected': {
+            width: '64px',
+            color: 'white',
+            background: COLORS.secondary.light,
+          },
+          '&.custom-chip': {
+            color: COLORS.primary.main,
+            background: 'transparent',
+            border: `1.3px solid ${COLORS.primary.main}`,
+          },
+        },
+      },
+    },
   },
 })
 
