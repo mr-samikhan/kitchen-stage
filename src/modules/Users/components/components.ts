@@ -1,5 +1,6 @@
 export * from '../components/components'
 export { default as ViewAds } from './ViewAds/ViewAds'
+export { default as SortModalUI } from './SortModalUI/SortModalUI'
 export { default as ViewAdDetails } from './ViewAdDetails/ViewAdDetails'
 export { default as SuspendModalUI } from './SuspendModalUI/SuspendModalUI'
 export { default as CustomDropdown } from './CustomDropdown/CustomDropdown'

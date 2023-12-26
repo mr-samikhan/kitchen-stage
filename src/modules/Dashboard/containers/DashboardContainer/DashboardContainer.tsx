@@ -14,7 +14,7 @@ export const DashboardContainer = () => {
   const { isSortModal } = useSelector((state: any) => state.header)
   return (
     <React.Fragment>
-      <Layout isTitle isSort>
+      <Layout isTitle isSort mainHeight="auto">
         <CardContainers title="Users" data={DASHBOARD_USERS} />
         <Box mt={4}>
           <CardContainers title="Activity" data={DASHBOARD_ACTIVITES} />

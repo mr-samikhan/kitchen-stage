@@ -33,7 +33,13 @@ export const AdminContainer = () => {
   let adminName = methods.watch('name')
 
   return (
-    <Layout isTitle isAddNewAdminBtn>
+    <Layout
+      isTitle
+      isExportCSV
+      isAddNewAdminBtn
+      isPaginationIcons
+      isFooter={ADMINS_DATA.length > 7 ? true : false}
+    >
       <CustomList
         isActionButtons
         onDelete={onDelete}

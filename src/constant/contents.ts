@@ -204,7 +204,6 @@ export const PERSONAL_USERS_DATA = [
     city: 'New York',
     state: 'NY, 123456',
   },
-
   {
     name: 'Emma Gosling',
     email: 'sam@sam.com',
@@ -230,6 +229,7 @@ export const PERSONAL_USERS_DATA = [
     state: 'NY, 123456',
   },
 ]
+
 export const PERSONAL_USERS_HEADER = [
   'NAME',
   'EMAIL',
@@ -441,4 +441,31 @@ export const USER_ADS_DATA = [
     key: 'Website',
     value: 'shakespeareandcompanycafe',
   },
+]
+
+export const EXPERIENCED_ARRAY = [
+  'Easy',
+  'Moderate',
+  'Hard',
+  'Chef',
+  'Professional',
+]
+
+export const AGE_RANGE_ARRAY = [
+  '21-27yrs',
+  '28-35yrs',
+  '36-43yrs',
+  '44-51yrs',
+  '52 and over',
+  'All',
+]
+
+export const GENDER_ARRAY = ['male', 'female', 'Non-Binary', 'All']
+
+export const BUSINESS_TYPES_ARRAY = [
+  'Winery/Vineyard',
+  'Restuarant',
+  'Bar',
+  'Cafe',
+  'All',
 ]

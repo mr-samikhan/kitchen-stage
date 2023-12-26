@@ -33,8 +33,8 @@ export const ViewAds = () => {
                   onClick={() => setIsImageClicked(true)}
                   sx={{
                     cursor: 'pointer',
-                    width: { md: 240, xs: 120 },
-                    height: { md: 240, xs: 120 },
+                    width: { md: 180, xs: 120 },
+                    height: { md: 180, xs: 120 },
                   }}
                 />
               )

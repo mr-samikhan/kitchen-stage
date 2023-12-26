@@ -27,7 +27,6 @@ export const Sidebar = (props: SidebarProps) => {
       )}
       <Box
         p={3}
-        height="100vh"
         display="flex"
         alignItems="center"
         flexDirection="column"

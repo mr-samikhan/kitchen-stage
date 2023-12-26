@@ -3,7 +3,12 @@ import { Box, Grid } from '@mui/material'
 import { SET_TAB_VALUE } from '@cookup/redux'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { CustomList, Layout, SubHeader } from '@cookup/components'
+import {
+  Layout,
+  SubHeader,
+  CustomList,
+  CustomSortModal,
+} from '@cookup/components'
 import {
   ROUTES,
   BUSINESS_USERS_DATA,
@@ -11,13 +16,17 @@ import {
   BUSINESS_USERS_HEADER,
   PERSONAL_USERS_HEADER,
 } from '@cookup/constant'
+import { SortModalUI } from '@cookup/modules'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { tabValue } = useSelector((state: any) => state.user)
-  const { isSearchFocus } = useSelector((state: any) => state.header)
+
+  const { isSearchFocus, isSortModal, isFilterModal } = useSelector(
+    (state: any) => state.header
+  )
 
   React.useEffect(() => {
     dispatch(SET_TAB_VALUE('personal'))
@@ -30,7 +39,7 @@ export const UserContainer = () => {
   }
 
   return (
-    <Layout isTitle isTabs isSearchInput>
+    <Layout isTitle isTabs isSearchInput isExportCSV isPaginationIcons isFooter>
       <Box my={3} mt={2}>
         <Grid container>
           <Grid item md={11} xs={12} textAlign="right">
@@ -46,7 +55,6 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
-            isPagination
             isActionButton
             isBgColor="white"
             data={PERSONAL_USERS_DATA}
@@ -56,13 +64,25 @@ export const UserContainer = () => {
         )}
         {!isSearchFocus && tabValue === 'business' && (
           <CustomList
-            isPagination
             isActionButton
             iconPosition="flex-end"
             data={BUSINESS_USERS_DATA}
             onNavigation={onNavigation}
             headerData={BUSINESS_USERS_HEADER}
           />
+        )}
+        {isSortModal && (
+          <CustomSortModal top={160} padding="12px 0px 12px 0px">
+            <SortModalUI isSortUI />
+          </CustomSortModal>
+        )}
+        {isFilterModal && (
+          <CustomSortModal top={160} padding="12px 0px 12px 0px" title="Filter">
+            <SortModalUI
+              isFilterUI={tabValue === 'business' ? false : true}
+              isBusinessFilter={tabValue === 'business' ? true : false}
+            />
+          </CustomSortModal>
         )}
       </Box>
     </Layout>
