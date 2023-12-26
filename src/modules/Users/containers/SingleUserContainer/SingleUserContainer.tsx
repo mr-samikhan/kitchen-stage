@@ -1,6 +1,6 @@
 import React from 'react'
 import useUser from '../../hooks/useUser'
-import { Box, Grid } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 import { FormProvider } from 'react-hook-form'
 import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
@@ -92,32 +92,35 @@ export const SingleUserContainer = () => {
 
   return (
     <Layout
-      bgcolor="#F5F5F5"
+      isFooter
+      isExportCSV
       isDeleteBtn
       isNavigation
+      bgcolor="#F5F5F5"
       onGoBack={() => navigate(-1)}
       navigationTitle={state.name || state.businessName}
       isSuspendBtn={isUserSuspened ? 'Unsuspend' : 'Suspend'}
     >
-      <Box
-        display="flex"
-        minHeight="80vh"
-        flexDirection="column"
-        justifyContent="space-between"
-      >
-        <Grid container alignItems="center" flexDirection="column" mt={4}>
-          <Grid item md={6} xs={12}>
-            <MuiCustomTab
-              className="custom-tabs"
-              labels={USER_TAB_OPTIONS}
-              width={{ xs: '100px', md: '188px' }}
-              isBusinessType={state.type ? true : false}
-            />
+      <Container maxWidth="xl">
+        <Box
+          display="flex"
+          minHeight="80vh"
+          flexDirection="column"
+          justifyContent="space-between"
+        >
+          <Grid container alignItems="center" flexDirection="column" mt={4}>
+            <Grid item md={6} xs={12}>
+              <MuiCustomTab
+                className="custom-tabs"
+                labels={USER_TAB_OPTIONS}
+                width={{ xs: '100px', md: '188px' }}
+                isBusinessType={state.type ? true : false}
+              />
+            </Grid>
+            <RenderUserSteps />
           </Grid>
-          <RenderUserSteps />
-        </Grid>
-        <TableFooter isExportCSV />
-      </Box>
+        </Box>
+      </Container>
       {isUserUpdateModal && (
         <CustomDialog
           isOkButton

@@ -204,7 +204,6 @@ export const PERSONAL_USERS_DATA = [
     city: 'New York',
     state: 'NY, 123456',
   },
-
   {
     name: 'Emma Gosling',
     email: 'sam@sam.com',
@@ -230,6 +229,7 @@ export const PERSONAL_USERS_DATA = [
     state: 'NY, 123456',
   },
 ]
+
 export const PERSONAL_USERS_HEADER = [
   'NAME',
   'EMAIL',

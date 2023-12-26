@@ -24,8 +24,8 @@ export const UserUploadedMedia = () => {
               key={index}
               variant="rounded"
               sx={{
-                width: { md: 240, xs: 120 },
-                height: { md: 240, xs: 120 },
+                width: { md: 180, xs: 120 },
+                height: { md: 180, xs: 120 },
               }}
             />
           ))}

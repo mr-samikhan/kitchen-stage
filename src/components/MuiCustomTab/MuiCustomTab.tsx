@@ -43,6 +43,7 @@ export const MuiCustomTab = (props: MuiCustomTabProps) => {
     <React.Fragment>
       <Tabs
         value={tabValue}
+        scrollButtons="auto"
         onChange={handleChange}
         className={className || 'custom-tab'}
         // textColor={COLORS.white}

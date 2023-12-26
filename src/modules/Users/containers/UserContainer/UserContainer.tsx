@@ -30,7 +30,7 @@ export const UserContainer = () => {
   }
 
   return (
-    <Layout isTitle isTabs isSearchInput>
+    <Layout isTitle isTabs isSearchInput isExportCSV isPaginationIcons isFooter>
       <Box my={3} mt={2}>
         <Grid container>
           <Grid item md={11} xs={12} textAlign="right">
@@ -46,7 +46,6 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
-            isPagination
             isActionButton
             isBgColor="white"
             data={PERSONAL_USERS_DATA}
@@ -56,7 +55,6 @@ export const UserContainer = () => {
         )}
         {!isSearchFocus && tabValue === 'business' && (
           <CustomList
-            isPagination
             isActionButton
             iconPosition="flex-end"
             data={BUSINESS_USERS_DATA}

@@ -10,7 +10,6 @@ import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
 interface CustomListProps {
   data?: any[]
   headerData?: string[]
-  isPagination?: boolean
   isActionButton?: boolean
   isActionButtons?: boolean
   isBgColor?: string | undefined
@@ -25,7 +24,6 @@ export const CustomList = (props: CustomListProps) => {
     onDelete,
     isBgColor,
     headerData,
-    isPagination,
     onNavigation,
     iconPosition,
     isActionButton,
@@ -54,7 +52,7 @@ export const CustomList = (props: CustomListProps) => {
         ))}
         <Grid item xs={3}></Grid>
       </Grid>
-      <Grid item md={12} xs={12} my={1} minHeight={'50vh'}>
+      <Grid item md={12} xs={12} my={1}>
         {data?.slice(0, 8).map((user, index) => (
           <>
             <Grid
@@ -63,7 +61,7 @@ export const CustomList = (props: CustomListProps) => {
               px={3}
               xs={12}
               key={index}
-              height={48}
+              height={40}
               display="flex"
               alignItems="center"
               borderRadius="8px"
@@ -173,7 +171,6 @@ export const CustomList = (props: CustomListProps) => {
           </>
         ))}
       </Grid>
-      {isPagination && <TableFooter isExportCSV isPaginationIcons />}
     </Grid>
   )
 }
