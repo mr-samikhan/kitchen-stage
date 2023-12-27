@@ -19,6 +19,7 @@ const Colors = {
   input: {
     main: '#808080',
     light: '#9D9DAA',
+    dark: '#F0F0F0',
   },
   error: {
     main: '#FF5655',

@@ -14,6 +14,7 @@ import {
   OPEN_ADMIN_MODAL,
   OPEN_SORT_MODAL,
   SET_DELETE_MODAL,
+  SET_LOGOUT_MODAL,
   SET_SUSPEND_MODAL,
   SET_UNSUSPEND_USER,
 } from '@cookup/redux'
@@ -22,6 +23,7 @@ interface HeaderProps {
   isTabs?: boolean
   isSort?: boolean
   isDeleteBtn?: boolean
+  isLogoutBtn?: 'Logout'
   onGoBack?: () => void
   isNavigation?: boolean
   isSearchInput?: boolean
@@ -40,6 +42,7 @@ export const Header = (props: HeaderProps) => {
     onGoBack,
     isDeleteBtn,
     isNavigation,
+    isLogoutBtn,
     isSuspendBtn,
     isSearchInput,
     toggleSidebar,
@@ -143,6 +146,12 @@ export const Header = (props: HeaderProps) => {
                         : SET_SUSPEND_MODAL(true)
                     )
                   }
+                />
+              )}
+              {isLogoutBtn && (
+                <MuiSmallButton
+                  btnText={isLogoutBtn}
+                  onClick={() => dispatch(SET_LOGOUT_MODAL(true))}
                 />
               )}
               {isDeleteBtn && (

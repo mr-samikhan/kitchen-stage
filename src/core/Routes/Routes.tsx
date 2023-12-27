@@ -12,6 +12,7 @@ import {
   Bookings,
   Dashboard,
   SingleUser,
+  ManageSettings,
   CustomerSupport,
 } from '@cookup/screens'
 
@@ -38,6 +39,7 @@ const Routes = () => {
         <Route path={ROUTES.ROOT} element={<Dashboard />} />
         <Route path={ROUTES.BOOKINGS} element={<Bookings />} />
         <Route path={ROUTES.ANALYTICS} element={<Dashboard />} />
+        <Route path={ROUTES.SETTINGS} element={<ManageSettings />} />
         <Route path={ROUTES.CUSTOMER_SUPPORT} element={<CustomerSupport />} />
       </ReactRoutes>
       {/* </ProtectedRoute> */}

@@ -1,5 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+interface ITabs {
+  tabValue:
+    | 'email'
+    | 'password'
+    | 'personal'
+    | 'business'
+    | 'account-info'
+    | 'profile-info'
+    | 'uploaded-media'
+    | 'ads'
+}
+
 interface ISortBy {
   all?: string
   name?: string
@@ -17,13 +29,7 @@ interface IFilterBy {
 }
 
 interface IUserSlice {
-  tabValue:
-    | 'personal'
-    | 'business'
-    | 'account-info'
-    | 'profile-info'
-    | 'uploaded-media'
-    | 'ads'
+  tabValue: ITabs['tabValue']
   isPasswordSent?: boolean
   isUserUpdateModal?: boolean
   sortBy?: ISortBy
@@ -54,17 +60,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    SET_TAB_VALUE: (
-      state,
-      action: PayloadAction<
-        | 'personal'
-        | 'business'
-        | 'account-info'
-        | 'profile-info'
-        | 'uploaded-media'
-        | 'ads'
-      >
-    ) => {
+    SET_TAB_VALUE: (state, action: PayloadAction<ITabs['tabValue']>) => {
       state.tabValue = action.payload
     },
     USER_RESET_PASSWORD: (state, action: PayloadAction<boolean>) => {
