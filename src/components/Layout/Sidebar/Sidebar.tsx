@@ -1,8 +1,8 @@
 import React from 'react'
-import { COLORS } from '@cookup/constant'
 import { useBreakpints } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
+import { COLORS, ROUTES } from '@cookup/constant'
 import { Avatar, Box, IconButton } from '@mui/material'
 
 interface SidebarProps {
@@ -70,7 +70,7 @@ export const Sidebar = (props: SidebarProps) => {
           })}
         </Box>
         <Box>
-          <IconButton>
+          <IconButton onClick={() => navigate(ROUTES.SETTINGS)}>
             <Avatar sx={{ bgcolor: COLORS.wine.main, fontWeight: 700 }}>
               SK
             </Avatar>

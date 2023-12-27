@@ -10,6 +10,7 @@ const Routes = {
   DASHBOARD: '/dashboard',
   ANALYTICS: '/analytics',
   SINGLE_USER: '/users/:id',
+  SETTINGS: '/account-settings',
   RESET_PASSWORD: '/reset_password',
   FORGOT_PASSWORD: '/forgot_password',
   CUSTOMER_SUPPORT: '/customersupport',
