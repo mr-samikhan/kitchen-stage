@@ -119,7 +119,9 @@ export const Layout = (props: LayoutProps) => {
           <main
             style={{
               overflowY: 'auto',
-              maxHeight: mainHeight || `calc(100vh - ${120 * 2}px )`,
+              maxHeight:
+                mainHeight ||
+                `calc(100vh - ${isFooter ? 120 * 2 : 120 * 1}px )`,
             }}
           >
             {children}

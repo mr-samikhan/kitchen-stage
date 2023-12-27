@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form'
 import { Container, Grid } from '@mui/material'
 import useSettings from '../../hooks/useSettings'
 import { useDispatch, useSelector } from 'react-redux'
-import { EmailUI } from '../../components/EmailUI/EmailUI'
+import { SettingsTabsUI } from '../../components/components'
 import { ROUTES, SETTINGS_TAB_ARRAY } from '@cookup/constant'
 import { SET_LOGOUT_MODAL, SET_TAB_VALUE } from '@cookup/redux'
 import { CustomDialog, Form, Layout, MuiCustomTab } from '@cookup/components'
@@ -13,10 +13,12 @@ export const SettingsContainer = () => {
   const dispatch = useDispatch()
   const naviagte = useNavigate()
 
-  const { isLogoutModal } = useSelector((state: any) => state.settings)
   const { tabValue } = useSelector((state: any) => state.user)
+  const { isLogoutModal } = useSelector((state: any) => state.settings)
 
-  const { methods, onSubmit, isValid } = useSettings()
+  const { methods, onSubmit, isValid } = useSettings({
+    isPasswordScreen: tabValue === 'password',
+  })
 
   const onLogout = () => {
     dispatch(SET_LOGOUT_MODAL(false))
@@ -26,17 +28,6 @@ export const SettingsContainer = () => {
   useEffect(() => {
     dispatch(SET_TAB_VALUE('email'))
   }, [])
-
-  const RenderSettingsSteps = () => {
-    switch (tabValue) {
-      case 'email':
-        return <EmailUI isValid={isValid} />
-      case 'password':
-        return <>Password</>
-      default:
-        break
-    }
-  }
 
   return (
     <Layout title="Personal Settings" isLogoutBtn="Logout">
@@ -55,7 +46,7 @@ export const SettingsContainer = () => {
                 <Grid item xs={12}>
                   <MuiCustomTab labels={SETTINGS_TAB_ARRAY} />
                 </Grid>
-                <RenderSettingsSteps />
+                <SettingsTabsUI tabValue={tabValue} isValid={isValid} />
               </Grid>
             </Grid>
           </Form>

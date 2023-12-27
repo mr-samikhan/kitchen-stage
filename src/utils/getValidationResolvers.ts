@@ -95,3 +95,28 @@ export const SuspendUserResolver: any | Resolver<any> = yupResolver(
     reason: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
   })
 )
+
+export const SettingsFormResolver: any | Resolver<IResetPasswordFormResolver> =
+  yupResolver(
+    yup.object().shape({
+      password: yup
+        .string()
+        .matches(
+          VALIDATION_PATTERNS.PASSWORD,
+          VALIDATION_MESSAGES.INVALID_PASSWORD
+        )
+        .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+      new_password: yup
+        .string()
+        .matches(
+          VALIDATION_PATTERNS.PASSWORD,
+          VALIDATION_MESSAGES.INVALID_PASSWORD
+        )
+        .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('new_password')], VALIDATION_MESSAGES.PASSWORD_MISMATCH)
+        .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    })
+  )
