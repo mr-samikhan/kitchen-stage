@@ -8,6 +8,7 @@ import { TableFooter } from '@cookup/components'
 import { COLORS, SIDEBAR_ARRAY } from '@cookup/constant'
 
 interface LayoutProps {
+  title?: string
   bgcolor?: string
   isTabs?: boolean
   isSort?: boolean
@@ -15,6 +16,7 @@ interface LayoutProps {
   isFooter?: boolean
   mainHeight?: string
   isExportCSV?: boolean
+  isLogoutBtn?: 'Logout'
   onGoBack?: () => void
   isDeleteBtn?: boolean
   isNavigation?: boolean
@@ -28,6 +30,7 @@ interface LayoutProps {
 
 export const Layout = (props: LayoutProps) => {
   const {
+    title,
     isTabs,
     isSort,
     bgcolor,
@@ -37,6 +40,7 @@ export const Layout = (props: LayoutProps) => {
     isFooter,
     mainHeight,
     isExportCSV,
+    isLogoutBtn,
     isDeleteBtn,
     isSuspendBtn,
     isNavigation,
@@ -64,6 +68,8 @@ export const Layout = (props: LayoutProps) => {
   })
 
   const handleSideBar = () => setIsSideBar && setIsSideBar(!isSideBar)
+
+  const { desktopMode } = useBreakpints()
 
   return (
     <React.Fragment>
@@ -101,13 +107,14 @@ export const Layout = (props: LayoutProps) => {
             isTabs={isTabs}
             onGoBack={onGoBack}
             isDeleteBtn={isDeleteBtn}
+            isLogoutBtn={isLogoutBtn}
             isSuspendBtn={isSuspendBtn}
             isNavigation={isNavigation}
             isSearchInput={isSearchInput}
             toggleSidebar={handleSideBar}
             navigationTitle={navigationTitle}
             isAddNewAdminBtn={isAddNewAdminBtn}
-            title={isTitle ? SELECTED_TITLE && SELECTED_TITLE : null}
+            title={isTitle ? SELECTED_TITLE && SELECTED_TITLE : title}
           />
           <main
             style={{

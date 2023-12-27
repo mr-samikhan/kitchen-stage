@@ -1,7 +1,82 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { FormProvider } from 'react-hook-form'
+import { Container, Grid } from '@mui/material'
+import useSettings from '../../hooks/useSettings'
+import { useDispatch, useSelector } from 'react-redux'
+import { EmailUI } from '../../components/EmailUI/EmailUI'
+import { ROUTES, SETTINGS_TAB_ARRAY } from '@cookup/constant'
+import { SET_LOGOUT_MODAL, SET_TAB_VALUE } from '@cookup/redux'
+import { CustomDialog, Form, Layout, MuiCustomTab } from '@cookup/components'
 
 export const SettingsContainer = () => {
-  return <div>SettingsContainer</div>
+  const dispatch = useDispatch()
+  const naviagte = useNavigate()
+
+  const { isLogoutModal } = useSelector((state: any) => state.settings)
+  const { tabValue } = useSelector((state: any) => state.user)
+
+  const { methods, onSubmit, isValid } = useSettings()
+
+  const onLogout = () => {
+    dispatch(SET_LOGOUT_MODAL(false))
+    naviagte(ROUTES.LOGIN_ACCOUNT)
+  }
+
+  useEffect(() => {
+    dispatch(SET_TAB_VALUE('email'))
+  }, [])
+
+  const RenderSettingsSteps = () => {
+    switch (tabValue) {
+      case 'email':
+        return <EmailUI isValid={isValid} />
+      case 'password':
+        return <>Password</>
+      default:
+        break
+    }
+  }
+
+  return (
+    <Layout title="Personal Settings" isLogoutBtn="Logout">
+      <Container maxWidth="xl">
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(onSubmit)}>
+            <Grid container>
+              <Grid
+                item
+                md={11}
+                xs={12}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+              >
+                <Grid item xs={12}>
+                  <MuiCustomTab labels={SETTINGS_TAB_ARRAY} />
+                </Grid>
+                <RenderSettingsSteps />
+              </Grid>
+            </Grid>
+          </Form>
+        </FormProvider>
+        {isLogoutModal && (
+          <CustomDialog
+            isOkButton
+            title="Log Out"
+            isCancleButton
+            onConfirm={onLogout}
+            cancelButtonText="No"
+            isOpen={isLogoutModal}
+            okButtonText="Yes, I confirm"
+            icon="/assets/icons/warn-icon.svg"
+            onClose={() => dispatch(SET_LOGOUT_MODAL(false))}
+            text="Are you sure you want to logout Cook Up Admin Panel? You will need to re-login to enter again."
+          />
+        )}
+      </Container>
+    </Layout>
+  )
 }
 
 export default SettingsContainer

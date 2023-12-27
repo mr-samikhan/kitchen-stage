@@ -99,6 +99,26 @@ export const MuiTextField: Components['MuiTextField'] = {
           border: 'none',
         },
       },
+      '&.settings-input': {
+        '& .MuiOutlinedInput-root': {
+          fontSize: '16px',
+          fontWeight: 600,
+          borderRadius: '8px',
+          fontFamily: 'Poppins',
+          background: '#F6F6F6',
+          border: '1px solid #EDEDED',
+          '&.Mui-focused': {
+            color: COLORS.primary.main,
+          },
+          '&.Mui-error': {
+            color: COLORS.error.main,
+            borderColor: COLORS.error.main,
+          },
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: 'none',
+        },
+      },
     },
   },
 }

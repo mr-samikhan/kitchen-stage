@@ -46,6 +46,7 @@ export const MuiCustomTab = (props: MuiCustomTabProps) => {
         scrollButtons="auto"
         onChange={handleChange}
         className={className || 'custom-tab'}
+
         // textColor={COLORS.white}
       >
         {ARRAY_CHECK.slice(

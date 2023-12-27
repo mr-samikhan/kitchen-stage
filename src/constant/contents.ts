@@ -469,3 +469,11 @@ export const BUSINESS_TYPES_ARRAY = [
   'Cafe',
   'All',
 ]
+
+export const SETTINGS_TAB_ARRAY = [
+  { label: 'Email', value: 'email' },
+  {
+    label: 'Password',
+    value: 'password',
+  },
+]
