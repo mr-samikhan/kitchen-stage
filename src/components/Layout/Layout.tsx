@@ -10,6 +10,7 @@ import { COLORS, SIDEBAR_ARRAY } from '@cookup/constant'
 interface LayoutProps {
   title?: string
   bgcolor?: string
+  isFilter?: boolean
   isTabs?: boolean
   isSort?: boolean
   isTitle?: boolean
@@ -37,6 +38,7 @@ export const Layout = (props: LayoutProps) => {
     isTitle,
     onGoBack,
     children,
+    isFilter,
     isFooter,
     mainHeight,
     isExportCSV,
@@ -105,6 +107,7 @@ export const Layout = (props: LayoutProps) => {
           <Header
             isSort={isSort}
             isTabs={isTabs}
+            isFilter={isFilter}
             onGoBack={onGoBack}
             isDeleteBtn={isDeleteBtn}
             isLogoutBtn={isLogoutBtn}
