@@ -1,5 +1,5 @@
 import React from 'react'
-import { Reports } from '../components'
+import { Reports, SuspendedUsers } from '../components'
 
 interface TabsUIProps {
   tabValue?: string
@@ -11,9 +11,9 @@ export const TabsUI = (props: TabsUIProps) => {
     case 'reports':
       return <Reports />
     case 'suspended-users':
-      return <>Suspended Users</>
+      return <SuspendedUsers />
     case 'resolved':
-      return <>Resolved</>
+      return <Reports />
 
     default:
       break

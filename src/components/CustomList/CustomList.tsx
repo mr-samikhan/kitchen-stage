@@ -9,6 +9,7 @@ import { Box, Grid, IconButton, Typography } from '@mui/material'
 interface CustomListProps {
   data?: any[]
   icon?: string
+  height?: number
   headerData?: string[]
   isActionButton?: boolean
   isActionButtons?: boolean
@@ -22,6 +23,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
   const {
     data,
     icon,
+    height,
     onDelete,
     isBgColor,
     headerData,
@@ -53,7 +55,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
         ))}
         <Grid item xs={3}></Grid>
       </Grid>
-      <Grid item md={12} xs={12} my={1}>
+      <Grid item md={12} xs={12} my={1} height={height}>
         {data?.slice(0, 8).map((user, index) => (
           <React.Fragment key={index}>
             <Grid

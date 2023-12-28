@@ -14,7 +14,14 @@ export const SupportContainer = () => {
     dispatch(SET_TAB_VALUE('reports'))
   }, [])
   return (
-    <Layout isTitle isSort isFilter isExportCSV isPaginationIcons isFooter>
+    <Layout
+      isTitle
+      isSort
+      isFilter
+      isFooter
+      isExportCSV
+      isPaginationIcons={tabValue !== 'suspended-users'}
+    >
       <Grid container>
         <Grid item xs={12} display="flex" justifyContent="center">
           <MuiCustomTab

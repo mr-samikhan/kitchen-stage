@@ -1,76 +1,14 @@
-import { CustomList } from '@cookup/components'
 import React from 'react'
+import { CustomList } from '@cookup/components'
+import { SUPPORT_REPORT_DATA, SUPPORT_REPORT_HEADER } from '@cookup/constant'
 
 export const Reports = () => {
-  let ARRAY = [
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-    {
-      requester: 'Requester',
-      supportReason: 'Support Reason',
-      requestedDate: 'Request Date',
-      reportedUserName: 'tipsydude(1)',
-      viewMessage: 'View Message',
-    },
-  ]
   return (
     <React.Fragment>
       <CustomList
         isActionButton
-        headerData={[
-          'REQUESTER',
-          'SUPPORT REASON',
-          'REQUESTED DATE',
-          'REPORTED USERNAME',
-        ]}
-        data={ARRAY}
+        data={SUPPORT_REPORT_DATA}
+        headerData={SUPPORT_REPORT_HEADER}
         onNavigation={() => alert('hello')}
         icon="/assets/icons/three-dots.svg"
       />
