@@ -22,6 +22,7 @@ import {
 interface HeaderProps {
   isTabs?: boolean
   isSort?: boolean
+  isFilter?: boolean
   isDeleteBtn?: boolean
   isLogoutBtn?: 'Logout'
   onGoBack?: () => void
@@ -40,6 +41,7 @@ export const Header = (props: HeaderProps) => {
     isTabs,
     isSort,
     onGoBack,
+    isFilter,
     isDeleteBtn,
     isNavigation,
     isLogoutBtn,
@@ -116,9 +118,16 @@ export const Header = (props: HeaderProps) => {
               md: 4,
             }}
           >
-            <Box display="flex" width="100%" justifyContent="center">
+            <Box display="flex" width="100%" justifyContent="center" gap={2}>
               {isSort && (
                 <CustomFilterButton
+                  onClick={() => dispatch(OPEN_SORT_MODAL())}
+                />
+              )}
+              {isFilter && (
+                <CustomFilterButton
+                  placeholder="Filter"
+                  icon="/assets/icons/filter_alt.svg"
                   onClick={() => dispatch(OPEN_SORT_MODAL())}
                 />
               )}

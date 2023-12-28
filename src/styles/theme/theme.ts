@@ -140,6 +140,22 @@ let theme = createTheme({
               background: COLORS.secondary.light,
             },
           },
+          '&.support-tabs': {
+            padding: 5,
+            width: '540px',
+            borderRadius: '57px',
+            color: COLORS.primary.main,
+            background: COLORS.grey.dark,
+            '& .Mui-selected': {
+              margin: 5,
+              height: 55,
+              fontSize: 16,
+              fontWeight: 600,
+              borderRadius: '50px',
+              color: COLORS.white,
+              background: COLORS.secondary.light,
+            },
+          },
         },
         indicator: {
           display: 'none',

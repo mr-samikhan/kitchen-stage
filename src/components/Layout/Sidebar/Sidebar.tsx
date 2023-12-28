@@ -1,9 +1,9 @@
 import React from 'react'
 import { useBreakpints } from '@cookup/hooks'
-import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import { COLORS, ROUTES } from '@cookup/constant'
 import { Avatar, Box, IconButton } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 interface SidebarProps {
   sideBarOptions?: any
@@ -12,6 +12,8 @@ interface SidebarProps {
 
 export const Sidebar = (props: SidebarProps) => {
   const { sideBarOptions, toggleSidebar } = props || {}
+
+  const { pathname } = useLocation()
 
   const navigate = useNavigate()
   const { mobileMode } = useBreakpints()
@@ -71,7 +73,15 @@ export const Sidebar = (props: SidebarProps) => {
         </Box>
         <Box>
           <IconButton onClick={() => navigate(ROUTES.SETTINGS)}>
-            <Avatar sx={{ bgcolor: COLORS.wine.main, fontWeight: 700 }}>
+            <Avatar
+              sx={{
+                bgcolor:
+                  pathname === ROUTES.SETTINGS
+                    ? COLORS.secondary.light
+                    : COLORS.wine.main,
+                fontWeight: 700,
+              }}
+            >
               SK
             </Avatar>
           </IconButton>

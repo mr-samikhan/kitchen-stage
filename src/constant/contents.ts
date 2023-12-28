@@ -477,3 +477,108 @@ export const SETTINGS_TAB_ARRAY = [
     value: 'password',
   },
 ]
+
+export const SUPPORT_REPORT_HEADER = [
+  'REQUESTER',
+  'SUPPORT REASON',
+  'REQUESTED DATE',
+  'REPORTED USERNAME',
+]
+
+export const SUPPORT_REPORT_DATA = [
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+  {
+    requester: 'Requester',
+    supportReason: 'Support Reason',
+    requestedDate: 'Request Date',
+    reportedUserName: 'tipsydude(1)',
+    viewMessage: 'View Message',
+  },
+]
+
+export const SUPPORT_SUSPENDED_HEADER = [
+  'NAME',
+  'EMAIL',
+  'EXPERIENCE',
+  'CITY',
+  'STATE, ZIPCODE',
+]
+
+export const SUPPORT_SUSPENDED_DATA = [
+  {
+    name: 'Lance Stroll',
+    email: 'lance.s@gmail.com',
+    experience: 'Novice',
+    city: 'Newport',
+    state: 'California,92627',
+  },
+  {
+    name: 'Lewis Hamilton',
+    email: 'lewis.h@gmail.com',
+    experience: 'Intermediate',
+    city: 'Costa Mesa',
+    state: 'California,92627',
+  },
+  {
+    name: 'Lance Stroll',
+    email: 'lance.s@gmail.com',
+    experience: 'Novice',
+    city: 'Newport',
+    state: 'California,92627',
+  },
+  {
+    name: 'Lewis Hamilton',
+    email: 'lewis.h@gmail.com',
+    experience: 'Intermediate',
+    city: 'Costa Mesa',
+    state: 'California,92627',
+  },
+]

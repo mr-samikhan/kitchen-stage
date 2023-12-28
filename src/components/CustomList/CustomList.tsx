@@ -2,13 +2,14 @@ import React from 'react'
 import { COLORS } from '@cookup/constant'
 import { useDispatch } from 'react-redux'
 import { useBreakpints } from '@cookup/hooks'
-import { TableFooter } from '@cookup/components'
 import { ChevronRight } from '@mui/icons-material'
 import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
+import { Box, Grid, IconButton, Typography } from '@mui/material'
 
 interface CustomListProps {
   data?: any[]
+  icon?: string
+  height?: number
   headerData?: string[]
   isActionButton?: boolean
   isActionButtons?: boolean
@@ -18,9 +19,11 @@ interface CustomListProps {
   iconPosition?: 'flex-start' | 'flex-end' | 'center'
 }
 
-export const CustomList = (props: CustomListProps) => {
+const CustomList: React.FC<CustomListProps> = (props) => {
   const {
     data,
+    icon,
+    height,
     onDelete,
     isBgColor,
     headerData,
@@ -52,9 +55,9 @@ export const CustomList = (props: CustomListProps) => {
         ))}
         <Grid item xs={3}></Grid>
       </Grid>
-      <Grid item md={12} xs={12} my={1}>
+      <Grid item md={12} xs={12} my={1} height={height}>
         {data?.slice(0, 8).map((user, index) => (
-          <>
+          <React.Fragment key={index}>
             <Grid
               item
               mt={1}
@@ -67,74 +70,16 @@ export const CustomList = (props: CustomListProps) => {
               borderRadius="8px"
               bgcolor={isBgColor || COLORS.grey.dark}
             >
-              {user.name && (
-                <Grid item xs={3}>
+              {Object.keys(user).map((key) => (
+                <Grid item xs={3} key={key}>
                   <Typography
                     variant={mobileMode ? 'body1' : 'subtitle1'}
                     color="secondary"
                   >
-                    {user.name}
+                    {user[key]}
                   </Typography>
                 </Grid>
-              )}
-              {user.businessName && (
-                <Grid item xs={3}>
-                  <Typography
-                    variant={mobileMode ? 'body1' : 'subtitle1'}
-                    color="secondary"
-                  >
-                    {user.businessName}
-                  </Typography>
-                </Grid>
-              )}
-              <Grid item xs={3}>
-                <Typography
-                  variant={mobileMode ? 'body1' : 'subtitle1'}
-                  color="secondary"
-                >
-                  {user.email}
-                </Typography>
-              </Grid>
-              {user.type && (
-                <Grid item xs={3}>
-                  <Typography
-                    variant={mobileMode ? 'body1' : 'subtitle1'}
-                    color="secondary"
-                  >
-                    {user.type}
-                  </Typography>
-                </Grid>
-              )}
-              {user.role && (
-                <Grid item xs={3}>
-                  <Typography
-                    variant={mobileMode ? 'body1' : 'subtitle1'}
-                    color="secondary"
-                  >
-                    {user.role}
-                  </Typography>
-                </Grid>
-              )}
-              {user.state && (
-                <Grid item xs={3}>
-                  <Typography
-                    variant={mobileMode ? 'body1' : 'subtitle1'}
-                    color="secondary"
-                  >
-                    {user.city}
-                  </Typography>
-                </Grid>
-              )}
-              {user.state && (
-                <Grid item xs={3}>
-                  <Typography
-                    variant={mobileMode ? 'body1' : 'subtitle1'}
-                    color="secondary"
-                  >
-                    {user.city}
-                  </Typography>
-                </Grid>
-              )}
+              ))}
               <Grid item xs={3}>
                 <Box
                   display="flex"
@@ -158,17 +103,31 @@ export const CustomList = (props: CustomListProps) => {
                       </IconButton>
                     </>
                   )}
+                  {user.viewMessage && (
+                    <Grid item xs={12}>
+                      <Typography
+                        color="secondary"
+                        variant={mobileMode ? 'body1' : 'subtitle1'}
+                      >
+                        {user.viewMessage}
+                      </Typography>
+                    </Grid>
+                  )}
                   {isActionButton && (
                     <IconButton
                       onClick={() => onNavigation && onNavigation(user)}
                     >
-                      <ChevronRight color="error" />
+                      {icon ? (
+                        <img src={icon} alt="" />
+                      ) : (
+                        <ChevronRight color="error" />
+                      )}
                     </IconButton>
                   )}
                 </Box>
               </Grid>
             </Grid>
-          </>
+          </React.Fragment>
         ))}
       </Grid>
     </Grid>

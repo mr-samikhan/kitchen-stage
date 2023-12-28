@@ -10,6 +10,9 @@ interface ITabs {
     | 'profile-info'
     | 'uploaded-media'
     | 'ads'
+    | 'reports'
+    | 'suspended-users'
+    | 'resolved'
 }
 
 interface ISortBy {
