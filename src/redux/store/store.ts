@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import {
+  userSlice,
   adminSlice,
   headerSlice,
-  userSlice,
+  supportSlice,
   settingsSlice,
 } from '@cookup/redux'
 
@@ -11,6 +12,7 @@ const store = configureStore({
     user: userSlice,
     admin: adminSlice,
     header: headerSlice,
+    support: supportSlice,
     settings: settingsSlice,
   },
 })

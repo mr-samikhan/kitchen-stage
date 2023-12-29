@@ -491,56 +491,56 @@ export const SUPPORT_REPORT_DATA = [
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
   {
     requester: 'Requester',
     supportReason: 'Support Reason',
     requestedDate: 'Request Date',
     reportedUserName: 'tipsydude(1)',
-    viewMessage: 'View Message',
+    // viewMessage: 'View Message',
   },
 ]
 
@@ -581,4 +581,10 @@ export const SUPPORT_SUSPENDED_DATA = [
     city: 'Costa Mesa',
     state: 'California,92627',
   },
+]
+
+export const SUPPORT_TABS = [
+  { label: 'Reports', value: 'reports' },
+  { label: 'Suspended Users', value: 'suspended-users' },
+  { label: 'Resolved', value: 'resolved' },
 ]

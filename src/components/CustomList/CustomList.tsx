@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { COLORS } from '@cookup/constant'
 import { useDispatch } from 'react-redux'
+import { ToolTip } from '@cookup/modules'
 import { useBreakpints } from '@cookup/hooks'
 import { ChevronRight } from '@mui/icons-material'
 import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
@@ -11,6 +12,7 @@ interface CustomListProps {
   icon?: string
   height?: number
   headerData?: string[]
+  isViewMessage?: boolean
   isActionButton?: boolean
   isActionButtons?: boolean
   isBgColor?: string | undefined
@@ -28,6 +30,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
     isBgColor,
     headerData,
     onNavigation,
+    isViewMessage,
     iconPosition,
     isActionButton,
     isActionButtons,
@@ -35,6 +38,8 @@ const CustomList: React.FC<CustomListProps> = (props) => {
 
   const dispatch = useDispatch()
   const { mobileMode } = useBreakpints()
+
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   return (
     <Grid
@@ -83,6 +88,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
               <Grid item xs={3}>
                 <Box
                   display="flex"
+                  position="relative"
                   justifyContent={
                     isActionButton
                       ? iconPosition || 'flex-start'
@@ -103,19 +109,22 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                       </IconButton>
                     </>
                   )}
-                  {user.viewMessage && (
+                  {isViewMessage && (
                     <Grid item xs={12}>
                       <Typography
                         color="secondary"
                         variant={mobileMode ? 'body1' : 'subtitle1'}
                       >
-                        {user.viewMessage}
+                        View Message
                       </Typography>
                     </Grid>
                   )}
                   {isActionButton && (
                     <IconButton
-                      onClick={() => onNavigation && onNavigation(user)}
+                      onClick={() => {
+                        onNavigation && onNavigation(user)
+                        setSelectedIndex(index)
+                      }}
                     >
                       {icon ? (
                         <img src={icon} alt="" />
@@ -123,6 +132,13 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                         <ChevronRight color="error" />
                       )}
                     </IconButton>
+                  )}
+                  {index == selectedIndex && (
+                    <ToolTip
+                      id="tooltip"
+                      selectedIndex={selectedIndex}
+                      setSelectedIndex={setSelectedIndex}
+                    />
                   )}
                 </Box>
               </Grid>

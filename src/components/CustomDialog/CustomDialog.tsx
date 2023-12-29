@@ -20,6 +20,7 @@ interface CustomDialogProps {
   children?: ReactNode
   isOkButton?: boolean
   okButtonStyle?: {}
+  textPosition?: any
   okButtonText?: string
   onConfirm?: () => void
   cancelButtonText?: string
@@ -40,6 +41,7 @@ export const CustomDialog = (props: CustomDialogProps) => {
     onCancel,
     onConfirm,
     isOkButton,
+    textPosition,
     okButtonText,
     titleVariant,
     okButtonStyle,
@@ -73,7 +75,10 @@ export const CustomDialog = (props: CustomDialogProps) => {
         <Typography variant="subtitle1" color="grey.50">
           {subTitle}
         </Typography>
-        <Typography variant="subtitle1" textAlign="justify">
+        <Typography
+          variant="subtitle1"
+          textAlign={textPosition ? textPosition : 'justify'}
+        >
           {text}
         </Typography>
         <DialogContent>{children}</DialogContent>
