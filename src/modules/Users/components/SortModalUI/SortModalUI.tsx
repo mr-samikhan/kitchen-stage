@@ -16,11 +16,12 @@ import {
 interface SortModalUIProps {
   isSortUI?: boolean
   isFilterUI?: boolean
+  isAccountTypes?: boolean
   isBusinessFilter?: boolean
 }
 
 export const SortModalUI = (props: SortModalUIProps) => {
-  const { isSortUI, isFilterUI, isBusinessFilter } = props || {}
+  const { isSortUI, isFilterUI, isBusinessFilter, isAccountTypes } = props || {}
 
   const dispatch = useDispatch()
 
@@ -129,6 +130,42 @@ export const SortModalUI = (props: SortModalUIProps) => {
             <Divider />
           </Box>
         </React.Fragment>
+      )}
+
+      {isAccountTypes && (
+        <Grid container>
+          <Grid item md={11}>
+            <Box mt={2} px={2} display="flex" alignItems="center">
+              <Typography variant="subtitle2" color="primary">
+                Account Type
+              </Typography>
+            </Box>
+            <Box
+              mt={2}
+              px={2}
+              gap={3}
+              display="flex"
+              flexWrap="wrap"
+              alignItems="center"
+            >
+              {['Personal', 'Business'].map((item) => (
+                <Chip
+                  key={item}
+                  label={item}
+                  onClick={() => onExpFilter(item)}
+                  className={
+                    filterBy.experience.includes(item)
+                      ? 'selected'
+                      : 'custom-chip'
+                  }
+                />
+              ))}
+            </Box>
+            <Grid item md={6} mt={2}>
+              <Divider />
+            </Grid>
+          </Grid>
+        </Grid>
       )}
 
       {isFilterUI && (

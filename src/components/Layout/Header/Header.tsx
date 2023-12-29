@@ -14,6 +14,7 @@ import {
   OPEN_ADMIN_MODAL,
   OPEN_SORT_MODAL,
   SET_DELETE_MODAL,
+  SET_FILTER_MODAL,
   SET_LOGOUT_MODAL,
   SET_SUSPEND_MODAL,
   SET_UNSUSPEND_USER,
@@ -128,7 +129,7 @@ export const Header = (props: HeaderProps) => {
                 <CustomFilterButton
                   placeholder="Filter"
                   icon="/assets/icons/filter_alt.svg"
-                  onClick={() => dispatch(OPEN_SORT_MODAL())}
+                  onClick={() => dispatch(SET_FILTER_MODAL(true))}
                 />
               )}
               {isAddNewAdminBtn && (

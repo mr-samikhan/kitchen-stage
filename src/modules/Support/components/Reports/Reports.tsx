@@ -6,10 +6,10 @@ export const Reports = () => {
   return (
     <React.Fragment>
       <CustomList
+        isViewMessage
         isActionButton
         data={SUPPORT_REPORT_DATA}
         headerData={SUPPORT_REPORT_HEADER}
-        onNavigation={() => alert('hello')}
         icon="/assets/icons/three-dots.svg"
       />
     </React.Fragment>
