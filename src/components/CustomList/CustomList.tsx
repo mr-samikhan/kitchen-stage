@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { COLORS } from '@cookup/constant'
-import { useDispatch } from 'react-redux'
 import { ToolTip } from '@cookup/modules'
 import { useBreakpints } from '@cookup/hooks'
 import { ChevronRight } from '@mui/icons-material'
-import { OPEN_EDIT_ADMIN_MODAL } from '@cookup/redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Box, Grid, IconButton, Typography } from '@mui/material'
+import { OPEN_EDIT_ADMIN_MODAL, SET_SINGLE_SUPPORT_DATA } from '@cookup/redux'
 
 interface CustomListProps {
   data?: any[]
@@ -39,6 +39,10 @@ const CustomList: React.FC<CustomListProps> = (props) => {
   const dispatch = useDispatch()
   const { mobileMode } = useBreakpints()
 
+  const { singleSupportData } = useSelector((state: any) => state.support)
+
+  const [isMessage, setIsMessage] = useState<boolean>(false)
+  const [isToolTip, setIsToolTip] = useState<boolean>(false)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   return (
@@ -110,10 +114,35 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                     </>
                   )}
                   {isViewMessage && (
-                    <Grid item xs={12}>
+                    <Grid
+                      item
+                      gap={1}
+                      xs={12}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      {singleSupportData &&
+                        isMessage &&
+                        index === selectedIndex && (
+                          <img src="/assets/icons/dot.svg" alt="dot" />
+                        )}
                       <Typography
+                        onClick={() => {
+                          dispatch(
+                            SET_SINGLE_SUPPORT_DATA({
+                              user,
+                              isViewMessage: true,
+                            })
+                          )
+                          setIsMessage(true)
+                          setSelectedIndex(index)
+                          setIsToolTip(false)
+                        }}
                         color="secondary"
                         variant={mobileMode ? 'body1' : 'subtitle1'}
+                        sx={{
+                          cursor: 'pointer',
+                        }}
                       >
                         View Message
                       </Typography>
@@ -122,8 +151,10 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                   {isActionButton && (
                     <IconButton
                       onClick={() => {
+                        setIsToolTip(true)
                         onNavigation && onNavigation(user)
                         setSelectedIndex(index)
+                        setIsMessage(false)
                       }}
                     >
                       {icon ? (
@@ -133,7 +164,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                       )}
                     </IconButton>
                   )}
-                  {index == selectedIndex && (
+                  {isToolTip && index == selectedIndex && (
                     <ToolTip
                       id="tooltip"
                       selectedIndex={selectedIndex}

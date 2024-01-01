@@ -3,9 +3,9 @@ import React, { useEffect } from 'react'
 import { useSupport } from '../../hooks/hooks'
 import { FormProvider } from 'react-hook-form'
 import { SUPPORT_TABS } from '@cookup/constant'
-import { TabsUI } from '../../components/components'
 import { useDispatch, useSelector } from 'react-redux'
 import { SortModalUI, SuspendModalUI } from '@cookup/modules'
+import { MessageModal, TabsUI } from '../../components/components'
 import {
   Form,
   Layout,
@@ -18,12 +18,14 @@ import {
   SET_TOOL_TIP,
   SET_TAB_VALUE,
   SET_EXPORT_MODAL,
-  SET_CONFIRM_SUSPENSION,
   SET_EXPORT_SUCCESS,
+  SET_CONFIRM_SUSPENSION,
+  SET_SINGLE_SUPPORT_DATA,
 } from '@cookup/redux'
 
 export const SupportContainer = () => {
   const { methods, onSevenDaysSuspend, onSubmit } = useSupport()
+
   const dispatch = useDispatch()
 
   const { isFilterModal, isSortModal } = useSelector(
@@ -33,6 +35,7 @@ export const SupportContainer = () => {
 
   const {
     isToolTip,
+    isViewMessage,
     isExportModal,
     isToolTipModal,
     isExportSuccess,
@@ -207,6 +210,35 @@ export const SupportContainer = () => {
             dispatch(SET_EXPORT_SUCCESS(false))
           }}
         />
+      )}
+
+      {isViewMessage && (
+        <CustomDialog
+          isOpen={isViewMessage}
+          onClose={() =>
+            dispatch(
+              SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })
+            )
+          }
+          sx={{
+            p: 2,
+            width: { xs: '320px', md: '415px' },
+          }}
+        >
+          <MessageModal
+            isSender
+            onReply={() =>
+              dispatch(
+                SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })
+              )
+            }
+            onCancel={() =>
+              dispatch(
+                SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })
+              )
+            }
+          />
+        </CustomDialog>
       )}
     </Layout>
   )

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IsupportSlice {
+  singleSupportData: any
   isExportModal?: boolean
   isViewMessage?: boolean
   isToolTipModal?: boolean
@@ -15,6 +16,7 @@ const initialState: IsupportSlice = {
   isViewMessage: false,
   isToolTipModal: false,
   isExportSuccess: false,
+  singleSupportData: null,
   isConfirmSuspension: false,
 }
 
@@ -38,14 +40,18 @@ const supportSlice = createSlice({
     SET_EXPORT_SUCCESS: (state, action: PayloadAction<boolean>) => {
       state.isExportSuccess = action.payload
     },
+    SET_SINGLE_SUPPORT_DATA: (state, action: PayloadAction<any>) => {
+      state.singleSupportData = action.payload.user
+      state.isViewMessage = action.payload.isViewMessage
+    },
   },
 })
-
 export const {
   SET_TOOL_TIP,
   SET_VIEW_MESSAGE,
   SET_EXPORT_MODAL,
   SET_EXPORT_SUCCESS,
   SET_CONFIRM_SUSPENSION,
+  SET_SINGLE_SUPPORT_DATA,
 } = supportSlice.actions
 export default supportSlice.reducer
