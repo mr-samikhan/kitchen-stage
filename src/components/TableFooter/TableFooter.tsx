@@ -4,7 +4,7 @@ import { Box, Button, Grid, IconButton } from '@mui/material'
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 
 interface TableFooterProps {
-  isExportCSV?: boolean
+  isExportCSV?: any
   isPaginationIcons?: boolean
 }
 
@@ -40,6 +40,7 @@ export const TableFooter = (props: TableFooterProps) => {
         {isExportCSV && (
           <Box>
             <Button
+              onClick={isExportCSV}
               color="primary"
               variant="contained"
               sx={{ p: 1.5, borderRadius: '12px' }}

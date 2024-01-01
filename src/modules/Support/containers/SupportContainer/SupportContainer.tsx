@@ -3,24 +3,29 @@ import React, { useEffect } from 'react'
 import { useSupport } from '../../hooks/hooks'
 import { FormProvider } from 'react-hook-form'
 import { SUPPORT_TABS } from '@cookup/constant'
-import { SortModalUI, SuspendModalUI } from '@cookup/modules'
-import { TabsUI } from '../../components/components'
 import { useDispatch, useSelector } from 'react-redux'
+import { SortModalUI, SuspendModalUI } from '@cookup/modules'
+import { MessageModal, TabsUI } from '../../components/components'
 import {
-  CustomDialog,
-  CustomSortModal,
   Form,
   Layout,
+  CustomDialog,
   MuiCustomTab,
+  ExportCSVModal,
+  CustomSortModal,
 } from '@cookup/components'
 import {
-  SET_TAB_VALUE,
   SET_TOOL_TIP,
+  SET_TAB_VALUE,
+  SET_EXPORT_MODAL,
+  SET_EXPORT_SUCCESS,
   SET_CONFIRM_SUSPENSION,
+  SET_SINGLE_SUPPORT_DATA,
 } from '@cookup/redux'
 
 export const SupportContainer = () => {
   const { methods, onSevenDaysSuspend, onSubmit } = useSupport()
+
   const dispatch = useDispatch()
 
   const { isFilterModal, isSortModal } = useSelector(
@@ -28,9 +33,14 @@ export const SupportContainer = () => {
   )
   const { tabValue } = useSelector((state: any) => state.user)
 
-  const { isToolTip, isToolTipModal, isConfirmSuspension } = useSelector(
-    (state: any) => state.support
-  )
+  const {
+    isToolTip,
+    isViewMessage,
+    isExportModal,
+    isToolTipModal,
+    isExportSuccess,
+    isConfirmSuspension,
+  } = useSelector((state: any) => state.support)
 
   useEffect(() => {
     dispatch(SET_TAB_VALUE('reports'))
@@ -42,7 +52,7 @@ export const SupportContainer = () => {
       isSort
       isFilter
       isFooter
-      isExportCSV
+      isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       isPaginationIcons={tabValue !== 'suspended-users'}
     >
       <Grid container>
@@ -163,6 +173,7 @@ export const SupportContainer = () => {
           <SortModalUI isSortUI />
         </CustomSortModal>
       )}
+
       {isFilterModal && (
         <CustomSortModal
           top={40}
@@ -172,6 +183,62 @@ export const SupportContainer = () => {
         >
           <SortModalUI isFilterUI isAccountTypes />
         </CustomSortModal>
+      )}
+
+      {isExportModal && (
+        <ExportCSVModal
+          isOpen={isExportModal}
+          onClose={() => dispatch(SET_EXPORT_MODAL(false))}
+          onExport={() => dispatch(SET_EXPORT_SUCCESS(true))}
+        />
+      )}
+
+      {isExportSuccess && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          textPosition="center"
+          isOpen={isExportSuccess}
+          title="Export Support Tickets"
+          icon="/assets/icons/user_circle.svg"
+          text="Successfuly exported Support Tickets"
+          okButtonStyle={{
+            width: 225,
+          }}
+          onConfirm={() => {
+            dispatch(SET_EXPORT_MODAL(false))
+            dispatch(SET_EXPORT_SUCCESS(false))
+          }}
+        />
+      )}
+
+      {isViewMessage && (
+        <CustomDialog
+          isOpen={isViewMessage}
+          onClose={() =>
+            dispatch(
+              SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })
+            )
+          }
+          sx={{
+            p: 2,
+            width: { xs: '320px', md: '415px' },
+          }}
+        >
+          <MessageModal
+            isSender
+            onReply={() =>
+              dispatch(
+                SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })
+              )
+            }
+            onCancel={() =>
+              dispatch(
+                SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })
+              )
+            }
+          />
+        </CustomDialog>
       )}
     </Layout>
   )

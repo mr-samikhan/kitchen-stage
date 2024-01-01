@@ -13,10 +13,10 @@ interface LayoutProps {
   isFilter?: boolean
   isTabs?: boolean
   isSort?: boolean
+  isExportCSV?: any
   isTitle?: boolean
   isFooter?: boolean
   mainHeight?: string
-  isExportCSV?: boolean
   isLogoutBtn?: 'Logout'
   onGoBack?: () => void
   isDeleteBtn?: boolean
