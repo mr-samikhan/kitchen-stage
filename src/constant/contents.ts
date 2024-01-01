@@ -588,3 +588,15 @@ export const SUPPORT_TABS = [
   { label: 'Suspended Users', value: 'suspended-users' },
   { label: 'Resolved', value: 'resolved' },
 ]
+
+export const EXPORT_CSV_DATA = [
+  { label: 'First Name', value: 'firstName', isChecked: true },
+  { label: 'Last Name', value: 'lastName', isChecked: true },
+  { label: 'Email Address', value: 'email', isChecked: true },
+  { label: 'Joined Date', value: 'joinedDate', isChecked: true },
+  { label: 'State', value: 'state', isChecked: true },
+  { label: 'City', value: 'city', isChecked: true },
+  { label: 'Gender', value: 'gender', isChecked: true },
+  { label: 'Age', value: 'age', isChecked: true },
+  { label: 'Experience', value: 'experience', isChecked: true },
+]
