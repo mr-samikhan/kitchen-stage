@@ -1,12 +1,8 @@
 import React from 'react'
-import { Layout } from '@cookup/components'
+import { AdsContainer } from '@cookup/modules'
 
 export const Ads = () => {
-  return (
-    <Layout isTitle isSuspendBtn="Create Ad">
-      Ads
-    </Layout>
-  )
+  return <AdsContainer />
 }
 
 export default Ads
