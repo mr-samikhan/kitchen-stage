@@ -13,6 +13,9 @@ interface ITabs {
     | 'reports'
     | 'suspended-users'
     | 'resolved'
+    | 'current'
+    | 'expired'
+    | 'drafts'
 }
 
 interface ISortBy {

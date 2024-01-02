@@ -1,5 +1,6 @@
 export * from './Ads/hook/hook'
 export * from './Ads/containers/containers'
+export * from './Ads/components/components'
 export * from './Login/containers/containers'
 export * from './Users/containers/containers'
 export * from './Admins/containers/containers'
