@@ -600,3 +600,17 @@ export const EXPORT_CSV_DATA = [
   { label: 'Age', value: 'age', isChecked: true },
   { label: 'Experience', value: 'experience', isChecked: true },
 ]
+
+export const ADS_TABS = [
+  { label: 'Current Ads', value: 'current' },
+  { label: 'Expired Ads', value: 'expired' },
+  { label: 'Drafts', value: 'drafts' },
+]
+
+export const ADS_CARD_DATA = [
+  { img: '/assets/images/ad_card1.svg', title: 'Ad Name', clickRate: '2.8' },
+  { img: '/assets/images/ad_card2.svg', title: 'Ad Name', clickRate: '1.9' },
+  { img: '/assets/images/ad_card3.svg', title: 'Ad Name', clickRate: '-3.5' },
+  { img: '/assets/images/ad_card4.svg', title: 'Ad Name', clickRate: '1.9' },
+  { img: '/assets/images/ad_card5.svg', title: 'Ad Name', clickRate: '-3.5' },
+]
