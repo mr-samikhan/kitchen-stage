@@ -11,6 +11,7 @@ import {
   Editors,
   Bookings,
   Dashboard,
+  CreateAds,
   SingleUser,
   ManageSettings,
   CustomerSupport,
@@ -39,6 +40,7 @@ const Routes = () => {
         <Route path={ROUTES.ROOT} element={<Dashboard />} />
         <Route path={ROUTES.BOOKINGS} element={<Bookings />} />
         <Route path={ROUTES.ANALYTICS} element={<Dashboard />} />
+        <Route path={ROUTES.CREATE_AD} element={<CreateAds />} />
         <Route path={ROUTES.SETTINGS} element={<ManageSettings />} />
         <Route path={ROUTES.CUSTOMER_SUPPORT} element={<CustomerSupport />} />
       </ReactRoutes>
