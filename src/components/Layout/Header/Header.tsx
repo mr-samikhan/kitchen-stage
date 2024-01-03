@@ -23,32 +23,42 @@ import {
 interface HeaderProps {
   isTabs?: boolean
   isSort?: boolean
+  onDelete?: () => void
   isFilter?: boolean
   isDeleteBtn?: boolean
   isLogoutBtn?: 'Logout'
+  isReviewBtn?: 'Review'
   onGoBack?: () => void
   isNavigation?: boolean
   isSearchInput?: boolean
+  deleteBtnText?: string
   navigationTitle?: string
   toggleSidebar?: () => void
   isAddNewAdminBtn?: boolean
+  onReviewClick?: () => void
+  onSuspendClick?: () => void
   title?: string | null | undefined
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad'
+  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad' | 'Review Ad'
 }
 
 export const Header = (props: HeaderProps) => {
   const {
+    onDelete,
     title,
     isTabs,
     isSort,
     onGoBack,
     isFilter,
+    isReviewBtn,
     isDeleteBtn,
+    deleteBtnText,
     isNavigation,
     isLogoutBtn,
     isSuspendBtn,
+    onReviewClick,
     isSearchInput,
     toggleSidebar,
+    onSuspendClick,
     navigationTitle,
     isAddNewAdminBtn,
   } = props || {}
@@ -150,6 +160,7 @@ export const Header = (props: HeaderProps) => {
                 <MuiSmallButton
                   btnText={isSuspendBtn}
                   onClick={() =>
+                    (onSuspendClick && onSuspendClick()) ||
                     dispatch(
                       isUserSuspened
                         ? SET_UNSUSPEND_USER(true)
@@ -167,9 +178,12 @@ export const Header = (props: HeaderProps) => {
               {isDeleteBtn && (
                 <Box ml={2}>
                   <MuiSmallButton
-                    btnText="Delete"
                     variant="outlined"
-                    onClick={() => dispatch(SET_DELETE_MODAL(true))}
+                    btnText={deleteBtnText || 'Delete'}
+                    onClick={() =>
+                      (onDelete && onDelete()) ||
+                      dispatch(SET_DELETE_MODAL(true))
+                    }
                   />
                 </Box>
               )}

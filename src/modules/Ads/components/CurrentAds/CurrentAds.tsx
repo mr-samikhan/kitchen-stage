@@ -28,7 +28,7 @@ export const CurrentAds = (props: ICurrentAds) => {
           setSelectedIndex={setSelectedIndex}
           setSelectedLable={setSelectedLable}
           data={
-            tabValue === 'drafts' ? ['Duplicate', 'Delete', 'Edit'] : undefined
+            tabValue === 'drafts' ? ['Edit', 'Duplicate', 'Delete'] : undefined
           }
           onIconClick={() => {
             if (selectedIndex === index) {

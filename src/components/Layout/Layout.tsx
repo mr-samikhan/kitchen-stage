@@ -10,14 +10,17 @@ import { COLORS, SIDEBAR_ARRAY } from '@cookup/constant'
 interface LayoutProps {
   title?: string
   bgcolor?: string
-  isFilter?: boolean
   isTabs?: boolean
   isSort?: boolean
   isExportCSV?: any
   isTitle?: boolean
   isFooter?: boolean
+  isFilter?: boolean
+  onDelete?: () => void
   mainHeight?: string
+  deleteBtnText?: string
   isLogoutBtn?: 'Logout'
+  isReviewBtn?: string
   onGoBack?: () => void
   isDeleteBtn?: boolean
   isNavigation?: boolean
@@ -25,8 +28,10 @@ interface LayoutProps {
   navigationTitle?: string
   isAddNewAdminBtn?: boolean
   children?: React.ReactNode
+  onReviewClick?: () => void
+  onSuspendClick?: () => void
   isPaginationIcons?: boolean
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad'
+  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad' | 'Review Ad'
 }
 
 export const Layout = (props: LayoutProps) => {
@@ -40,13 +45,18 @@ export const Layout = (props: LayoutProps) => {
     children,
     isFilter,
     isFooter,
+    onDelete,
     mainHeight,
     isExportCSV,
+    isReviewBtn,
     isLogoutBtn,
     isDeleteBtn,
     isSuspendBtn,
     isNavigation,
+    deleteBtnText,
     isSearchInput,
+    onReviewClick,
+    onSuspendClick,
     navigationTitle,
     isAddNewAdminBtn,
     isPaginationIcons,
@@ -109,12 +119,16 @@ export const Layout = (props: LayoutProps) => {
             isTabs={isTabs}
             isFilter={isFilter}
             onGoBack={onGoBack}
+            onDelete={onDelete}
             isDeleteBtn={isDeleteBtn}
             isLogoutBtn={isLogoutBtn}
             isSuspendBtn={isSuspendBtn}
             isNavigation={isNavigation}
+            deleteBtnText={deleteBtnText}
             isSearchInput={isSearchInput}
+            onReviewClick={onReviewClick}
             toggleSidebar={handleSideBar}
+            onSuspendClick={onSuspendClick}
             navigationTitle={navigationTitle}
             isAddNewAdminBtn={isAddNewAdminBtn}
             title={isTitle ? SELECTED_TITLE && SELECTED_TITLE : title}
