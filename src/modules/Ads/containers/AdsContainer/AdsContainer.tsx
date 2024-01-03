@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { ADS_TABS } from '@cookup/constant'
+import { ADS_TABS, ROUTES } from '@cookup/constant'
 import { SET_TAB_VALUE } from '@cookup/redux'
+import { useNavigate } from 'react-router-dom'
 import { AdsTypes, useAds } from '@cookup/modules'
 import { Box, Container, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +9,7 @@ import { Layout, MuiCustomTab } from '@cookup/components'
 
 export const AdsContainer = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { setSelectedIndex, selectedIndex } = useAds()
 
@@ -18,7 +20,11 @@ export const AdsContainer = () => {
   }, [])
 
   return (
-    <Layout isTitle isSuspendBtn="Create Ad">
+    <Layout
+      isTitle
+      isSuspendBtn="Create Ad"
+      onSuspendClick={() => navigate(ROUTES.CREATE_AD)}
+    >
       <Container maxWidth="xl">
         <Grid container>
           <Grid item md={10} xs={12} display="flex" justifyContent="center">
