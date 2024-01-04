@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { UploadMedia } from '../components'
-import { Box, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { CustomTextField } from '@cookup/components'
+import { Box, Chip, Grid, Typography } from '@mui/material'
+import { CustomSelect, UploadMedia } from '../components'
+import { AGE_RANGE_ARRAY, GENDER_ARRAY } from '@cookup/constant'
 
 interface SelectedFile {
   file: File
@@ -10,7 +12,19 @@ interface SelectedFile {
   fileUrl: string
 }
 
-export const CreateAdForm = () => {
+interface ICreateForm {
+  methods?: any
+  adValues: {
+    ageRange: any[]
+    gender: any[]
+  }
+
+  onMultiSelect?: (item: any, key: any) => void
+}
+
+export const CreateAdForm = (props: ICreateForm) => {
+  const { methods, onMultiSelect, adValues } = props || {}
+
   const [selectedFile, setSelectedFile] = useState<SelectedFile>({
     file: new File([], ''),
     fileName: '',
@@ -18,9 +32,10 @@ export const CreateAdForm = () => {
     fileType: '',
     fileUrl: '',
   })
+
   return (
     <React.Fragment>
-      <Grid item md={5} xs={12} px={7}>
+      <Grid item md={5} xs={12} pl={{ xs: 0, md: 7 }}>
         <Typography variant="h4" fontFamily="Poppins" color="secondary.main">
           Ad Information
         </Typography>
@@ -31,92 +46,73 @@ export const CreateAdForm = () => {
           flexWrap="wrap"
           width={{ xs: '100%', md: 366 }}
         >
-          <TextField
+          <CustomTextField
             fullWidth
+            name="adName"
             sx={inputStyle}
             placeholder="Ad Name (For recognition)"
           />
-          <TextField sx={inputStyle} placeholder="Website" fullWidth />
-          <TextField
+          <CustomTextField
             fullWidth
+            name="website"
+            sx={inputStyle}
+            placeholder="Website"
+          />
+          <CustomTextField
+            fullWidth
+            name="location"
             sx={inputStyle}
             placeholder="Location"
-            InputProps={{
-              endAdornment: (
-                <IconButton>
-                  <img src="/assets/icons/search.svg" alt="" />
-                </IconButton>
-              ),
-            }}
+            icon="/assets/icons/search.svg"
           />
-          <TextField
-            select
-            fullWidth
-            label="Select Age Range"
-            sx={{
-              '& .MuiFormLabel-root': {
-                fontFamily: 'Poppins',
-                color: '#808080',
-              },
-            }}
+          <CustomSelect
+            isMultiSelect
+            name="ageRange"
+            label="Age Range"
+            methods={methods}
+            adValues={adValues}
+            options={AGE_RANGE_ARRAY}
+            placeholder="Select Age Range"
+            onMultiSelect={onMultiSelect}
           />
-          <TextField
-            select
-            fullWidth
-            label="Select Age Range"
-            sx={{
-              '& .MuiFormLabel-root': {
-                fontFamily: 'Poppins',
-              },
-            }}
+          <CustomSelect
+            isMultiSelect
+            name="gender"
+            label="Gender"
+            methods={methods}
+            adValues={adValues}
+            options={GENDER_ARRAY}
+            placeholder="Select Gender"
+            onMultiSelect={onMultiSelect}
           />
-          <TextField
-            fullWidth
-            sx={inputStyle}
-            placeholder="Select Keywords"
-            InputProps={{
-              endAdornment: (
-                <IconButton>
-                  <img src="/assets/icons/search.svg" alt="" />
-                </IconButton>
-              ),
-            }}
-          />
-          <TextField
+          <CustomTextField
             fullWidth
             multiline
             rows={6}
             sx={inputStyle}
+            name="description"
             placeholder="Type Description"
           />
-          <TextField
+          <CustomTextField
             fullWidth
+            name="startDate"
             sx={inputStyle}
             placeholder="Start Date"
-            InputProps={{
-              endAdornment: (
-                <IconButton>
-                  <img src="/assets/icons/calendar.svg" alt="" />
-                </IconButton>
-              ),
-            }}
+            icon="/assets/icons/calendar.svg"
           />
-          <TextField
+          <CustomTextField
             fullWidth
+            name="endDate"
             sx={inputStyle}
             placeholder="End Date"
-            InputProps={{
-              endAdornment: (
-                <IconButton>
-                  <img src="/assets/icons/calendar.svg" alt="" />
-                </IconButton>
-              ),
-            }}
+            icon="/assets/icons/calendar.svg"
           />
         </Box>
       </Grid>
       <Grid item md={6} xs={12} display="flex" justifyContent="center">
         <UploadMedia
+          name="image"
+          methods={methods}
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
         />

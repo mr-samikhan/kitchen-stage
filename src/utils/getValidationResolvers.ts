@@ -120,3 +120,17 @@ export const SettingsFormResolver: any | Resolver<IResetPasswordFormResolver> =
         .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
     })
   )
+
+export const AdsFormResolver: any | Resolver<any> = yupResolver(
+  yup.object().shape({
+    adName: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    website: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    location: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    ageRange: yup.mixed().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    gender: yup.mixed().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    description: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    startDate: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    endDate: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    image: yup.object().required('Image is Required'),
+  })
+)

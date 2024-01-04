@@ -17,6 +17,7 @@ export const MuiSmallButton = (props: MuiSmallButtonProps) => {
   return (
     <Button
       size="small"
+      type="submit"
       onClick={onClick}
       endIcon={ICON_CHECK}
       variant={variant || 'contained'}

@@ -4,6 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 interface CustomTextFieldProps {
   sx?: any
+  rows?: number
   name: string
   options?: any
   icon?: string
@@ -17,7 +18,8 @@ interface CustomTextFieldProps {
   type?: 'text' | 'number' | 'password'
 }
 export const CustomTextField = (props: CustomTextFieldProps) => {
-  const { name, className, defaultValue, options, select, icon } = props || {}
+  const { name, className, defaultValue, options, select, icon, sx } =
+    props || {}
 
   const {
     control,
@@ -36,10 +38,12 @@ export const CustomTextField = (props: CustomTextFieldProps) => {
             {...field}
             className={className}
             error={!!errors[name]}
-            sx={{
-              ...inputStyle,
-              textAlign: 'left',
-            }}
+            sx={
+              sx || {
+                ...inputStyle,
+                textAlign: 'left',
+              }
+            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

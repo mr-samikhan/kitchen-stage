@@ -12,6 +12,8 @@ interface SelectedFile {
 }
 
 interface UploadMediaProps {
+  name?: string
+  methods?: any
   setSelectedFile?: any
   onNavigate?: () => void
   selectedFile: SelectedFile
@@ -21,6 +23,8 @@ interface UploadMediaProps {
 
 const UploadMedia: React.FC<UploadMediaProps> = (props) => {
   const {
+    name,
+    methods,
     onNavigate,
     selectedFile,
     setSelectedFile,
@@ -58,6 +62,15 @@ const UploadMedia: React.FC<UploadMediaProps> = (props) => {
     if (file && isFileTypeAllowed(file)) {
       const fileUrl = URL.createObjectURL(file)
 
+      methods.setValue(name, {
+        ...selectedFile,
+        file,
+        fileName: file.name,
+        fileSize: `${(file.size / (1024 * 1024)).toFixed(2)}mb`,
+        fileType: file.type,
+        fileUrl,
+      })
+
       setSelectedFile({
         ...selectedFile,
         file,
@@ -80,7 +93,7 @@ const UploadMedia: React.FC<UploadMediaProps> = (props) => {
             alignItems="center"
             position="relative"
             flexDirection="column"
-            width={{ md: 400, xs: '80%' }}
+            width={{ md: 400, xs: '100%' }}
           >
             {isNavigationTitle && fileType == 'image' && (
               <Box
@@ -101,7 +114,7 @@ const UploadMedia: React.FC<UploadMediaProps> = (props) => {
                 >
                   {isNavigationTitle}
                 </Typography>
-                <IconButton>
+                <IconButton onClick={onNavigate}>
                   <ChevronRight
                     sx={{
                       color: COLORS.white,
@@ -167,7 +180,7 @@ const UploadMedia: React.FC<UploadMediaProps> = (props) => {
           alignItems="center"
           flexDirection="column"
           justifyContent="center"
-          width={{ md: 570, xs: '80%' }}
+          width={{ md: 570, xs: '100%' }}
           border={'1px dashed #85848B'}
         >
           <Button
