@@ -13,12 +13,13 @@ interface CustomTextFieldProps {
   fullWidth?: boolean
   multiline?: boolean
   className?: string
+  onClick?: () => void
   placeholder?: string
   defaultValue?: string | number
   type?: 'text' | 'number' | 'password'
 }
 export const CustomTextField = (props: CustomTextFieldProps) => {
-  const { name, className, defaultValue, options, select, icon, sx } =
+  const { name, className, defaultValue, options, select, icon, sx, onClick } =
     props || {}
 
   const {
@@ -48,7 +49,7 @@ export const CustomTextField = (props: CustomTextFieldProps) => {
               endAdornment: (
                 <InputAdornment position="end">
                   {icon && (
-                    <IconButton>
+                    <IconButton onClick={onClick}>
                       <img src={icon || '/assets/icons/check.svg'} alt="eye" />
                     </IconButton>
                   )}
