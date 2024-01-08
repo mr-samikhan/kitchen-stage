@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 import { CustomSelect, UploadMedia } from '../components'
 import { AGE_RANGE_ARRAY, GENDER_ARRAY } from '@cookup/constant'
-import { CustomDatePicker, CustomTextField } from '@cookup/components'
-import { Box, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { CustomTextField, MuiCustomDatePicker } from '@cookup/components'
 
 interface SelectedFile {
   file: File
@@ -32,6 +32,10 @@ export const CreateAdForm = (props: ICreateForm) => {
     fileType: '',
     fileUrl: '',
   })
+
+  const onDateChange = (key: string, date: any) => {
+    methods.setValue(key, date.$d)
+  }
 
   return (
     <React.Fragment>
@@ -93,56 +97,23 @@ export const CreateAdForm = (props: ICreateForm) => {
             name="description"
             placeholder="Type Description"
           />
-          <CustomDatePicker
-            renderInput={({ ref }: any) => (
-              <TextField
-                fullWidth
-                inputRef={ref}
-                name="startDate"
-                sx={inputStyle}
-                placeholder="Start Date"
-                InputProps={{
-                  endAdornment: (
-                    <IconButton>
-                      <img src="/assets/icons/calendar.svg" alt="calendar" />
-                    </IconButton>
-                  ),
-                }}
-              />
-            )}
-          />
-          <CustomDatePicker
-            renderInput={({ ref }: any) => (
-              <TextField
-                fullWidth
-                inputRef={ref}
-                name="endDate"
-                sx={inputStyle}
-                placeholder="End Date"
-                InputProps={{
-                  endAdornment: (
-                    <IconButton>
-                      <img src="/assets/icons/calendar.svg" alt="calendar" />
-                    </IconButton>
-                  ),
-                }}
-              />
-            )}
-          />
-          {/* <CustomTextField
-            fullWidth
-            name="startDate"
-            sx={inputStyle}
-            placeholder="Start Date"
-            icon="/assets/icons/calendar.svg"
-          />
-          <CustomTextField
-            fullWidth
-            name="endDate"
-            sx={inputStyle}
-            placeholder="End Date"
-            icon="/assets/icons/calendar.svg"
-          /> */}
+
+          <Box width="100%">
+            <MuiCustomDatePicker
+              name="startDate"
+              methods={methods}
+              label="Start Date"
+              setDate={(date) => onDateChange('startDate', date)}
+            />
+          </Box>
+          <Box width="100%">
+            <MuiCustomDatePicker
+              name="endDate"
+              label="End Date"
+              methods={methods}
+              setDate={(date) => onDateChange('endDate', date)}
+            />
+          </Box>
         </Box>
       </Grid>
       <Grid item md={6} xs={12} display="flex" justifyContent="center">
