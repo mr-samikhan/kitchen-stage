@@ -1,6 +1,7 @@
 export * from '../components/components'
 export { default as AdsCard } from './AdsCard/AdsCard'
 export { default as DraftAds } from './DraftAds/DraftAds'
+export { default as ReviewAd } from './ReviewAd/ReviewAd'
 export { default as AdsTypes } from './AdsTypes/AdsTypes'
 export { default as ExpiredAds } from './ExpiredAds/ExpiredAds'
 export { default as CurrentAds } from './CurrentAds/CurrentAds'

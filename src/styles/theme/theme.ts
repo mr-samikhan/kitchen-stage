@@ -179,6 +179,17 @@ let theme = createTheme({
         },
       },
     },
+    MuiPopper: {
+      styleOverrides: {
+        root: {
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignSelf: 'center',
+          position: 'absolute',
+        },
+      },
+    },
   },
 })
 

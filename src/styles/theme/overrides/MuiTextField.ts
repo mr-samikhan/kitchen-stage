@@ -119,6 +119,12 @@ export const MuiTextField: Components['MuiTextField'] = {
           border: 'none',
         },
       },
+      '&.grey-background': {
+        '& .MuiOutlinedInput-root': {
+          background: COLORS.grey.dark,
+          color: COLORS.input.main,
+        },
+      },
     },
   },
 }
