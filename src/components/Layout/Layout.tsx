@@ -23,8 +23,6 @@ interface LayoutProps {
   navigationTitle?: string
   children?: React.ReactNode
   isPaginationIcons?: boolean
-
-  //new work
   showButton1?: boolean
   showButton2?: boolean
   button1Text?: string
