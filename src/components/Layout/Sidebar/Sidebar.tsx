@@ -1,5 +1,5 @@
 import React from 'react'
-import { useBreakpints } from '@cookup/hooks'
+import { useBreakPoints } from '@cookup/hooks'
 import CloseIcon from '@mui/icons-material/Close'
 import { COLORS, ROUTES } from '@cookup/constant'
 import { Avatar, Box, IconButton } from '@mui/material'
@@ -16,7 +16,7 @@ export const Sidebar = (props: SidebarProps) => {
   const { pathname } = useLocation()
 
   const navigate = useNavigate()
-  const { mobileMode } = useBreakpints()
+  const { mobileMode } = useBreakPoints()
 
   return (
     <React.Fragment>

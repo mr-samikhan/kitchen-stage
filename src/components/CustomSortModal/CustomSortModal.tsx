@@ -8,12 +8,12 @@ import {
   InputAdornment,
 } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { useBreakpints } from '@cookup/hooks'
+import { useBreakPoints } from '@cookup/hooks'
 import { ISortItem } from 'types/FormResolvers'
-import { CLOSE_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
 import CloseIcon from '@mui/icons-material/Close'
 import { ChevronRight } from '@mui/icons-material'
 import { COLORS, SORT_MODAL_ARRAY } from '@cookup/constant'
+import { CLOSE_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
 
 interface CustomSortModalProps {
   height?: any
@@ -26,7 +26,7 @@ interface CustomSortModalProps {
 
 export const CustomSortModal = (props: CustomSortModalProps) => {
   const { children, top, padding, height, title, width } = props || {}
-  const { mobileMode, tabMode } = useBreakpints()
+  const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
 

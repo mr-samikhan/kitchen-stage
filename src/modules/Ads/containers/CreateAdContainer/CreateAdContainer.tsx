@@ -10,7 +10,7 @@ export const CreateAdContainer = () => {
 
   const { methods, onSubmit, onMultiSelect, adValues, setAdValues } = useAds()
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
 
   const RenderAdSteps = () => {
     switch (step) {
@@ -26,7 +26,7 @@ export const CreateAdContainer = () => {
         return <ReviewAd />
 
       default:
-        break
+        throw new Error('No Screen Found')
     }
   }
 
@@ -35,14 +35,16 @@ export const CreateAdContainer = () => {
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           <Layout
-            isDeleteBtn
+            showButton1
+            showButton2
             isNavigation
-            isSuspendBtn="Review Ad"
+            button2Type="submit"
+            button2Text="Save Draft"
+            button2Variant="outlined"
             navigationTitle="Create Ad"
-            deleteBtnText="Save Draft"
-            onGoBack={() => navigate(-1)}
-            onSuspendClick={() => alert('review')}
-            // isSuspendBtn={step === 0 ? 'Review Ad' : 'Publish Ad'}
+            onButton1Click={() => setStep(1)}
+            button1Text={step === 0 ? 'Review Ad' : 'Publish Ad'}
+            onGoBack={() => (step === 1 ? setStep(0) : navigate(-1))}
           >
             <Container maxWidth="xl">
               <Grid container pt={3}>

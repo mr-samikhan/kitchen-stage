@@ -85,8 +85,6 @@ let theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          // width: '205px',
-          // height: '60px',
           fontSize: 16,
           fontWeight: 600,
           borderRadius: '8px',
@@ -95,6 +93,9 @@ let theme = createTheme({
           background: COLORS.secondary.light,
           '&.MuiButton-outlined': {
             background: 'transparent',
+          },
+          '&.custom': {
+            borderRadius: '12px',
           },
         },
         sizeSmall: {

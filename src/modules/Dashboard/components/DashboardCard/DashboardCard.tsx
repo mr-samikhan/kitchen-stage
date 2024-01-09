@@ -1,6 +1,6 @@
 import React from 'react'
 import { COLORS } from '@cookup/constant'
-import { useBreakpints } from '@cookup/hooks'
+import { useBreakPoints } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { Box, IconButton, Paper, Typography } from '@mui/material'
@@ -28,7 +28,7 @@ export const DashboardCard = (props: DashboardCardProps) => {
 
   const navigatTo = useNavigate()
 
-  const { mobileMode } = useBreakpints()
+  const { mobileMode } = useBreakPoints()
 
   return (
     <Paper className="dashboard_card" elevation={0}>

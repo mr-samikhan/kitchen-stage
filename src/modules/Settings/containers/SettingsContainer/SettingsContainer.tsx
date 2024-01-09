@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
+import { useBreakPoints } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
 import { FormProvider } from 'react-hook-form'
 import { Container, Grid } from '@mui/material'
 import useSettings from '../../hooks/useSettings'
+import LogoutIcon from '@mui/icons-material/Logout'
 import { useDispatch, useSelector } from 'react-redux'
 import { SettingsTabsUI } from '../../components/components'
 import { ROUTES, SETTINGS_TAB_ARRAY } from '@cookup/constant'
@@ -12,6 +14,7 @@ import { CustomDialog, Form, Layout, MuiCustomTab } from '@cookup/components'
 export const SettingsContainer = () => {
   const dispatch = useDispatch()
   const naviagte = useNavigate()
+  const { mobileMode } = useBreakPoints()
 
   const { tabValue } = useSelector((state: any) => state.user)
   const { isLogoutModal } = useSelector((state: any) => state.settings)
@@ -30,7 +33,13 @@ export const SettingsContainer = () => {
   }, [])
 
   return (
-    <Layout title="Personal Settings" isLogoutBtn="Logout">
+    <Layout
+      showButton1
+      button1Text="Logout"
+      title="Personal Settings"
+      button1Icon={mobileMode ? <LogoutIcon /> : undefined}
+      onButton1Click={() => dispatch(SET_LOGOUT_MODAL(true))}
+    >
       <Container maxWidth="xl">
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(onSubmit)}>

@@ -15,10 +15,10 @@ export const CustomFilterButton = (props: CustomFilterButtonProps) => {
 
   return (
     <TextField
+      value={value}
       variant="outlined"
       className={className || 'filter'}
       placeholder={placeholder || 'Today'}
-      value={value}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end" onClick={onClick}>

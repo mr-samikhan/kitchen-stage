@@ -1,10 +1,14 @@
 import React from 'react'
 import useUser from '../../hooks/useUser'
-import { Box, Container, Grid } from '@mui/material'
+import { Delete } from '@mui/icons-material'
+import { useBreakPoints } from '@cookup/hooks'
 import { FormProvider } from 'react-hook-form'
 import { USER_TAB_OPTIONS } from '@cookup/constant'
+import { Box, Container, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled'
+import { Form, Layout, CustomDialog, MuiCustomTab } from '@cookup/components'
 import {
   SET_TAB_VALUE,
   SET_DELETE_MODAL,
@@ -16,19 +20,12 @@ import {
   SET_SUSPENSION_SUCCESS,
 } from '@cookup/redux'
 import {
-  Form,
-  Layout,
-  TableFooter,
-  CustomDialog,
-  MuiCustomTab,
-} from '@cookup/components'
-import {
+  ViewAds,
   SuspendModalUI,
   SuspensionAlert,
   UserAccountInfo,
   UserProfileInfo,
   UserUploadedMedia,
-  ViewAds,
 } from '@cookup/modules'
 
 export const SingleUserContainer = () => {
@@ -36,6 +33,7 @@ export const SingleUserContainer = () => {
   const dispatch = useDispatch()
 
   const { state } = useLocation()
+  const { mobileMode } = useBreakPoints()
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
   const {
@@ -94,12 +92,23 @@ export const SingleUserContainer = () => {
     <Layout
       isFooter
       isExportCSV
-      isDeleteBtn
       isNavigation
+      showButton1
+      showButton2
       bgcolor="#F5F5F5"
+      button2Text="Delete"
+      button2Variant="outlined"
       onGoBack={() => navigate(-1)}
+      button2Icon={mobileMode ? <Delete /> : undefined}
       navigationTitle={state.name || state.businessName}
-      isSuspendBtn={isUserSuspened ? 'Unsuspend' : 'Suspend'}
+      button1Text={isUserSuspened ? 'Unsuspend' : 'Suspend'}
+      onButton2Click={() => dispatch(SET_DELETE_MODAL(true))}
+      button1Icon={mobileMode ? <PersonAddDisabledIcon /> : undefined}
+      onButton1Click={() =>
+        dispatch(
+          isUserSuspened ? SET_UNSUSPEND_USER(true) : SET_SUSPEND_MODAL(true)
+        )
+      }
     >
       <Container maxWidth="xl">
         <Box
@@ -117,7 +126,7 @@ export const SingleUserContainer = () => {
                 isBusinessType={state.type ? true : false}
               />
             </Grid>
-            <RenderUserSteps />
+            {RenderUserSteps()}
           </Grid>
         </Box>
       </Container>

@@ -1,7 +1,7 @@
 import React from 'react'
-import { useBreakpints } from '@cookup/hooks'
+import { useBreakPoints } from '@cookup/hooks'
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
+import { Box, Grid, IconButton, Typography } from '@mui/material'
 import {
   MuiCustomTab,
   NavigationBar,
@@ -39,6 +39,24 @@ interface HeaderProps {
   onSuspendClick?: () => void
   title?: string | null | undefined
   isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad' | 'Review Ad'
+
+  //new work
+  showButton1?: boolean
+  showButton2?: boolean
+  button1Text?: string
+  button2Text?: string
+  button1Type?: string
+  button2Type?: string
+  button1Icon?: any
+  button2Icon?: any
+  button1ClassName?: string
+  button2ClassName?: string
+  onButton1Click?: () => void
+  onButton2Click?: () => void
+  button1Variant?: 'contained' | 'outlined'
+  button2Variant?: 'contained' | 'outlined'
+  button1Size?: 'small' | 'large' | 'medium'
+  button2Size?: 'small' | 'large' | 'medium'
 }
 
 export const Header = (props: HeaderProps) => {
@@ -61,9 +79,27 @@ export const Header = (props: HeaderProps) => {
     onSuspendClick,
     navigationTitle,
     isAddNewAdminBtn,
+
+    //new work
+    showButton1,
+    showButton2,
+    button1Icon,
+    button2Icon,
+    button1Text,
+    button2Text,
+    button1Type,
+    button2Type,
+    button1Size,
+    button2Size,
+    onButton2Click,
+    onButton1Click,
+    button2Variant,
+    button1Variant,
+    button1ClassName,
+    button2ClassName,
   } = props || {}
 
-  const { mobileMode, tabMode } = useBreakpints()
+  const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
   const { isUserSuspened } = useSelector((state: any) => state.header)
@@ -82,13 +118,58 @@ export const Header = (props: HeaderProps) => {
             <IconButton onClick={toggleSidebar}>
               <RestaurantMenuIcon />
             </IconButton>
+            {isNavigation && (
+              <NavigationBar
+                onGoBack={onGoBack}
+                navigationTitle={navigationTitle}
+              />
+            )}
             <Typography variant="h1" textAlign="left">
               {title}
             </Typography>
-            <Button variant="contained" color="primary">
-              Add New Admin
-            </Button>
+            <Box display="flex" gap={2}>
+              {isSort && (
+                <CustomFilterButton
+                  onClick={() => dispatch(OPEN_SORT_MODAL())}
+                />
+              )}
+              {isFilter && (
+                <CustomFilterButton
+                  placeholder="Filter"
+                  icon="/assets/icons/filter_alt.svg"
+                  onClick={() => dispatch(SET_FILTER_MODAL(true))}
+                />
+              )}
+              {showButton1 && (
+                <IconButton onClick={onButton1Click}>
+                  {typeof button1Icon === 'string' ? (
+                    <img src={button1Icon} alt="" />
+                  ) : (
+                    button1Icon
+                  )}
+                </IconButton>
+              )}
+              {showButton2 && (
+                <IconButton onClick={onButton2Click}>
+                  {typeof button2Icon === 'string' ? (
+                    <img src={button2Icon} alt="" />
+                  ) : (
+                    button2Icon
+                  )}
+                </IconButton>
+              )}
+            </Box>
           </Box>
+          {isTabs && (
+            <Box width="100%" display="flex" justifyContent="center">
+              <MuiCustomTab />
+            </Box>
+          )}
+          {isSearchInput && (
+            <Box width={'100%'} py={2}>
+              <MuiCustomSearchInput />
+            </Box>
+          )}
         </>
       )}
       {!mobileMode && (
@@ -142,21 +223,54 @@ export const Header = (props: HeaderProps) => {
                   onClick={() => dispatch(SET_FILTER_MODAL(true))}
                 />
               )}
-              {isAddNewAdminBtn && (
-                <Button
+              {/* {isAddNewAdminBtn && (
+                <MuiSmallButton
+                  sx={{
+                    borderRadius: 2,
+                  }}
                   variant="contained"
-                  color="primary"
+                  btnText="Add New Admin"
                   onClick={() => dispatch(OPEN_ADMIN_MODAL())}
-                >
-                  Add New Admin
-                </Button>
-              )}
+                />
+                // <Button
+                //   variant="contained"
+                //   color="primary"
+                //   onClick={() => dispatch(OPEN_ADMIN_MODAL())}
+                // >
+                //   Add New Admin
+                // </Button>
+              )} */}
               {isSearchInput && (
                 <Box width={tabMode ? '100%' : '80%'}>
                   <MuiCustomSearchInput />
                 </Box>
               )}
-              {isSuspendBtn && (
+              {/* new */}
+              {showButton1 && (
+                <MuiSmallButton
+                  icon={button1Icon}
+                  type={button1Type}
+                  btnText={button1Text}
+                  onClick={onButton1Click}
+                  variant={button1Variant}
+                  className={button1ClassName}
+                  size={button1Size}
+                />
+              )}
+              {showButton2 && (
+                <MuiSmallButton
+                  icon={button2Icon}
+                  type={button2Type}
+                  btnText={button2Text}
+                  onClick={onButton2Click}
+                  variant={button2Variant}
+                  className={button2ClassName}
+                  size={button2Size}
+                />
+              )}
+
+              {/* new end */}
+              {/* {isSuspendBtn && (
                 <MuiSmallButton
                   btnText={isSuspendBtn}
                   onClick={() =>
@@ -186,7 +300,7 @@ export const Header = (props: HeaderProps) => {
                     }
                   />
                 </Box>
-              )}
+              )} */}
             </Box>
           </Grid>
         </Grid>

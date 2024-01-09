@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { ADS_TABS, ROUTES } from '@cookup/constant'
 import { SET_TAB_VALUE } from '@cookup/redux'
 import { useNavigate } from 'react-router-dom'
 import { AdsTypes, useAds } from '@cookup/modules'
 import { Box, Container, Grid } from '@mui/material'
+import { ADS_TABS, ROUTES } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { Layout, MuiCustomTab } from '@cookup/components'
 
@@ -22,8 +22,10 @@ export const AdsContainer = () => {
   return (
     <Layout
       isTitle
-      isSuspendBtn="Create Ad"
-      onSuspendClick={() => navigate(ROUTES.CREATE_AD)}
+      showButton1
+      button1Text="Create Ad"
+      button1Icon="/assets/icons/add_square.svg"
+      onButton1Click={() => navigate(ROUTES.CREATE_AD)}
     >
       <Container maxWidth="xl">
         <Grid container>
