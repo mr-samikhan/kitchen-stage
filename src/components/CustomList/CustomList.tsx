@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { COLORS } from '@cookup/constant'
 import { ToolTip } from '@cookup/modules'
-import { useBreakpints } from '@cookup/hooks'
+import { useBreakPoints } from '@cookup/hooks'
 import { ChevronRight } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Grid, IconButton, Typography } from '@mui/material'
@@ -37,7 +37,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
   } = props || {}
 
   const dispatch = useDispatch()
-  const { mobileMode } = useBreakpints()
+  const { mobileMode } = useBreakPoints()
 
   const { singleSupportData } = useSelector((state: any) => state.support)
 

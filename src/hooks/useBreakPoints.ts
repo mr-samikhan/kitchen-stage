@@ -1,6 +1,7 @@
 import { useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-export const useBreakpints = () => {
+
+export const useBreakPoints = () => {
   const theme = useTheme()
   const mobileMode = useMediaQuery(theme.breakpoints.between(0, 600))
   const tabMode = useMediaQuery(theme.breakpoints.between(600, 900))
@@ -12,4 +13,4 @@ export const useBreakpints = () => {
     desktopMode,
   }
 }
-export default useBreakpints
+export default useBreakPoints

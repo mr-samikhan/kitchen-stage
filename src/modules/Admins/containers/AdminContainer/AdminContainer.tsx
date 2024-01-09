@@ -1,10 +1,13 @@
+import { Add } from '@mui/icons-material'
 import { FormProvider } from 'react-hook-form'
+import { useBreakPoints } from '@cookup/hooks'
 import { useAdmins } from '../../hooks/useAdmin'
 import { useDispatch, useSelector } from 'react-redux'
 import { ADMINS_DATA, ADMINS_HEADER } from '@cookup/constant'
 import { CustomDialog, CustomList, Form, Layout } from '@cookup/components'
 import { AdminFormsUI } from '../../components/AdminFormsUI/AdminFormsUI'
 import {
+  OPEN_ADMIN_MODAL,
   CLOSE_ADMIN_MODAL,
   CLOSE_ADMIN_SUCCESS,
   CLOSE_EDIT_ADMIN_MODAL,
@@ -16,6 +19,7 @@ import {
 export const AdminContainer = () => {
   const dispatch = useDispatch()
 
+  const { mobileMode } = useBreakPoints()
   const { methods, onSubmit, isValid, onDelete, delAdminName } = useAdmins()
 
   const { isOpenAdminModal } = useSelector((state: any) => state.header)
@@ -36,9 +40,13 @@ export const AdminContainer = () => {
     <Layout
       isTitle
       isExportCSV
-      isAddNewAdminBtn
+      showButton1
       isPaginationIcons
+      button1ClassName="custom"
+      button1Text="Add New Admin"
       isFooter={ADMINS_DATA.length > 7 ? true : false}
+      onButton1Click={() => dispatch(OPEN_ADMIN_MODAL())}
+      button1Icon={mobileMode ? <Add /> : undefined}
     >
       <CustomList
         isActionButtons

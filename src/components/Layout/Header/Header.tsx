@@ -1,7 +1,9 @@
 import React from 'react'
-import { useBreakpints } from '@cookup/hooks'
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { useBreakPoints } from '@cookup/hooks'
+import { Box, Grid, Typography } from '@mui/material'
+import MobileHeader from '../MobileHeader/MobileHeader'
+import { OPEN_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
 import {
   MuiCustomTab,
   NavigationBar,
@@ -9,87 +11,89 @@ import {
   CustomFilterButton,
   MuiCustomSearchInput,
 } from '@cookup/components'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  OPEN_ADMIN_MODAL,
-  OPEN_SORT_MODAL,
-  SET_DELETE_MODAL,
-  SET_FILTER_MODAL,
-  SET_LOGOUT_MODAL,
-  SET_SUSPEND_MODAL,
-  SET_UNSUSPEND_USER,
-} from '@cookup/redux'
 
 interface HeaderProps {
+  button1Icon?: any
+  button2Icon?: any
   isTabs?: boolean
   isSort?: boolean
-  onDelete?: () => void
   isFilter?: boolean
-  isDeleteBtn?: boolean
-  isLogoutBtn?: 'Logout'
-  isReviewBtn?: 'Review'
   onGoBack?: () => void
+  showButton1?: boolean
+  showButton2?: boolean
+  button1Text?: string
+  button2Text?: string
+  button1Type?: string
+  button2Type?: string
   isNavigation?: boolean
   isSearchInput?: boolean
-  deleteBtnText?: string
   navigationTitle?: string
   toggleSidebar?: () => void
   isAddNewAdminBtn?: boolean
-  onReviewClick?: () => void
-  onSuspendClick?: () => void
+  button1ClassName?: string
+  button2ClassName?: string
+  onButton1Click?: () => void
+  onButton2Click?: () => void
   title?: string | null | undefined
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad' | 'Review Ad'
+  button1Variant?: 'contained' | 'outlined'
+  button2Variant?: 'contained' | 'outlined'
+  button1Size?: 'small' | 'large' | 'medium'
+  button2Size?: 'small' | 'large' | 'medium'
 }
 
 export const Header = (props: HeaderProps) => {
   const {
-    onDelete,
     title,
     isTabs,
     isSort,
     onGoBack,
     isFilter,
-    isReviewBtn,
-    isDeleteBtn,
-    deleteBtnText,
     isNavigation,
-    isLogoutBtn,
-    isSuspendBtn,
-    onReviewClick,
     isSearchInput,
     toggleSidebar,
-    onSuspendClick,
     navigationTitle,
-    isAddNewAdminBtn,
+    showButton1,
+    showButton2,
+    button1Icon,
+    button2Icon,
+    button1Text,
+    button2Text,
+    button1Type,
+    button2Type,
+    button1Size,
+    button2Size,
+    onButton2Click,
+    onButton1Click,
+    button2Variant,
+    button1Variant,
+    button1ClassName,
+    button2ClassName,
   } = props || {}
 
-  const { mobileMode, tabMode } = useBreakpints()
+  const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
-  const { isUserSuspened } = useSelector((state: any) => state.header)
 
   return (
     <React.Fragment>
       {mobileMode && (
-        <>
-          <Box
-            p={2}
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <IconButton onClick={toggleSidebar}>
-              <RestaurantMenuIcon />
-            </IconButton>
-            <Typography variant="h1" textAlign="left">
-              {title}
-            </Typography>
-            <Button variant="contained" color="primary">
-              Add New Admin
-            </Button>
-          </Box>
-        </>
+        <MobileHeader
+          title={title}
+          isSort={isSort}
+          isTabs={isTabs}
+          isFilter={isFilter}
+          onGoBack={onGoBack}
+          showButton1={showButton1}
+          showButton2={showButton2}
+          button1Icon={button1Icon}
+          button2Icon={button2Icon}
+          isNavigation={isNavigation}
+          toggleSidebar={toggleSidebar}
+          isSearchInput={isSearchInput}
+          onButton1Click={onButton1Click}
+          onButton2Click={onButton2Click}
+          navigationTitle={navigationTitle}
+        />
       )}
       {!mobileMode && (
         <Grid
@@ -142,50 +146,32 @@ export const Header = (props: HeaderProps) => {
                   onClick={() => dispatch(SET_FILTER_MODAL(true))}
                 />
               )}
-              {isAddNewAdminBtn && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => dispatch(OPEN_ADMIN_MODAL())}
-                >
-                  Add New Admin
-                </Button>
-              )}
               {isSearchInput && (
                 <Box width={tabMode ? '100%' : '80%'}>
                   <MuiCustomSearchInput />
                 </Box>
               )}
-              {isSuspendBtn && (
+              {showButton1 && (
                 <MuiSmallButton
-                  btnText={isSuspendBtn}
-                  onClick={() =>
-                    (onSuspendClick && onSuspendClick()) ||
-                    dispatch(
-                      isUserSuspened
-                        ? SET_UNSUSPEND_USER(true)
-                        : SET_SUSPEND_MODAL(true)
-                    )
-                  }
+                  icon={button1Icon}
+                  type={button1Type}
+                  btnText={button1Text}
+                  onClick={onButton1Click}
+                  variant={button1Variant}
+                  className={button1ClassName}
+                  size={button1Size}
                 />
               )}
-              {isLogoutBtn && (
+              {showButton2 && (
                 <MuiSmallButton
-                  btnText={isLogoutBtn}
-                  onClick={() => dispatch(SET_LOGOUT_MODAL(true))}
+                  icon={button2Icon}
+                  type={button2Type}
+                  btnText={button2Text}
+                  onClick={onButton2Click}
+                  variant={button2Variant}
+                  className={button2ClassName}
+                  size={button2Size}
                 />
-              )}
-              {isDeleteBtn && (
-                <Box ml={2}>
-                  <MuiSmallButton
-                    variant="outlined"
-                    btnText={deleteBtnText || 'Delete'}
-                    onClick={() =>
-                      (onDelete && onDelete()) ||
-                      dispatch(SET_DELETE_MODAL(true))
-                    }
-                  />
-                </Box>
               )}
             </Box>
           </Grid>

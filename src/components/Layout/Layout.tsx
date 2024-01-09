@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './Header/Header'
 import { Box, Grid } from '@mui/material'
 import Sidebar from './Sidebar/Sidebar'
-import { useBreakpints } from '@cookup/hooks'
+import { useBreakPoints } from '@cookup/hooks'
 import { useLocation } from 'react-router-dom'
 import { TableFooter } from '@cookup/components'
 import { COLORS, SIDEBAR_ARRAY } from '@cookup/constant'
@@ -16,22 +16,29 @@ interface LayoutProps {
   isTitle?: boolean
   isFooter?: boolean
   isFilter?: boolean
-  onDelete?: () => void
   mainHeight?: string
-  deleteBtnText?: string
-  isLogoutBtn?: 'Logout'
-  isReviewBtn?: string
   onGoBack?: () => void
-  isDeleteBtn?: boolean
   isNavigation?: boolean
   isSearchInput?: boolean
   navigationTitle?: string
-  isAddNewAdminBtn?: boolean
   children?: React.ReactNode
-  onReviewClick?: () => void
-  onSuspendClick?: () => void
   isPaginationIcons?: boolean
-  isSuspendBtn?: 'Suspend' | 'Logout' | 'Unsuspend' | 'Create Ad' | 'Review Ad'
+  showButton1?: boolean
+  showButton2?: boolean
+  button1Text?: string
+  button2Text?: string
+  button1Type?: string
+  button2Type?: string
+  button1Icon?: any
+  button2Icon?: any
+  button1Variant?: 'contained' | 'outlined'
+  button2Variant?: 'contained' | 'outlined'
+  button1Size?: 'small' | 'large' | 'medium'
+  button2Size?: 'small' | 'large' | 'medium'
+  button1ClassName?: string
+  button2ClassName?: string
+  onButton1Click?: () => void
+  onButton2Click?: () => void
 }
 
 export const Layout = (props: LayoutProps) => {
@@ -45,25 +52,32 @@ export const Layout = (props: LayoutProps) => {
     children,
     isFilter,
     isFooter,
-    onDelete,
     mainHeight,
     isExportCSV,
-    isReviewBtn,
-    isLogoutBtn,
-    isDeleteBtn,
-    isSuspendBtn,
     isNavigation,
-    deleteBtnText,
     isSearchInput,
-    onReviewClick,
-    onSuspendClick,
+    showButton1,
+    showButton2,
+    button1Icon,
+    button2Icon,
+    button1Text,
+    button2Text,
+    button1Type,
+    button2Type,
+    button1Size,
+    button2Size,
+    button1Variant,
+    button2Variant,
+    onButton1Click,
+    onButton2Click,
     navigationTitle,
-    isAddNewAdminBtn,
+    button1ClassName,
+    button2ClassName,
     isPaginationIcons,
   } = props || {}
 
   const { pathname } = useLocation()
-  const { mobileMode } = useBreakpints()
+  const { mobileMode } = useBreakPoints()
 
   const [isSideBar, setIsSideBar] = React.useState(false)
 
@@ -80,8 +94,6 @@ export const Layout = (props: LayoutProps) => {
   })
 
   const handleSideBar = () => setIsSideBar && setIsSideBar(!isSideBar)
-
-  const { desktopMode } = useBreakpints()
 
   return (
     <React.Fragment>
@@ -119,18 +131,26 @@ export const Layout = (props: LayoutProps) => {
             isTabs={isTabs}
             isFilter={isFilter}
             onGoBack={onGoBack}
-            onDelete={onDelete}
-            isDeleteBtn={isDeleteBtn}
-            isLogoutBtn={isLogoutBtn}
-            isSuspendBtn={isSuspendBtn}
+            button1Size={button1Size}
+            button2Size={button2Size}
+            showButton1={showButton1}
+            showButton2={showButton2}
+            button1Icon={button1Icon}
+            button1Type={button1Type}
+            button1Text={button1Text}
+            button2Icon={button2Icon}
+            button2Type={button2Type}
+            button2Text={button2Text}
             isNavigation={isNavigation}
-            deleteBtnText={deleteBtnText}
             isSearchInput={isSearchInput}
-            onReviewClick={onReviewClick}
             toggleSidebar={handleSideBar}
-            onSuspendClick={onSuspendClick}
+            onButton2Click={onButton2Click}
+            onButton1Click={onButton1Click}
+            button2Variant={button2Variant}
+            button1Variant={button1Variant}
             navigationTitle={navigationTitle}
-            isAddNewAdminBtn={isAddNewAdminBtn}
+            button1ClassName={button1ClassName}
+            button2ClassName={button2ClassName}
             title={isTitle ? SELECTED_TITLE && SELECTED_TITLE : title}
           />
           <main
