@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { ChevronRight } from '@mui/icons-material'
 import { COLORS, SORT_MODAL_ARRAY } from '@cookup/constant'
 import { CLOSE_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
+import { MuiCustomDatePicker } from '@cookup/components'
 
 interface CustomSortModalProps {
   height?: any
@@ -103,38 +104,18 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
           </Box>
           <Box px={2} mt={2}>
             <Typography variant="subtitle2">Start Date</Typography>
-            <TextField
-              fullWidth
-              sx={{ mt: 2 }}
+            <MuiCustomDatePicker
+              name="startDate"
+              icon={ChevronRight}
               className="start-end-date"
-              placeholder="Choose Date"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <ChevronRight />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
             />
           </Box>
           <Box px={2} mt={2}>
             <Typography variant="subtitle2">End Date</Typography>
-            <TextField
-              fullWidth
-              sx={{ mt: 2 }}
-              placeholder="Choose Date"
+            <MuiCustomDatePicker
+              name="endDate"
+              icon={ChevronRight}
               className="start-end-date"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <ChevronRight />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
             />
           </Box>
         </>

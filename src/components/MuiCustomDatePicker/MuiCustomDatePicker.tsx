@@ -2,7 +2,7 @@ import * as React from 'react'
 import { COLORS } from '@cookup/constant'
 import { useFormContext } from 'react-hook-form'
 import EventIcon from '@mui/icons-material/Event'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, SvgIconProps, TextField } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
@@ -14,12 +14,14 @@ interface MuiCustomDatePickerProps {
   label?: string
   error?: boolean
   helperText?: string
+  className?: string
   name?: string | undefined
   setDate?: (date: any) => void
+  icon?: string | React.ComponentType<SvgIconProps>
 }
 
 export const MuiCustomDatePicker = (props: MuiCustomDatePickerProps) => {
-  const { label, setDate, name, methods } = props || {}
+  const { label, setDate, name, methods, icon, className } = props || {}
 
   const ActionBarUI = ({ onCancel, onAccept }: any) => (
     <Box maxWidth={320}>
@@ -62,12 +64,13 @@ export const MuiCustomDatePicker = (props: MuiCustomDatePickerProps) => {
           label={label}
           onChange={setDate}
           closeOnSelect={false}
+          className={className}
           views={['year', 'month', 'day']}
           slots={{
             actionBar: ({ onAccept, onCancel }) => (
               <ActionBarUI onAccept={onAccept} onCancel={onCancel} />
             ),
-            openPickerIcon: EventIcon as any,
+            openPickerIcon: icon || (EventIcon as any),
             textField: (props) => (
               <TextField
                 {...props}
@@ -93,6 +96,25 @@ export const MuiCustomDatePicker = (props: MuiCustomDatePickerProps) => {
             },
             layout: {
               sx: layoutStyle,
+            },
+            popper: {
+              anchorEl: null,
+              sx: {
+                backdropFilter: 'blur(2px)',
+                width: '100vw',
+                position: 'absolute',
+                height: '100vh',
+                '& .MuiPaper-root': {
+                  '&.MuiPickersPopper-paper': {
+                    height: 400,
+                    position: 'absolute',
+                    top: '20%',
+                    left: '35%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  },
+                },
+              },
             },
           }}
         />
