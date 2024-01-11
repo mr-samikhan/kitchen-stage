@@ -52,6 +52,7 @@ export const CreateAdForm = (props: ICreateForm) => {
         >
           <CustomTextField
             fullWidth
+            className="border"
             name="adName"
             sx={inputStyle}
             placeholder="Ad Name (For recognition)"

@@ -5,6 +5,9 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 interface AdValues {
   ageRange: any[]
   gender: any[]
+  draftModal?: boolean
+  publishModal?: boolean
+  successModal?: boolean
 }
 
 interface UseAdsResult {
@@ -23,6 +26,9 @@ export const useAds = (): UseAdsResult => {
   const [adValues, setAdValues] = useState<AdValues>({
     ageRange: [],
     gender: [],
+    draftModal: false,
+    publishModal: false,
+    successModal: false,
   })
 
   const methods = useForm({
