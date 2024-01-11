@@ -15,6 +15,8 @@ interface CustomDialogProps {
   text?: string
   subTitle?: string
   isOpen?: boolean
+  textVariant?: any
+  fontFamily?: string
   onClose?: () => void
   onCancel?: () => void
   children?: ReactNode
@@ -40,7 +42,9 @@ export const CustomDialog = (props: CustomDialogProps) => {
     subTitle,
     onCancel,
     onConfirm,
+    fontFamily,
     isOkButton,
+    textVariant,
     textPosition,
     okButtonText,
     titleVariant,
@@ -72,11 +76,12 @@ export const CustomDialog = (props: CustomDialogProps) => {
           </Box>
         )}
         <DialogTitle variant={titleVariant || 'body2'}>{title}</DialogTitle>
-        <Typography variant="subtitle1" color="grey.50">
+        <Typography variant="subtitle1" color="grey.50" fontFamily={fontFamily}>
           {subTitle}
         </Typography>
         <Typography
-          variant="subtitle1"
+          fontFamily={fontFamily}
+          variant={textVariant ? textVariant : 'subtitle1'}
           textAlign={textPosition ? textPosition : 'justify'}
         >
           {text}
