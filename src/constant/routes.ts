@@ -12,6 +12,7 @@ const Routes = {
   CREATE_AD: '/create_ad',
   SINGLE_USER: '/users/:id',
   SETTINGS: '/account-settings',
+  DASHBOARD_ADS: '/dashboard/ads',
   RESET_PASSWORD: '/reset_password',
   FORGOT_PASSWORD: '/forgot_password',
   CUSTOMER_SUPPORT: '/customersupport',
