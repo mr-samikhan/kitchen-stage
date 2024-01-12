@@ -1,8 +1,9 @@
 import React from 'react'
 import { Box, Grid } from '@mui/material'
 import { SET_TAB_VALUE } from '@cookup/redux'
-import { useNavigate } from 'react-router-dom'
+import { SortModalUI } from '@cookup/modules'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   Layout,
   SubHeader,
@@ -16,11 +17,12 @@ import {
   BUSINESS_USERS_HEADER,
   PERSONAL_USERS_HEADER,
 } from '@cookup/constant'
-import { SortModalUI } from '@cookup/modules'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const { state } = useLocation()
 
   const { tabValue } = useSelector((state: any) => state.user)
 
@@ -38,8 +40,30 @@ export const UserContainer = () => {
     })
   }
 
+  let USER_TYPES: any = {
+    personal: 'personal',
+    business: 'business',
+    registered: 'registered',
+    deactivated: 'deactivated',
+  }
+
   return (
-    <Layout isTitle isTabs isSearchInput isExportCSV isPaginationIcons isFooter>
+    <Layout
+      isFooter
+      isExportCSV
+      isSearchInput
+      isPaginationIcons
+      isTitle={state?.type !== undefined ? false : true}
+      isTabs={state?.type !== undefined ? false : true}
+      isNavigation={
+        state?.type !== undefined && state?.type === USER_TYPES[state?.type]
+          ? true
+          : false
+      }
+      navigationTitle={
+        state?.type === USER_TYPES[state?.type] ? state?.title : undefined
+      }
+    >
       <Box my={3} mt={2}>
         <Grid container>
           <Grid item md={11} xs={12} textAlign="right">

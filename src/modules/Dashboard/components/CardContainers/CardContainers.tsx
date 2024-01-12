@@ -20,6 +20,7 @@ export const CardContainers = (props: CardContainersProps) => {
         {data?.map((item: any) => (
           <Grid item md={2.8} xs={6}>
             <DashboardCard
+              type={item.type}
               title={item.title}
               counter={item.counter}
               titleColor={titleColor}

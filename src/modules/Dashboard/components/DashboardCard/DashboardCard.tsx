@@ -6,6 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { Box, IconButton, Paper, Typography } from '@mui/material'
 
 interface DashboardCardProps {
+  type?: string
   title?: string
   counter?: number
   duration?: string
@@ -17,6 +18,7 @@ interface DashboardCardProps {
 
 export const DashboardCard = (props: DashboardCardProps) => {
   const {
+    type,
     title,
     counter,
     navigate,
@@ -44,7 +46,9 @@ export const DashboardCard = (props: DashboardCardProps) => {
           </Typography>
           {navigate !== undefined && (
             <Box position={mobileMode ? 'relative' : 'absolute'} right={0}>
-              <IconButton onClick={() => navigatTo(navigate)}>
+              <IconButton
+                onClick={() => navigatTo(navigate, { state: { type, title } })}
+              >
                 <ChevronRightIcon />
               </IconButton>
             </Box>

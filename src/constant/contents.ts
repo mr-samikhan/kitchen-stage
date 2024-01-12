@@ -57,12 +57,14 @@ export const DASHBOARD_USERS = [
   {
     counter: 159,
     percentage: +4.5,
+    type: 'registered',
     duration: 'last week',
     navigate: ROUTES.USERS,
     title: 'Registered Users',
   },
   {
     counter: 98,
+    type: 'personal',
     percentage: -1.8,
     duration: 'last week',
     navigate: ROUTES.USERS,
@@ -70,6 +72,7 @@ export const DASHBOARD_USERS = [
   },
   {
     counter: 159,
+    type: 'business',
     percentage: 4.5,
     duration: 'last week',
     navigate: ROUTES.USERS,
@@ -77,6 +80,7 @@ export const DASHBOARD_USERS = [
   },
   {
     counter: 159,
+    type: 'deactivated',
     percentage: 4.5,
     duration: 'last week',
     navigate: ROUTES.USERS,
@@ -101,8 +105,8 @@ export const DASHBOARD_ACTIVITES = [
     title: 'Ads',
     counter: 159,
     percentage: 4.5,
-    navigate: ROUTES.ADS,
     duration: 'last week',
+    navigate: ROUTES.DASHBOARD_ADS,
   },
 ]
 
@@ -613,4 +617,22 @@ export const ADS_CARD_DATA = [
   { img: '/assets/images/ad_card3.svg', title: 'Ad Name', clickRate: '-3.5' },
   { img: '/assets/images/ad_card4.svg', title: 'Ad Name', clickRate: '1.9' },
   { img: '/assets/images/ad_card5.svg', title: 'Ad Name', clickRate: '-3.5' },
+]
+
+export const ADS_ARRAY = [
+  { img: '/assets/images/media_card1.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card2.svg', user: '/assets/icons/user2.svg' },
+  { img: '/assets/images/media_card3.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card4.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card5.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card2.svg', user: '/assets/icons/user2.svg' },
+  { img: '/assets/images/media_card1.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card3.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card4.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card1.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card5.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card2.svg', user: '/assets/icons/user2.svg' },
+  { img: '/assets/images/media_card3.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card4.svg', user: '/assets/icons/user1.svg' },
+  { img: '/assets/images/media_card5.svg', user: '/assets/icons/user1.svg' },
 ]

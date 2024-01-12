@@ -15,6 +15,7 @@ import {
   SingleUser,
   ManageSettings,
   CustomerSupport,
+  DashboardAds,
 } from '@cookup/screens'
 
 const Routes = () => {
@@ -42,6 +43,7 @@ const Routes = () => {
         <Route path={ROUTES.ANALYTICS} element={<Dashboard />} />
         <Route path={ROUTES.CREATE_AD} element={<CreateAds />} />
         <Route path={ROUTES.SETTINGS} element={<ManageSettings />} />
+        <Route path={ROUTES.DASHBOARD_ADS} element={<DashboardAds />} />
         <Route path={ROUTES.CUSTOMER_SUPPORT} element={<CustomerSupport />} />
       </ReactRoutes>
       {/* </ProtectedRoute> */}
