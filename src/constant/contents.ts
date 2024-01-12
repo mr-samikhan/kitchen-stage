@@ -57,12 +57,14 @@ export const DASHBOARD_USERS = [
   {
     counter: 159,
     percentage: +4.5,
+    type: 'registered',
     duration: 'last week',
     navigate: ROUTES.USERS,
     title: 'Registered Users',
   },
   {
     counter: 98,
+    type: 'personal',
     percentage: -1.8,
     duration: 'last week',
     navigate: ROUTES.USERS,
@@ -70,6 +72,7 @@ export const DASHBOARD_USERS = [
   },
   {
     counter: 159,
+    type: 'business',
     percentage: 4.5,
     duration: 'last week',
     navigate: ROUTES.USERS,
@@ -77,6 +80,7 @@ export const DASHBOARD_USERS = [
   },
   {
     counter: 159,
+    type: 'deactivated',
     percentage: 4.5,
     duration: 'last week',
     navigate: ROUTES.USERS,
