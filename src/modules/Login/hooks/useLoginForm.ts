@@ -53,8 +53,8 @@ export default function useLoginForm() {
       setIsPasswordSent(true)
     } else {
       const { email, password } = data || {}
-      if (email === 'sami@chopdawg.com' && password === 'Abcd@123') {
-        navigate(ROUTES.ANALYTICS)
+      if (email && password) {
+        navigate(ROUTES.ROOT)
         // alert('Congratulations, you are logged in')
       } else if (LOGIN_PATH_CHECK) {
         setIsSnackBar(true)
