@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { FormProvider } from 'react-hook-form'
 import { useBreakPoints } from '@cookup/hooks'
@@ -48,12 +49,14 @@ export const AdminContainer = () => {
       onButton1Click={() => dispatch(OPEN_ADMIN_MODAL())}
       button1Icon={mobileMode ? <Add /> : undefined}
     >
-      <CustomList
-        isActionButtons
-        onDelete={onDelete}
-        data={ADMINS_DATA}
-        headerData={ADMINS_HEADER}
-      />
+      <Box mt={2}>
+        <CustomList
+          isActionButtons
+          onDelete={onDelete}
+          data={ADMINS_DATA}
+          headerData={ADMINS_HEADER}
+        />
+      </Box>
       {MODAL_CHECK && (
         <CustomDialog
           isOpen={isOpenAdminModal || isAdminEditModal}

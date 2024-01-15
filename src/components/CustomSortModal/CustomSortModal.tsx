@@ -1,20 +1,19 @@
 import {
   Box,
   Paper,
+  Modal,
   Divider,
-  TextField,
   IconButton,
   Typography,
-  InputAdornment,
 } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import { useBreakPoints } from '@cookup/hooks'
 import { ISortItem } from 'types/FormResolvers'
 import CloseIcon from '@mui/icons-material/Close'
 import { ChevronRight } from '@mui/icons-material'
+import { useDispatch, useSelector } from 'react-redux'
+import { MuiCustomDatePicker } from '@cookup/components'
 import { COLORS, SORT_MODAL_ARRAY } from '@cookup/constant'
 import { CLOSE_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
-import { MuiCustomDatePicker } from '@cookup/components'
 
 interface CustomSortModalProps {
   height?: any
@@ -31,6 +30,10 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
 
   const dispatch = useDispatch()
 
+  const { isSortModal, isFilterModal } = useSelector(
+    (state: any) => state.header
+  )
+
   const onSelectValues = (item: ISortItem) => {
     console.log(item)
   }
@@ -39,88 +42,96 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
   const shouldTranslate = mobileMode && CHECK
 
   return (
-    <Paper
-      sx={{
-        zIndex: 1,
-        width: width || 300,
-        position: 'absolute',
-        borderRadius: '20px',
-        height: height || 'auto',
-        p: padding ? padding : 2,
-        right: { xs: 0, sm: 0, md: 150 },
-        top: { xs: '50%', sm: '50%', md: top || 50 },
-        left: shouldTranslate ? '50%' : undefined,
-        dropShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-        transform: shouldTranslate ? 'translate(-50%, -50%)' : undefined,
+    <Modal
+      open={isSortModal || isFilterModal}
+      onClose={() => {
+        dispatch(SET_FILTER_MODAL(false))
+        dispatch(CLOSE_SORT_MODAL())
       }}
     >
-      <Box
-        px={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
+      <Paper
+        sx={{
+          zIndex: 1,
+          width: width || 300,
+          position: 'absolute',
+          borderRadius: '20px',
+          height: height || 'auto',
+          p: padding ? padding : 2,
+          right: { xs: 0, sm: 0, md: 150 },
+          top: { xs: '50%', sm: '50%', md: top || 50 },
+          left: shouldTranslate ? '50%' : undefined,
+          dropShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          transform: shouldTranslate ? 'translate(-50%, -50%)' : undefined,
+        }}
       >
-        <Typography variant="subtitle2" color="primary">
-          {title || 'Sort By'}
-        </Typography>
-        <IconButton
-          onClick={() => {
-            dispatch(SET_FILTER_MODAL(false))
-            dispatch(CLOSE_SORT_MODAL())
-          }}
+        <Box
+          px={2}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <Divider />
-      {children || (
-        <>
-          {SORT_MODAL_ARRAY.map((item, index) => (
+          <Typography variant="subtitle2" color="primary">
+            {title || 'Sort By'}
+          </Typography>
+          <IconButton
+            onClick={() => {
+              dispatch(SET_FILTER_MODAL(false))
+              dispatch(CLOSE_SORT_MODAL())
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Divider />
+        {children || (
+          <>
+            {SORT_MODAL_ARRAY.map((item, index) => (
+              <Box
+                px={2}
+                display="flex"
+                gap={2}
+                mt={1}
+                key={index}
+                onClick={() => onSelectValues(item)}
+              >
+                <Typography variant="subtitle2">{item.title}</Typography>
+                <Typography variant="subtitle2" color="grey">
+                  {item.value}
+                </Typography>
+              </Box>
+            ))}
             <Box
+              mt={2}
               px={2}
+              height={60}
               display="flex"
-              gap={2}
-              mt={1}
-              key={index}
-              onClick={() => onSelectValues(item)}
+              alignItems="center"
+              bgcolor={COLORS.grey.dark}
             >
-              <Typography variant="subtitle2">{item.title}</Typography>
-              <Typography variant="subtitle2" color="grey">
-                {item.value}
+              <Typography variant="subtitle2" color="primary">
+                Custom Range
               </Typography>
             </Box>
-          ))}
-          <Box
-            mt={2}
-            px={2}
-            height={60}
-            display="flex"
-            alignItems="center"
-            bgcolor={COLORS.grey.dark}
-          >
-            <Typography variant="subtitle2" color="primary">
-              Custom Range
-            </Typography>
-          </Box>
-          <Box px={2} mt={2}>
-            <Typography variant="subtitle2">Start Date</Typography>
-            <MuiCustomDatePicker
-              name="startDate"
-              icon={ChevronRight}
-              className="start-end-date"
-            />
-          </Box>
-          <Box px={2} mt={2}>
-            <Typography variant="subtitle2">End Date</Typography>
-            <MuiCustomDatePicker
-              name="endDate"
-              icon={ChevronRight}
-              className="start-end-date"
-            />
-          </Box>
-        </>
-      )}
-    </Paper>
+            <Box px={2} mt={2}>
+              <Typography variant="subtitle2">Start Date</Typography>
+              <MuiCustomDatePicker
+                name="startDate"
+                icon={ChevronRight}
+                className="start-end-date"
+              />
+            </Box>
+            <Box px={2} mt={2}>
+              <Typography variant="subtitle2">End Date</Typography>
+              <MuiCustomDatePicker
+                name="endDate"
+                icon={ChevronRight}
+                className="start-end-date"
+              />
+            </Box>
+          </>
+        )}
+      </Paper>
+    </Modal>
   )
 }
 

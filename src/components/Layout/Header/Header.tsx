@@ -18,6 +18,7 @@ interface HeaderProps {
   isTabs?: boolean
   isSort?: boolean
   isFilter?: boolean
+  navTitleColor?: string
   onGoBack?: () => void
   showButton1?: boolean
   showButton2?: boolean
@@ -48,6 +49,7 @@ export const Header = (props: HeaderProps) => {
     isSort,
     onGoBack,
     isFilter,
+    navTitleColor,
     isNavigation,
     isSearchInput,
     toggleSidebar,
@@ -111,6 +113,7 @@ export const Header = (props: HeaderProps) => {
             {isNavigation && (
               <NavigationBar
                 onGoBack={onGoBack}
+                navTitleColor={navTitleColor}
                 navigationTitle={navigationTitle}
               />
             )}

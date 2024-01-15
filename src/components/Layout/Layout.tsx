@@ -17,6 +17,7 @@ interface LayoutProps {
   isFooter?: boolean
   isFilter?: boolean
   mainHeight?: string
+  navTitleColor?: string
   onGoBack?: () => void
   isNavigation?: boolean
   isSearchInput?: boolean
@@ -56,6 +57,7 @@ export const Layout = (props: LayoutProps) => {
     isExportCSV,
     isNavigation,
     isSearchInput,
+    navTitleColor,
     showButton1,
     showButton2,
     button1Icon,
@@ -131,6 +133,7 @@ export const Layout = (props: LayoutProps) => {
             isTabs={isTabs}
             isFilter={isFilter}
             onGoBack={onGoBack}
+            navTitleColor={navTitleColor}
             button1Size={button1Size}
             button2Size={button2Size}
             showButton1={showButton1}
