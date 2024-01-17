@@ -18,6 +18,7 @@ export default defineConfig({
       '@cookup/screens': path.resolve(__dirname, './src/screens/screens.ts'),
       '@cookup/services': path.resolve(__dirname, './src/services/services.ts'),
       '@cookup/constant': path.resolve(__dirname, './src/constant/constant.ts'),
+      '@cookup/firebase': path.resolve(__dirname, './src/firebase.ts'),
       '@cookup/providers': path.resolve(
         __dirname,
         './src/providers/providers.ts'

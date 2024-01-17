@@ -19,6 +19,8 @@
       "@cookup/constant": ["constant/constant.ts"],
       "@cookup/providers": ["providers/providers.ts"],
       "@cookup/components": ["components/components.ts"],
+      "@cookup/services": ["services/services.ts"],
+      "@cookup/firebase": ["firebase.ts"],
     },
 
     /* Bundler mode */
