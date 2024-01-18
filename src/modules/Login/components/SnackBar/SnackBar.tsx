@@ -1,5 +1,8 @@
-import { Box, Grid, Paper, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectError } from '@cookup/redux'
+import { getErrorMessage } from '@cookup/constant'
+import { Box, Paper, Typography } from '@mui/material'
 
 interface snackBarProps {
   isOpen?: boolean
@@ -7,6 +10,9 @@ interface snackBarProps {
 
 export const SnackBar = (props: snackBarProps) => {
   const { isOpen } = props || {}
+
+  const error = useSelector(selectError)
+  const errorMsg = getErrorMessage(error)
 
   return (
     <React.Fragment>
@@ -36,9 +42,7 @@ export const SnackBar = (props: snackBarProps) => {
             textAlign="left"
             color="white"
           >
-            Your email address and password did not match, Please check your
-            {/* <br /> */}
-            credentials and try again
+            {errorMsg}
           </Typography>
         </Box>
       </Paper>

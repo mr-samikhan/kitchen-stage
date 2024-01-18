@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ROUTES } from '@cookup/constant'
 import { useForm } from 'react-hook-form'
+import { AppDispatch } from 'redux/store/store'
+import { loginUser, selectUser } from '@cookup/redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ILoginFormResolver } from 'types/FormResolvers'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
@@ -13,9 +16,19 @@ export default function useLoginForm() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
+  const dispatch = useDispatch<AppDispatch>()
+
+  const user = useSelector(selectUser)
+
   const [isSnackBar, setIsSnackBar] = React.useState(false)
   const [isPasswordSent, setIsPasswordSent] = React.useState(false)
   const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
+
+  useEffect(() => {
+    if (user) {
+      return navigate(ROUTES.ROOT)
+    }
+  }, [])
 
   //forgot password screen
   let PATH_CHECK = pathname === ROUTES.FORGOT_PASSWORD
@@ -48,14 +61,26 @@ export default function useLoginForm() {
     navigate(ROUTES.LOGIN_ACCOUNT)
   }
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     if (PATH_CHECK) {
       setIsPasswordSent(true)
     } else {
       const { email, password } = data || {}
       if (email && password) {
-        navigate(ROUTES.ROOT)
-        // alert('Congratulations, you are logged in')
+        try {
+          await dispatch(
+            loginUser({
+              email,
+              password,
+            })
+          )
+        } catch (error: any) {
+          if (error?.message === 'auth/not-admin') {
+            setIsSnackBar(true)
+          } else {
+            console.error(error)
+          }
+        }
       } else if (LOGIN_PATH_CHECK) {
         setIsSnackBar(true)
       } else {

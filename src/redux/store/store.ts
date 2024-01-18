@@ -5,10 +5,12 @@ import {
   headerSlice,
   supportSlice,
   settingsSlice,
+  authSlice,
 } from '@cookup/redux'
 
 const store = configureStore({
   reducer: {
+    auth: authSlice,
     user: userSlice,
     admin: adminSlice,
     header: headerSlice,

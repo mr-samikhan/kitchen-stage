@@ -1,4 +1,6 @@
 import { Box, Grid } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { selectError } from '@cookup/redux'
 import { FormProvider } from 'react-hook-form'
 import useLoginForm from '../../hooks/useLoginForm'
 import { CustomDialog, Form } from '@cookup/components'
@@ -22,6 +24,8 @@ export const LoginContainer = () => {
     setIsPasswordResetModal,
   } = useLoginForm()
 
+  const isLoginError = useSelector(selectError)
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -40,7 +44,7 @@ export const LoginContainer = () => {
             />
           </Grid>
         </Box>
-        {isSnackBar && <SnackBar isOpen={isSnackBar} />}
+        {isLoginError !== null && <SnackBar isOpen={isLoginError !== null} />}
         {isPasswordSent && (
           <CustomDialog
             isOkButton

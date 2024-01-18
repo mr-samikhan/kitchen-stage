@@ -1,11 +1,11 @@
 import { ROUTES } from '@cookup/constant'
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
 interface ProtectedRoutesProps {
-  isAuthenticated?: boolean
   isLoading?: boolean
+  isAuthenticated?: boolean
   children: React.ReactNode
 }
 
@@ -16,26 +16,14 @@ const ProtectedRoutes = ({ children, ...props }: ProtectedRoutesProps) => {
 
   useLayoutEffect(() => {
     if (isAuthenticated) {
-      navigate(ROUTES.DASHBOARD)
+      navigate(ROUTES.ROOT)
     } else {
       navigate(ROUTES.LOGIN_ACCOUNT)
     }
     // eslint-disable-next-line
   }, [isAuthenticated])
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login')
-    }
-  }, [])
-
-  return isLoading ? (
-    'LOADING...'
-  ) : isAuthenticated ? (
-    <React.Fragment>{children}</React.Fragment>
-  ) : (
-    <></>
-  )
+  return isAuthenticated ? <React.Fragment>{children}</React.Fragment> : <></>
 }
 
 export default ProtectedRoutes

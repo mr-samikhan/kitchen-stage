@@ -7,39 +7,34 @@ import { useNavigate } from 'react-router-dom'
 import { ThemeProvider } from '@cookup/providers'
 import { CustomLoader } from '@cookup/components'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  LOGOUT,
-  SET_LOADING,
-  UPDATE_USER,
-  SET_AUTHENTICATED,
-} from '@cookup/redux'
+import { LOGOUT, getCurrentUserData } from '@cookup/redux'
 
 const App = () => {
-  const dispath = useDispatch()
+  const dispath = useDispatch<any>()
   const navigate = useNavigate()
-  const { isLoading } = useSelector((state: any) => state.auth)
+  const { userLoading } = useSelector((state: any) => state.auth)
 
   useEffect(() => {
-    dispath(SET_LOADING(true))
-    auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        dispath(SET_AUTHENTICATED())
         dispath(
-          UPDATE_USER({
-            userName: user.displayName || '',
-            email: user.email || '',
+          getCurrentUserData({
+            uid: user.uid,
+            email: user.email,
+            type: '',
+            userName: user.displayName,
           })
         )
-        dispath(SET_LOADING(false))
       } else {
         dispath(LOGOUT())
-        dispath(SET_LOADING(false))
         navigate(ROUTES.LOGIN_ACCOUNT)
       }
     })
+
+    return unsubscribe
   }, [dispath, auth])
 
-  if (isLoading) {
+  if (userLoading === 'pending') {
     return <CustomLoader />
   }
 
