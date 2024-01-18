@@ -1,3 +1,4 @@
+import { auth } from '@cookup/firebase'
 import React, { useEffect } from 'react'
 import { useBreakPoints } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
@@ -38,7 +39,10 @@ export const SettingsContainer = () => {
       button1Text="Logout"
       title="Personal Settings"
       button1Icon={mobileMode ? <LogoutIcon /> : undefined}
-      onButton1Click={() => dispatch(SET_LOGOUT_MODAL(true))}
+      onButton1Click={() => {
+        auth.signOut()
+        dispatch(SET_LOGOUT_MODAL(true))
+      }}
     >
       <Container maxWidth="xl">
         <FormProvider {...methods}>

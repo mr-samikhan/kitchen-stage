@@ -1,5 +1,5 @@
 const getErrorMessage = (error: any) => {
-  error = error.code || error
+  error = error.code || error.message
   let errorMsg = ''
   if (error === 'auth/user-not-found') {
     errorMsg = 'This email is not registered!'
@@ -24,6 +24,8 @@ const getErrorMessage = (error: any) => {
     errorMsg = "You don't have permission to do this operation!"
   } else if (error === 'auth/network-request-failed') {
     errorMsg = 'You are offline!'
+  } else if (error === 'auth/not-admin') {
+    errorMsg = 'You are not an admin user!'
   } else if (error === 'permission-error') {
     errorMsg = 'You don`t have permission to delete Adminsitrator!'
   }

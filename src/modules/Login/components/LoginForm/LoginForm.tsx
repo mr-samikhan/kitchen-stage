@@ -1,7 +1,16 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectLoading } from '@cookup/redux'
 import { COLORS, ROUTES } from '@cookup/constant'
 import { CustomTextField } from '@cookup/components'
-import { Box, Grid, IconButton, Link, Typography } from '@mui/material'
+import {
+  Box,
+  Grid,
+  Link,
+  IconButton,
+  Typography,
+  CircularProgress,
+} from '@mui/material'
 
 interface LoginFormProps {
   pathname?: string
@@ -16,6 +25,7 @@ export const LoginForm = (props: LoginFormProps) => {
   let PATH_CHECK = pathname === ROUTES.FORGOT_PASSWORD
   let RESET_PATH_CHECK = pathname === ROUTES.RESET_PASSWORD
 
+  const isLoading = useSelector(selectLoading)
   return (
     <React.Fragment>
       <Grid item md={5} sm={10} xs={10}>
@@ -97,6 +107,8 @@ export const LoginForm = (props: LoginFormProps) => {
           <IconButton type="submit">
             {!isDisable ? (
               <img src="/assets/icons/login-disable-btn.svg" alt="eye" />
+            ) : isLoading === 'pending' ? (
+              <CircularProgress />
             ) : (
               <img src="/assets/icons/login-btn.svg" alt="eye" />
             )}
