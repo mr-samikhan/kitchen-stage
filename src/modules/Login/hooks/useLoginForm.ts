@@ -1,6 +1,8 @@
+import { Api } from '@cookup/services'
 import React, { useEffect } from 'react'
 import { ROUTES } from '@cookup/constant'
 import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 import { AppDispatch } from 'redux/store/store'
 import { loginUser, selectUser } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +16,7 @@ import {
 
 export default function useLoginForm() {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { pathname, state: oobCode } = useLocation()
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -23,6 +25,9 @@ export default function useLoginForm() {
   const [isSnackBar, setIsSnackBar] = React.useState(false)
   const [isPasswordSent, setIsPasswordSent] = React.useState(false)
   const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
+
+  //oobCode
+  console.log('>>>oobCode', oobCode)
 
   useEffect(() => {
     if (user) {
@@ -52,7 +57,7 @@ export default function useLoginForm() {
   const onResetPassword: any = () => {
     methods.reset()
     setIsPasswordSent(false)
-    navigate(ROUTES.RESET_PASSWORD)
+    navigate(ROUTES.LOGIN_ACCOUNT)
   }
 
   const onResetSuccess: any = () => {
@@ -61,9 +66,18 @@ export default function useLoginForm() {
     navigate(ROUTES.LOGIN_ACCOUNT)
   }
 
+  //mutation forgot_password
+  const { isLoading, mutate: onForgotPassword_ } = useMutation(
+    Api.auth.forgotPassword,
+    {
+      onSuccess: () => setIsPasswordSent(true),
+      onError: (error) => alert(error),
+    }
+  )
+
   const onSubmit = async (data: any) => {
     if (PATH_CHECK) {
-      setIsPasswordSent(true)
+      onForgotPassword_(data.email)
     } else {
       const { email, password } = data || {}
       if (email && password) {
