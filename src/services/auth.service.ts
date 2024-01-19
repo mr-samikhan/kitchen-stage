@@ -6,7 +6,13 @@ import {
   signInWithEmailAndPassword,
 } from '@cookup/firebase'
 import { IUser } from '@cookup/redux'
+import { getErrorMessage } from '@cookup/constant'
 import { getDocs, where } from 'firebase/firestore'
+import {
+  confirmPasswordReset,
+  fetchSignInMethodsForEmail,
+  sendPasswordResetEmail,
+} from 'firebase/auth'
 
 class Auth {
   login = async (data: any) => {
@@ -58,6 +64,46 @@ class Auth {
     } else {
       return querySnapshot.docs[0].data()
     }
+  }
+
+  checkEmail = async (email: string) => {
+    try {
+      const methods = await fetchSignInMethodsForEmail(auth, email)
+      console.log(methods)
+      if (methods.length === 0) {
+        throw Error('auth/email-not-found')
+      } else {
+        return { message: 'Email sent successfully' }
+      }
+    } catch (error) {
+      return error
+    }
+  }
+
+  forgotPassword = async (email: string) => {
+    return new Promise((resolve, reject) => {
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          resolve({ message: 'Email sent successfully' })
+        })
+        .catch((error) => {
+          const err = getErrorMessage(error)
+          reject(err)
+        })
+    })
+  }
+
+  confirmPasswordReset = async (values = { oobCode: '', newPassword: '' }) => {
+    const { oobCode, newPassword } = values || {}
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (!oobCode && !newPassword) return
+
+        resolve(await confirmPasswordReset(auth, oobCode, newPassword))
+      } catch (error) {
+        reject(error)
+      }
+    })
   }
 }
 const AuthService = new Auth()
