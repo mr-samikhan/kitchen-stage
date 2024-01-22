@@ -1,5 +1,5 @@
 const getErrorMessage = (error: any) => {
-  error = error.code || error.message
+  error = error.code || error.message || error
   let errorMsg = ''
   if (error === 'auth/user-not-found') {
     errorMsg = 'This email is not registered!'
