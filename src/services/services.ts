@@ -1,3 +1,4 @@
+import { AdminService } from './admins.services'
 import { AuthService } from './auth.service'
 
 const Api = {
@@ -7,6 +8,11 @@ const Api = {
     getCurrentUser: AuthService.getCurrentUser,
     forgotPassword: AuthService.forgotPassword,
     checkAdminStatus: AuthService.checkAdminStatus,
+  },
+  admin: {
+    addAdmin: AdminService.addAdmin,
+    getAdmins: AdminService.getAdmins,
+    updateAdmin: AdminService.updateAdmin,
   },
 }
 export { Api }

@@ -1,12 +1,12 @@
 import { Box } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { FormProvider } from 'react-hook-form'
-import { useBreakPoints } from '@cookup/hooks'
 import { useAdmins } from '../../hooks/useAdmin'
 import { useDispatch, useSelector } from 'react-redux'
+import { useBreakPoints, useGetAdmins } from '@cookup/hooks'
 import { ADMINS_DATA, ADMINS_HEADER } from '@cookup/constant'
-import { CustomDialog, CustomList, Form, Layout } from '@cookup/components'
 import { AdminFormsUI } from '../../components/AdminFormsUI/AdminFormsUI'
+import { CustomDialog, CustomList, Form, Layout } from '@cookup/components'
 import {
   OPEN_ADMIN_MODAL,
   CLOSE_ADMIN_MODAL,
@@ -16,12 +16,25 @@ import {
   CLOSE_DELETE_ADMIN_MODAL,
   OPEN_DELETE_ADMIN_SUCCESS,
 } from '@cookup/redux'
+import { useQueryClient } from 'react-query'
 
 export const AdminContainer = () => {
   const dispatch = useDispatch()
+  const queryClient = useQueryClient()
 
   const { mobileMode } = useBreakPoints()
-  const { methods, onSubmit, isValid, onDelete, delAdminName } = useAdmins()
+
+  const { admins, adminLoading } = useGetAdmins({ enabled: true })
+
+  const {
+    methods,
+    onSubmit,
+    isValid,
+    onDelete,
+    delAdminName,
+    onSelectUser,
+    isLoading,
+  } = useAdmins({ admins })
 
   const { isOpenAdminModal } = useSelector((state: any) => state.header)
 
@@ -45,15 +58,17 @@ export const AdminContainer = () => {
       isPaginationIcons
       button1ClassName="custom"
       button1Text="Add New Admin"
+      button1Icon={mobileMode ? <Add /> : undefined}
       isFooter={ADMINS_DATA.length > 7 ? true : false}
       onButton1Click={() => dispatch(OPEN_ADMIN_MODAL())}
-      button1Icon={mobileMode ? <Add /> : undefined}
     >
       <Box mt={2}>
         <CustomList
+          data={admins}
           isActionButtons
           onDelete={onDelete}
-          data={ADMINS_DATA}
+          isLoading={adminLoading}
+          onSelectUser={onSelectUser}
           headerData={ADMINS_HEADER}
         />
       </Box>
@@ -69,7 +84,7 @@ export const AdminContainer = () => {
         >
           <FormProvider {...methods}>
             <Form onSubmit={methods.handleSubmit(onSubmit)}>
-              <AdminFormsUI isValid={isValid} />
+              <AdminFormsUI isValid={isValid} isLoading={isLoading} />
             </Form>
           </FormProvider>
         </CustomDialog>
@@ -81,7 +96,10 @@ export const AdminContainer = () => {
           title={'New Admin Added'}
           isOpen={isAdminSuccess}
           icon="/assets/icons/user_circle.svg"
-          onConfirm={() => dispatch(CLOSE_ADMIN_SUCCESS())}
+          onConfirm={() => {
+            dispatch(CLOSE_ADMIN_SUCCESS())
+            queryClient.invalidateQueries('getAdmins')
+          }}
           onClose={() => dispatch(CLOSE_ADMIN_SUCCESS())}
           text={`Congratulations! “${adminName}” has been successfully added as an Admin. We have sent them a new invite email with a one-time usage password included.`}
           okButtonStyle={{
@@ -97,7 +115,10 @@ export const AdminContainer = () => {
           title={'Admin Updated'}
           isOpen={isAdminEditSuccess}
           icon="/assets/icons/user_circle.svg"
-          onConfirm={() => dispatch(CLOSE_ADMIN_EDIT_SUCCESS())}
+          onConfirm={() => {
+            dispatch(CLOSE_ADMIN_EDIT_SUCCESS())
+            queryClient.invalidateQueries('getAdmins')
+          }}
           onClose={() => dispatch(CLOSE_ADMIN_EDIT_SUCCESS())}
           text={`Congratulations! “${adminName}” has been updated successfully.`}
           okButtonStyle={{

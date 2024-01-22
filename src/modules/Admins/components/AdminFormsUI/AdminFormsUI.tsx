@@ -1,24 +1,22 @@
+import React from 'react'
 import { Box, Button } from '@mui/material'
-import { useAdmins } from '../../hooks/hooks'
-import { FormProvider } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { CustomTextField, Form } from '@cookup/components'
 import { CLOSE_ADMIN_MODAL, CLOSE_EDIT_ADMIN_MODAL } from '@cookup/redux'
 
 interface AdminFormsUIProps {
   isValid?: boolean
+  isLoading?: boolean
 }
 
 export const AdminFormsUI = (props: AdminFormsUIProps) => {
-  const { isValid } = props || {}
+  const { isValid, isLoading } = props || {}
   const dispatch = useDispatch()
 
   const { isAdminEditModal } = useSelector((state: any) => state.admin)
 
   return (
-    // <FormProvider {...methods}>
-    //   <Form onSubmit={methods.handleSubmit(onSubmit)}>
-    <>
+    <React.Fragment>
       <Box mt={1}>
         <CustomTextField
           select
@@ -43,14 +41,18 @@ export const AdminFormsUI = (props: AdminFormsUIProps) => {
       <Box mt={2} display="flex" gap={2} justifyContent="center">
         <Button
           type="submit"
-          disabled={!isValid}
           variant="contained"
+          disabled={!isValid || isLoading}
           sx={{
             height: 60,
             width: 200,
           }}
         >
-          {isAdminEditModal ? 'Update Admin' : 'Add Admin'}
+          {isLoading
+            ? 'Loading...'
+            : isAdminEditModal
+            ? 'Update Admin'
+            : 'Add Admin'}
         </Button>
         <Button
           variant="outlined"
@@ -64,9 +66,7 @@ export const AdminFormsUI = (props: AdminFormsUIProps) => {
           Cancel
         </Button>
       </Box>
-    </>
-    //   </Form>
-    // </FormProvider>
+    </React.Fragment>
   )
 }
 
