@@ -7,9 +7,13 @@ import {
 import {
   DocumentData,
   DocumentSnapshot,
+  addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
 } from 'firebase/firestore'
@@ -32,7 +36,10 @@ class Admin {
       let admins: IAdmin[] | null = []
       try {
         const querySnapshot = await getDocs(
-          collection(firestore, COLLECTIONS.ADMIN)
+          query(
+            collection(firestore, COLLECTIONS.ADMIN),
+            orderBy('createdAt', 'desc')
+          )
         )
 
         querySnapshot.forEach((doc: DocumentSnapshot<DocumentData>) => {
@@ -88,31 +95,56 @@ class Admin {
       userName: '',
     }
   ) => {
-    const { email, role } = values || {}
+    const { email, role, userName } = values || {}
     return new Promise(async (resolve, reject) => {
       try {
-        const createdUser = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          'Abcd@123'
-        )
+        // const createdUser = await createUserWithEmailAndPassword(
+        //   auth,
+        //   email,
+        //   'Abcd@123'
+        // )
 
-        const user = {
+        // const user = {
+        //   role,
+        //   createdAt: new Date(),
+        //   uid: createdUser.user.uid,
+        //   email: createdUser.user.email,
+        //   userName: userName,
+        // }
+
+        // const docRef = await setDoc(
+        //   doc(firestore, COLLECTIONS.ADMIN, createdUser?.user?.uid),
+        //   { ...user }
+        // )
+        const docRef = await addDoc(collection(firestore, COLLECTIONS.ADMIN), {
           role,
+          email,
+          userName,
           createdAt: new Date(),
-          uid: createdUser.user.uid,
-          email: createdUser.user.email,
-          userName: createdUser?.user?.email?.split('@')[0],
-        }
-
-        const docRef = await setDoc(
-          doc(firestore, COLLECTIONS.ADMIN, createdUser?.user?.uid),
-          { ...user }
-        )
+        })
         resolve(docRef)
       } catch (error) {
         const err = getErrorMessage(error)
         reject(err)
+      }
+    })
+  }
+
+  deleteAdmin = async (
+    values: any = { uid: '', currentUser: '', role: '' }
+  ) => {
+    const { uid, currentUser, role } = values || {}
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (currentUser.role === 'Admin' && role === 'Super Admin') {
+          reject('permission-error')
+        } else {
+          const docRef = doc(firestore, COLLECTIONS.ADMIN, uid)
+          await deleteDoc(docRef)
+          resolve('user deleted successfully')
+        }
+      } catch (error) {
+        reject(error)
       }
     })
   }

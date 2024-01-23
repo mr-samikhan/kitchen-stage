@@ -30,7 +30,7 @@ const App = () => {
             getCurrentUserData({
               uid: user.uid,
               email: user.email,
-              type: '',
+              role: '',
               userName: user.displayName,
             })
           )

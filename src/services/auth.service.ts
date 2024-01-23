@@ -46,7 +46,7 @@ class Auth {
         where('uid', '==', user.uid)
       )
       const querySnapshot = await getDocs(q)
-      return { user: querySnapshot.docs[0].data() }
+      return { user: querySnapshot?.docs[0]?.data() }
     } catch (error) {
       throw error
     }

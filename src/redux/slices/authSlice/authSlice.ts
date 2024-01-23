@@ -10,7 +10,7 @@ import { auth } from '@cookup/firebase'
 
 export interface IUser {
   uid: string
-  type: string
+  role: string
   email: string
   userName: string
 }

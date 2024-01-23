@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { Add } from '@mui/icons-material'
+import { useQueryClient } from 'react-query'
 import { FormProvider } from 'react-hook-form'
 import { useAdmins } from '../../hooks/useAdmin'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +17,6 @@ import {
   CLOSE_DELETE_ADMIN_MODAL,
   OPEN_DELETE_ADMIN_SUCCESS,
 } from '@cookup/redux'
-import { useQueryClient } from 'react-query'
 
 export const AdminContainer = () => {
   const dispatch = useDispatch()
@@ -27,13 +27,16 @@ export const AdminContainer = () => {
   const { admins, adminLoading } = useGetAdmins({ enabled: true })
 
   const {
+    admin,
     methods,
     onSubmit,
     isValid,
     onDelete,
+    isLoading,
+    deleteAdmin,
     delAdminName,
     onSelectUser,
-    isLoading,
+    isDelLoading,
   } = useAdmins({ admins })
 
   const { isOpenAdminModal } = useSelector((state: any) => state.header)
@@ -49,6 +52,8 @@ export const AdminContainer = () => {
   let MODAL_CHECK = isOpenAdminModal || isAdminEditModal
 
   let adminName = methods.watch('name')
+
+  const { user } = useSelector((state: any) => state.auth)
 
   return (
     <Layout
@@ -120,7 +125,9 @@ export const AdminContainer = () => {
             queryClient.invalidateQueries('getAdmins')
           }}
           onClose={() => dispatch(CLOSE_ADMIN_EDIT_SUCCESS())}
-          text={`Congratulations! “${adminName}” has been updated successfully.`}
+          text={`Congratulations! “${
+            adminName || admin.userName
+          }” has been updated successfully.`}
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -134,18 +141,21 @@ export const AdminContainer = () => {
           title={'Delete Admin'}
           cancelButtonText="Cancel"
           isOpen={isDeleteAdminModal}
-          okButtonText="Yes, I confirm"
           icon="/assets/icons/warn-icon.svg"
+          okButtonText={isDelLoading ? 'Deleting...' : 'Yes, I confirm'}
           okButtonStyle={{
             p: 2,
             width: 205,
           }}
           onConfirm={() => {
-            dispatch(CLOSE_DELETE_ADMIN_MODAL())
-            dispatch(OPEN_DELETE_ADMIN_SUCCESS(true))
+            deleteAdmin({
+              uid: delAdminName.uid,
+              role: delAdminName.role,
+              currentUser: user,
+            })
           }}
           onClose={() => dispatch(CLOSE_DELETE_ADMIN_MODAL())}
-          text={`Are you sure you want to delete the admin “${delAdminName}”? Actions are not reversable.`}
+          text={`Are you sure you want to delete the admin “${delAdminName.userName}”? Actions are not reversable.`}
         />
       )}
       {isDeleteAdminSuccess && (
@@ -157,7 +167,7 @@ export const AdminContainer = () => {
           icon="/assets/icons/delete.svg"
           onClose={() => dispatch(OPEN_DELETE_ADMIN_SUCCESS(false))}
           onConfirm={() => dispatch(OPEN_DELETE_ADMIN_SUCCESS(false))}
-          text={`“${delAdminName}” has been removed from the system successfully.`}
+          text={`“${delAdminName.userName}” has been removed from the system successfully.`}
           okButtonStyle={{
             width: 205,
             p: 2,
