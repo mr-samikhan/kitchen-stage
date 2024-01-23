@@ -12,6 +12,8 @@ import {
   CLOSE_EDIT_ADMIN_MODAL,
   OPEN_ADMIN_EDIT_SUCCESS,
   OPEN_DELETE_ADMIN_MODAL,
+  CLOSE_DELETE_ADMIN_MODAL,
+  OPEN_DELETE_ADMIN_SUCCESS,
 } from '@cookup/redux'
 
 interface IAdmins {
@@ -24,7 +26,7 @@ export const useAdmins = ({ admins }: IAdmins) => {
 
   const [admin, setAdmin] = React.useState<any>(null)
   const { isAdminEditModal } = useSelector((state: any) => state.admin)
-  const [delAdminName, setDelAdminName] = React.useState<string | null>(null)
+  const [delAdminName, setDelAdminName] = React.useState<any | null>(null)
 
   const methods = useForm<IAdminsFormResolver>({
     resolver: AdminsFormResolver,
@@ -75,6 +77,22 @@ export const useAdmins = ({ admins }: IAdmins) => {
     }
   )
 
+  const {
+    mutate: deleteAdmin,
+    isError: isDelError,
+    isLoading: isDelLoading,
+  } = useMutation(Api.admin.deleteAdmin, {
+    onSuccess: () => {
+      dispatch(CLOSE_DELETE_ADMIN_MODAL())
+      dispatch(OPEN_DELETE_ADMIN_SUCCESS(true))
+      queryClient.invalidateQueries('getAdmins')
+    },
+    onError: (error) => {
+      const errorMsg = getErrorMessage(error)
+      alert(errorMsg)
+    },
+  })
+
   const onSubmit = (data: any) => {
     if (isAdminEditModal) {
       mutate({
@@ -95,19 +113,23 @@ export const useAdmins = ({ admins }: IAdmins) => {
     }
   }
 
-  const onDelete = (name: string) => {
-    setDelAdminName(name)
+  const onDelete = (user: any) => {
+    setDelAdminName(user)
     dispatch(OPEN_DELETE_ADMIN_MODAL())
   }
+
   return {
+    admin,
     methods,
-    onSubmit,
     isValid,
+    isError,
+    onSubmit,
     onDelete,
+    isLoading,
+    deleteAdmin,
     delAdminName,
     onSelectUser,
-    isError,
-    isLoading,
+    isDelLoading,
   }
 }
 

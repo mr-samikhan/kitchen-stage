@@ -126,7 +126,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                             <img src="/assets/icons/edit-icon.svg" alt="edit" />
                           </IconButton>
                           <IconButton
-                            onClick={() => onDelete && onDelete(user?.name)}
+                            onClick={() => onDelete && onDelete(user)}
                           >
                             <img
                               src="/assets/icons/delete-icon.svg"

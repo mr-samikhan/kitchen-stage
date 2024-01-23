@@ -13,6 +13,7 @@ const Api = {
     addAdmin: AdminService.addAdmin,
     getAdmins: AdminService.getAdmins,
     updateAdmin: AdminService.updateAdmin,
+    deleteAdmin: AdminService.deleteAdmin,
   },
 }
 export { Api }
