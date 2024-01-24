@@ -4,7 +4,13 @@ import { Box, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SUSPENSION_SUCCESS, SET_UNSUSPEND_USER } from '@cookup/redux'
 
-export const SuspensionAlert = () => {
+interface ISuspensionAlert {
+  isSuspended: boolean
+  suspensionDuration?: string
+}
+
+export const SuspensionAlert = (props: ISuspensionAlert) => {
+  const { isSuspended, suspensionDuration } = props || {}
   const dispatch = useDispatch()
 
   const { isUserSuspened } = useSelector((state: any) => state.header)
@@ -30,8 +36,8 @@ export const SuspensionAlert = () => {
         bgcolor={COLORS.transparentOrange}
       >
         <Typography variant="subtitle1" textAlign="center" color="secondary">
-          {!isUserSuspened
-            ? 'User suspended until July 7, 2021'
+          {isSuspended
+            ? `User suspended until ${suspensionDuration}`
             : 'User unsuspended'}
         </Typography>
       </Box>

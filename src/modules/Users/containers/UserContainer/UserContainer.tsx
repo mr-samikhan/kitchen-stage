@@ -17,6 +17,7 @@ import {
   BUSINESS_USERS_HEADER,
   PERSONAL_USERS_HEADER,
 } from '@cookup/constant'
+import { useGetUsers } from '@cookup/hooks'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
@@ -30,12 +31,14 @@ export const UserContainer = () => {
     (state: any) => state.header
   )
 
+  const { users, usersLoading } = useGetUsers({})
+
   React.useEffect(() => {
     dispatch(SET_TAB_VALUE('personal'))
   }, [])
 
   const onNavigation = (item: any) => {
-    navigate(`${ROUTES.USERS}/1`, {
+    navigate(`${ROUTES.USERS}/${item.id}`, {
       state: { ...item },
     })
   }
@@ -49,10 +52,10 @@ export const UserContainer = () => {
 
   return (
     <Layout
-      isFooter
       isExportCSV
       isSearchInput
       isPaginationIcons
+      isFooter={users?.length > 7}
       isTitle={state?.type !== undefined ? false : true}
       isTabs={state?.type !== undefined ? false : true}
       isNavigation={
@@ -79,11 +82,12 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
+            data={users}
             isActionButton
             isBgColor="white"
-            data={PERSONAL_USERS_DATA}
-            headerData={PERSONAL_USERS_HEADER}
+            isLoading={usersLoading}
             onNavigation={onNavigation}
+            headerData={PERSONAL_USERS_HEADER}
           />
         )}
         {!isSearchFocus && tabValue === 'business' && (

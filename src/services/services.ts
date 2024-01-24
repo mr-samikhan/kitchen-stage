@@ -1,5 +1,6 @@
-import { AdminService } from './admins.services'
 import { AuthService } from './auth.service'
+import { UserService } from './user.services'
+import { AdminService } from './admins.services'
 
 const Api = {
   auth: {
@@ -14,6 +15,11 @@ const Api = {
     getAdmins: AdminService.getAdmins,
     updateAdmin: AdminService.updateAdmin,
     deleteAdmin: AdminService.deleteAdmin,
+  },
+  user: {
+    getUser: UserService.getUser,
+    getUsers: UserService.getUsers,
+    updateUser: UserService.updateUser,
   },
 }
 export { Api }
