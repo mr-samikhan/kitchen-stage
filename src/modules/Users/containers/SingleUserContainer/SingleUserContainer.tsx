@@ -1,14 +1,21 @@
 import React from 'react'
+import moment from 'moment'
 import useUser from '../../hooks/useUser'
 import { Delete } from '@mui/icons-material'
-import { useBreakPoints } from '@cookup/hooks'
 import { FormProvider } from 'react-hook-form'
 import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { Box, Container, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useBreakPoints, useGetUser } from '@cookup/hooks'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled'
-import { Form, Layout, CustomDialog, MuiCustomTab } from '@cookup/components'
+import {
+  Form,
+  Layout,
+  CustomDialog,
+  MuiCustomTab,
+  CustomLoader,
+} from '@cookup/components'
 import {
   SET_TAB_VALUE,
   SET_DELETE_MODAL,
@@ -32,6 +39,10 @@ export const SingleUserContainer = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const { id } = useParams()
+
+  const { user, userLoading } = useGetUser(id || '')
+
   const { state } = useLocation()
   const { mobileMode } = useBreakPoints()
 
@@ -40,7 +51,6 @@ export const SingleUserContainer = () => {
     isDeleteModal,
     isSuspendModal,
     isDeleteSuccess,
-    isUserSuspened,
     unsuspenedUser,
     isUserSuspension,
     isSuspensionSuccess,
@@ -50,10 +60,12 @@ export const SingleUserContainer = () => {
     methods,
     onSubmit,
     isValid,
+    onUnsuspend,
+    suspenseDays,
     onUpdateUser,
     onSubmitSuspension,
     onSevenDaysSuspend,
-  } = useUser()
+  } = useUser({ user })
 
   const { tabValue } = useSelector((state: any) => state.user)
 
@@ -88,6 +100,8 @@ export const SingleUserContainer = () => {
     }
   }
 
+  if (userLoading) return <CustomLoader />
+
   return (
     <Layout
       isFooter
@@ -101,12 +115,12 @@ export const SingleUserContainer = () => {
       onGoBack={() => navigate(-1)}
       button2Icon={mobileMode ? <Delete /> : undefined}
       navigationTitle={state.name || state.businessName}
-      button1Text={isUserSuspened ? 'Unsuspend' : 'Suspend'}
+      button1Text={user?.isSuspended ? 'Unsuspend' : 'Suspend'}
       onButton2Click={() => dispatch(SET_DELETE_MODAL(true))}
       button1Icon={mobileMode ? <PersonAddDisabledIcon /> : undefined}
       onButton1Click={() =>
         dispatch(
-          isUserSuspened ? SET_UNSUSPEND_USER(true) : SET_SUSPEND_MODAL(true)
+          user?.isSuspended ? SET_UNSUSPEND_USER(true) : SET_SUSPEND_MODAL(true)
         )
       }
     >
@@ -150,11 +164,11 @@ export const SingleUserContainer = () => {
       {isDeleteModal && (
         <CustomDialog
           isOkButton
-          okButtonText="Yes, I Confirm"
           isCancleButton
+          title="Delete User"
           cancelButtonText="No"
           isOpen={isDeleteModal}
-          title="Delete User"
+          okButtonText="Yes, I Confirm"
           icon="/assets/icons/warn-icon.svg"
           onClose={() => dispatch(SET_DELETE_MODAL(false))}
           onConfirm={() => {
@@ -172,8 +186,8 @@ export const SingleUserContainer = () => {
         <CustomDialog
           isOkButton
           okButtonText="Okay"
-          isOpen={isDeleteSuccess}
           title="User Deleted"
+          isOpen={isDeleteSuccess}
           icon="/assets/icons/warn-icon.svg"
           onClose={() => dispatch(SET_SUCCESS_DELETE(false))}
           onConfirm={() => dispatch(SET_SUCCESS_DELETE(false))}
@@ -186,8 +200,8 @@ export const SingleUserContainer = () => {
       )}
       {isSuspendModal && (
         <CustomDialog
-          isOpen={isSuspendModal}
           title="Suspend User"
+          isOpen={isSuspendModal}
           icon="/assets/icons/suspend-icon.svg"
           onClose={() => dispatch(SET_SUSPEND_MODAL(false))}
           okButtonStyle={{
@@ -213,7 +227,9 @@ export const SingleUserContainer = () => {
           isOpen={isUserSuspension}
           icon="/assets/icons/suspend-icon.svg"
           onClose={() => dispatch(SET_USER_SUSPENSION(false))}
-          text="“Emma Gosling” has been suspended for 7 days."
+          text={`“${user.firstName}” has been suspended for ${
+            suspenseDays || 7
+          } days.`}
           onConfirm={() => {
             dispatch(SET_SUSPEND_MODAL(false))
             dispatch(SET_USER_SUSPENSION(false))
@@ -233,13 +249,10 @@ export const SingleUserContainer = () => {
           title="Unsuspend User"
           isOpen={unsuspenedUser}
           okButtonText="Yes, I Confirm"
+          onConfirm={() => onUnsuspend()}
           icon="/assets/icons/suspend-icon.svg"
           onClose={() => dispatch(SET_UNSUSPEND_USER(false))}
-          text="Are you sure you want to unsuspend the user “Emma Gosling”?"
-          onConfirm={() => {
-            dispatch(SET_UNSUSPEND_USER(false))
-            dispatch(SET_SUSPENSION_SUCCESS(true))
-          }}
+          text={`Are you sure you want to unsuspend the user “${user.firstName}”?`}
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -248,7 +261,12 @@ export const SingleUserContainer = () => {
       )}
       {isSuspensionSuccess && (
         <Box display="flex" justifyContent="center" alignItems="center">
-          <SuspensionAlert />
+          <SuspensionAlert
+            isSuspended={user?.isSuspended}
+            suspensionDuration={moment(
+              Date.now() + 7 * 24 * 60 * 60 * 1000
+            ).format('MMMM DD, YYYY')}
+          />
         </Box>
       )}
     </Layout>

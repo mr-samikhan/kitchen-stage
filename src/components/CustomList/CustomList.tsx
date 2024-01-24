@@ -4,6 +4,7 @@ import { ToolTip } from '@cookup/modules'
 import { useBreakPoints } from '@cookup/hooks'
 import { ChevronRight } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
+import { OPEN_EDIT_ADMIN_MODAL, SET_SINGLE_SUPPORT_DATA } from '@cookup/redux'
 import {
   Box,
   Grid,
@@ -11,7 +12,6 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material'
-import { OPEN_EDIT_ADMIN_MODAL, SET_SINGLE_SUPPORT_DATA } from '@cookup/redux'
 
 interface CustomListProps {
   data?: any
@@ -79,7 +79,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
         {!isLoading &&
           data?.map((user: any, index: number) => {
             const filteredKeys = Object.keys(user).filter(
-              (key) => key !== 'uid'
+              (key) => key !== 'id' && key !== 'uid'
             )
             return (
               <React.Fragment key={index}>

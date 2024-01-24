@@ -1,3 +1,6 @@
+import { useGetUsers } from '@cookup/hooks'
 export * from '../hooks/hooks'
+export { default as useGetUser } from './useGetUser'
+export { default as useGetUsers } from './useGetUsers'
 export { default as useGetAdmins } from './useGetAdmins'
 export { default as useBreakPoints } from './useBreakPoints'
