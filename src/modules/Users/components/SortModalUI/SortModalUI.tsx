@@ -28,7 +28,12 @@ export const SortModalUI = (props: SortModalUIProps) => {
   const { sortBy, filterBy } = useSelector((state: any) => state.user)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(SET_SORT_TYPE((event.target as HTMLInputElement).value))
+    dispatch(
+      SET_SORT_TYPE({
+        ...sortBy,
+        sortType: (event.target as HTMLInputElement).value,
+      })
+    )
   }
 
   const onExpFilter = (item: any) => {
@@ -83,6 +88,15 @@ export const SortModalUI = (props: SortModalUIProps) => {
     }
   }
 
+  const onSort = (value: string) => {
+    dispatch(
+      SET_SORT_TYPE({
+        ...sortBy,
+        [value]: value,
+      })
+    )
+  }
+
   return (
     <React.Fragment>
       {isSortUI && (
@@ -95,7 +109,11 @@ export const SortModalUI = (props: SortModalUIProps) => {
             alignItems="center"
             bgcolor={COLORS.grey.dark}
           >
-            <Typography variant="subtitle2" color="primary">
+            <Typography
+              variant="subtitle2"
+              color="primary"
+              onClick={() => onSort('name')}
+            >
               Name
             </Typography>
           </Box>
@@ -104,6 +122,7 @@ export const SortModalUI = (props: SortModalUIProps) => {
               color="primary"
               variant="subtitle2"
               fontFamily="SF Pro Display"
+              onClick={() => onSort('state')}
             >
               State
             </Typography>
@@ -113,6 +132,7 @@ export const SortModalUI = (props: SortModalUIProps) => {
               color="primary"
               variant="subtitle2"
               fontFamily="SF Pro Display"
+              onClick={() => onSort('joinedDate')}
             >
               Date Joined
             </Typography>
@@ -122,6 +142,7 @@ export const SortModalUI = (props: SortModalUIProps) => {
               color="primary"
               variant="subtitle2"
               fontFamily="SF Pro Display"
+              onClick={() => onSort('all')}
             >
               All
             </Typography>
