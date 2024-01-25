@@ -1,4 +1,5 @@
 import React from 'react'
+import { calculateAgeRange } from '@cookup/helpers'
 import { Avatar, Box, Grid, Typography } from '@mui/material'
 import {
   COLORS,
@@ -7,21 +8,37 @@ import {
 } from '@cookup/constant'
 
 interface UserProfileInfoProps {
+  user?: any
   isBusinessType?: boolean
 }
 
 export const UserProfileInfo = (props: UserProfileInfoProps) => {
-  const { isBusinessType } = props || {}
+  const { isBusinessType, user } = props || {}
 
   let isBusinessUser = isBusinessType
     ? BUSINESS_USER_PROFILE_DATA
     : PERSONAL_USER_PROFILE_DATA
+
+  console.log(user, 'user')
+
+  const userObj: any = {
+    Name: `${user?.firstName} ${user?.lastName}`,
+    Type: user?.type,
+    Username: user?.email,
+    ['Age Range']: calculateAgeRange(user?.dateOfBirth || ''),
+    Gender: user?.gender,
+    City: user?.city,
+    State: user?.country,
+    ['Zip Code']: user?.zipCode,
+    About: user?.about,
+  }
+
   return (
     <React.Fragment>
       <Grid mt={4} container display="flex" justifyContent="center">
         <Grid item md={2} xs={4} px={3}>
           <Avatar
-            src="/assets/images/profile-image.svg"
+            src={user?.imageUrl}
             sx={{
               width: { xs: 'auto', md: '150px' },
               height: { xs: 'auto', md: '150px' },
@@ -39,7 +56,8 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
                 {item.key}
               </Typography>
               <Typography variant="h5" color={COLORS.grey.main}>
-                {item.value}
+                {userObj[item.key]}
+                {/* {item.value} */}
               </Typography>
             </Box>
           ))}

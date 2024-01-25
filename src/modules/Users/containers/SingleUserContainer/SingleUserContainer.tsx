@@ -45,6 +45,7 @@ export const SingleUserContainer = () => {
 
   const { state } = useLocation()
   const { mobileMode } = useBreakPoints()
+  console.log(state, 'state')
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
   const {
@@ -94,7 +95,9 @@ export const SingleUserContainer = () => {
           </FormProvider>
         )
       case 'profile-info':
-        return <UserProfileInfo isBusinessType={state.type} />
+        return (
+          <UserProfileInfo isBusinessType={state.type} user={user && user} />
+        )
       case 'uploaded-media':
         return <UserUploadedMedia />
       case 'ads':

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IHeaderSlice {
+  searchValue?: string
   isSortModal: boolean
   isFilterModal: boolean
   isSearchFocus: boolean
@@ -15,6 +16,7 @@ interface IHeaderSlice {
 }
 
 const initialState: IHeaderSlice = {
+  searchValue: '',
   isSortModal: false,
   isFilterModal: false,
   isSearchFocus: false,
@@ -70,10 +72,14 @@ const headerSlice = createSlice({
     SET_FILTER_MODAL: (state, action: PayloadAction<boolean>) => {
       state.isFilterModal = action.payload
     },
+    onSearchChange: (state, action: PayloadAction<string>) => {
+      state.searchValue = action.payload
+    },
   },
 })
 
 export const {
+  onSearchChange,
   OPEN_SORT_MODAL,
   CLOSE_SORT_MODAL,
   OPEN_ADMIN_MODAL,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Grid } from '@mui/material'
 import { SET_TAB_VALUE } from '@cookup/redux'
+import { useGetUsers } from '@cookup/hooks'
 import { SortModalUI } from '@cookup/modules'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -12,12 +13,9 @@ import {
 } from '@cookup/components'
 import {
   ROUTES,
-  BUSINESS_USERS_DATA,
-  PERSONAL_USERS_DATA,
   BUSINESS_USERS_HEADER,
   PERSONAL_USERS_HEADER,
 } from '@cookup/constant'
-import { useGetUsers } from '@cookup/hooks'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
@@ -27,19 +25,38 @@ export const UserContainer = () => {
 
   const { tabValue } = useSelector((state: any) => state.user)
 
-  const { isSearchFocus, isSortModal, isFilterModal } = useSelector(
-    (state: any) => state.header
-  )
+  const { isSearchFocus, isSortModal, isFilterModal, searchValue } =
+    useSelector((state: any) => state.header)
 
   const { users, usersLoading } = useGetUsers({})
+
+  const [filteredData, setFilteredData] = React.useState<any>(null)
 
   React.useEffect(() => {
     dispatch(SET_TAB_VALUE('personal'))
   }, [])
 
+  //filter
+  React.useEffect(() => {
+    if (searchValue.length) {
+      const items = [...users]
+      const filteredItems = items.filter(
+        (item) =>
+          (item.email &&
+            item.email.toLowerCase().includes(searchValue.toLowerCase())) ||
+          (item.city &&
+            item.city.toLowerCase().includes(searchValue.toLowerCase()))
+      )
+
+      setFilteredData(filteredItems)
+    } else {
+      setFilteredData(null)
+    }
+  }, [searchValue])
+
   const onNavigation = (item: any) => {
     navigate(`${ROUTES.USERS}/${item.id}`, {
-      state: { ...item },
+      state: { ...item, type: tabValue === 'business' },
     })
   }
 
@@ -82,7 +99,7 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
-            data={users}
+            data={filteredData || users}
             isActionButton
             isBgColor="white"
             isLoading={usersLoading}
@@ -92,9 +109,10 @@ export const UserContainer = () => {
         )}
         {!isSearchFocus && tabValue === 'business' && (
           <CustomList
+            data={filteredData || users}
             isActionButton
             iconPosition="flex-end"
-            data={BUSINESS_USERS_DATA}
+            isLoading={usersLoading}
             onNavigation={onNavigation}
             headerData={BUSINESS_USERS_HEADER}
           />
