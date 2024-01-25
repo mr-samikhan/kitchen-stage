@@ -20,6 +20,7 @@ const Api = {
     getUser: UserService.getUser,
     getUsers: UserService.getUsers,
     updateUser: UserService.updateUser,
+    deleteUser: UserService.deleteUser,
   },
 }
 export { Api }

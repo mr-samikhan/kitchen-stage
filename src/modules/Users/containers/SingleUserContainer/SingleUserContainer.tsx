@@ -63,11 +63,16 @@ export const SingleUserContainer = () => {
     onUnsuspend,
     suspenseDays,
     onUpdateUser,
+    onDeleteUser,
+    isDelLoading,
+    isResetLoading,
     onSubmitSuspension,
     onSevenDaysSuspend,
   } = useUser({ user })
 
   const { tabValue } = useSelector((state: any) => state.user)
+
+  let userName = `${user?.firstName || ''} ${user?.lastName || ''}`
 
   React.useEffect(() => {
     dispatch(SET_TAB_VALUE('account-info'))
@@ -79,12 +84,17 @@ export const SingleUserContainer = () => {
         return (
           <FormProvider {...methods}>
             <Form onSubmit={methods.handleSubmit(onSubmit)}>
-              <UserAccountInfo isValid={isValid} onUpdateUser={onUpdateUser} />
+              <UserAccountInfo
+                user={user}
+                isValid={isValid}
+                isLoading={isResetLoading}
+                onUpdateUser={onUpdateUser}
+              />
             </Form>
           </FormProvider>
         )
       case 'profile-info':
-        return <UserProfileInfo isBusinessType={state.type ? true : false} />
+        return <UserProfileInfo isBusinessType={state.type} />
       case 'uploaded-media':
         return <UserUploadedMedia />
       case 'ads':
@@ -153,7 +163,7 @@ export const SingleUserContainer = () => {
           icon="/assets/icons/user_circle.svg"
           onClose={() => dispatch(USER_ACCOUNT_UPDATED(false))}
           onConfirm={() => dispatch(USER_ACCOUNT_UPDATED(false))}
-          text="Account info of “Emma Gosling” has been succesfully updated."
+          text={`Account info of “${userName}” has been succesfully updated.`}
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -168,14 +178,11 @@ export const SingleUserContainer = () => {
           title="Delete User"
           cancelButtonText="No"
           isOpen={isDeleteModal}
-          okButtonText="Yes, I Confirm"
           icon="/assets/icons/warn-icon.svg"
+          onConfirm={() => onDeleteUser(user.id)}
           onClose={() => dispatch(SET_DELETE_MODAL(false))}
-          onConfirm={() => {
-            dispatch(SET_DELETE_MODAL(false))
-            dispatch(SET_SUCCESS_DELETE(true))
-          }}
-          text="Are you sure you want to delete the user “Emma Gosling”? Actions are not reversable."
+          okButtonText={isDelLoading ? 'Deleting...' : 'Yes, I Confirm'}
+          text={`Are you sure you want to delete the user “${userName}”? Actions are not reversable.`}
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -190,8 +197,11 @@ export const SingleUserContainer = () => {
           isOpen={isDeleteSuccess}
           icon="/assets/icons/warn-icon.svg"
           onClose={() => dispatch(SET_SUCCESS_DELETE(false))}
-          onConfirm={() => dispatch(SET_SUCCESS_DELETE(false))}
-          text="“Emma Gosling” has been removed from the system successfully. "
+          text={`“${userName}” has been removed from the system successfully.`}
+          onConfirm={() => {
+            dispatch(SET_SUCCESS_DELETE(false))
+            navigate(-1)
+          }}
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -227,7 +237,7 @@ export const SingleUserContainer = () => {
           isOpen={isUserSuspension}
           icon="/assets/icons/suspend-icon.svg"
           onClose={() => dispatch(SET_USER_SUSPENSION(false))}
-          text={`“${user.firstName}” has been suspended for ${
+          text={`“${userName}” has been suspended for ${
             suspenseDays || 7
           } days.`}
           onConfirm={() => {
@@ -252,7 +262,7 @@ export const SingleUserContainer = () => {
           onConfirm={() => onUnsuspend()}
           icon="/assets/icons/suspend-icon.svg"
           onClose={() => dispatch(SET_UNSUSPEND_USER(false))}
-          text={`Are you sure you want to unsuspend the user “${user.firstName}”?`}
+          text={`Are you sure you want to unsuspend the user “${userName}”?`}
           okButtonStyle={{
             p: 2,
             width: 205,
