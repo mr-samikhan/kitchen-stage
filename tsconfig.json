@@ -21,6 +21,7 @@
       "@cookup/components": ["components/components.ts"],
       "@cookup/services": ["services/services.ts"],
       "@cookup/firebase": ["firebase.ts"],
+      "@cookup/helpers": ["helpers/helpers.ts"],
     },
 
     /* Bundler mode */

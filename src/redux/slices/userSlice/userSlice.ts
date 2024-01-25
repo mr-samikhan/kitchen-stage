@@ -75,8 +75,9 @@ const userSlice = createSlice({
     USER_ACCOUNT_UPDATED: (state, action: PayloadAction<boolean>) => {
       state.isUserUpdateModal = action.payload
     },
-    SET_SORT_TYPE: (state, action: PayloadAction<string>) => {
-      state.sortBy = { ...state.sortBy, sortType: action.payload }
+    SET_SORT_TYPE: (state, action: PayloadAction<any>) => {
+      state.sortBy = action.payload
+      // state.sortBy = { ...state.sortBy, sortType: action.payload }
     },
     SET_FILTER_TYPE: (state, action: PayloadAction<any>) => {
       state.filterBy = { ...state.filterBy, ...action.payload }

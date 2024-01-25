@@ -1,19 +1,20 @@
 import React from 'react'
-import { set, useForm } from 'react-hook-form'
+import moment from 'moment'
+import { Api } from '@cookup/services'
+import { useForm } from 'react-hook-form'
 import { IUserEmailresolver } from '@cookup/types'
 import { useDispatch, useSelector } from 'react-redux'
+import { useMutation, useQueryClient } from 'react-query'
+import { SuspendUserResolver, UserPasswordResetResolver } from '@cookup/utils'
 import {
-  SET_SUSPEND_MODAL,
-  SET_SUSPENSION_SUCCESS,
+  SET_DELETE_MODAL,
+  SET_SUCCESS_DELETE,
   SET_UNSUSPEND_USER,
   SET_USER_SUSPENSION,
-  USER_ACCOUNT_UPDATED,
   USER_RESET_PASSWORD,
+  USER_ACCOUNT_UPDATED,
+  SET_SUSPENSION_SUCCESS,
 } from '@cookup/redux'
-import { SuspendUserResolver, UserPasswordResetResolver } from '@cookup/utils'
-import { useMutation, useQueryClient } from 'react-query'
-import { Api } from '@cookup/services'
-import moment from 'moment'
 
 interface IUseUser {
   user: any
@@ -38,19 +39,34 @@ const useUser = ({ user }: IUseUser) => {
   }
 
   //mutation
-  const { mutate, isError, isLoading } = useMutation<any, any, any>(
-    Api.user.updateUser,
+  const { mutate: onSuspendUser, isLoading: isSuspendLoading } = useMutation<
+    any,
+    any,
+    any
+  >(Api.user.updateUser, {
+    onSuccess: (success) => {
+      if (success === 'suspended') {
+        dispatch(SET_USER_SUSPENSION(true))
+      } else if (success === 'unsuspended') {
+        dispatch(SET_UNSUSPEND_USER(false))
+        dispatch(SET_SUSPENSION_SUCCESS(true))
+      } else {
+        setSuspenseDays(null)
+        console.log(success)
+      }
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
+
+  //delete mutation
+  const { mutate: onDeleteUser, isLoading: isDelLoading } = useMutation(
+    Api.user.deleteUser,
     {
       onSuccess: (success) => {
-        if (success === 'suspended') {
-          dispatch(SET_USER_SUSPENSION(true))
-        } else if (success === 'unsuspended') {
-          dispatch(SET_UNSUSPEND_USER(false))
-          dispatch(SET_SUSPENSION_SUCCESS(true))
-        } else {
-          setSuspenseDays(null)
-          console.log(success)
-        }
+        dispatch(SET_DELETE_MODAL(false))
+        dispatch(SET_SUCCESS_DELETE(true))
       },
       onError: (error) => {
         console.log(error)
@@ -58,14 +74,25 @@ const useUser = ({ user }: IUseUser) => {
     }
   )
 
+  //reset password mutation
+  const { mutate: onResetPassword, isLoading: isResetLoading } = useMutation(
+    Api.auth.forgotPassword,
+    {
+      onSuccess: () => {
+        dispatch(USER_RESET_PASSWORD(true))
+      },
+      onError: (error) => console.log(error),
+    }
+  )
+
   const onSubmit = (data: any) => {
     console.log(data)
-    dispatch(USER_RESET_PASSWORD(true))
+    onResetPassword(user.email)
     // methods.reset()
   }
 
   const onSubmitSuspension = (data: any) => {
-    mutate({
+    onSuspendUser({
       id: user.id,
       data: {
         suspensionDays: data.days,
@@ -83,7 +110,7 @@ const useUser = ({ user }: IUseUser) => {
   }
 
   const onSevenDaysSuspend = () => {
-    mutate({
+    onSuspendUser({
       id: user.id,
       data: {
         suspensionDays: 7,
@@ -98,7 +125,7 @@ const useUser = ({ user }: IUseUser) => {
   }
 
   const onUnsuspend = () => {
-    mutate({
+    onSuspendUser({
       id: user.id,
       data: {
         suspensionDays: 0,
@@ -117,6 +144,10 @@ const useUser = ({ user }: IUseUser) => {
     onUnsuspend,
     suspenseDays,
     onUpdateUser,
+    isDelLoading,
+    onDeleteUser,
+    isResetLoading,
+    isSuspendLoading,
     onSubmitSuspension,
     onSevenDaysSuspend,
   }

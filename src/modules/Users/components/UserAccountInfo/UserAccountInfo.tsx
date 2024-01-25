@@ -5,12 +5,14 @@ import { CustomTextField } from '@cookup/components'
 import { Box, Button, Grid, Typography } from '@mui/material'
 
 interface UserAccountInfoProps {
+  user?: any
   isValid?: boolean
+  isLoading?: boolean
   onUpdateUser?: () => void
 }
 
 export const UserAccountInfo = (props: UserAccountInfoProps) => {
-  const { isValid, onUpdateUser } = props || {}
+  const { isValid, onUpdateUser, user, isLoading } = props || {}
 
   const { isPasswordSent } = useSelector((state: any) => state.user)
 
@@ -22,18 +24,23 @@ export const UserAccountInfo = (props: UserAccountInfoProps) => {
             Email Address
           </Typography>
           <Box mt={2}>
-            <CustomTextField name="email" placeholder="" fullWidth />
+            <CustomTextField
+              fullWidth
+              name="email"
+              placeholder=""
+              defaultValue={user.email}
+            />
           </Box>
           <Grid item md={10} xs={12} m="auto" mt={2}>
             <Button
-              type="submit"
               fullWidth
+              type="submit"
               color="primary"
-              disabled={isPasswordSent || !isValid}
               variant="contained"
               sx={{ borderRadius: '38px', p: '15px 20px' }}
+              disabled={isPasswordSent || !isValid || isLoading}
             >
-              Send Password Reset Email
+              {isLoading ? 'Loading...' : 'Send Password Reset Email'}
             </Button>
           </Grid>
 

@@ -11,6 +11,7 @@ import {
   collection,
   DocumentData,
   DocumentSnapshot,
+  deleteDoc,
 } from 'firebase/firestore'
 
 type IUser = {
@@ -98,6 +99,19 @@ class User {
         } else {
           resolve('user/updated')
         }
+      } catch (error) {
+        const errorMessage = getErrorMessage(error)
+        reject(errorMessage)
+      }
+    })
+  }
+
+  deleteUser = async (id: string) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const docRef = doc(firestore, COLLECTIONS.USER, id)
+        await deleteDoc(docRef)
+        resolve('User deleted successfully')
       } catch (error) {
         const errorMessage = getErrorMessage(error)
         reject(errorMessage)

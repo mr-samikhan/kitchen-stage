@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { SET_SEARCH_FOCUS } from '@cookup/redux'
 import { InputAdornment, TextField } from '@mui/material'
+import { SET_SEARCH_FOCUS, onSearchChange } from '@cookup/redux'
 
 export const MuiCustomSearchInput = () => {
   const dispatch = useDispatch()
@@ -9,8 +9,9 @@ export const MuiCustomSearchInput = () => {
   return (
     <React.Fragment>
       <TextField
-        onFocus={() => dispatch(SET_SEARCH_FOCUS(false))}
         onBlur={() => dispatch(SET_SEARCH_FOCUS(true))}
+        onFocus={() => dispatch(SET_SEARCH_FOCUS(false))}
+        onChange={(e) => dispatch(onSearchChange(e.target.value))}
         variant="outlined"
         placeholder="Search Users"
         InputProps={{
