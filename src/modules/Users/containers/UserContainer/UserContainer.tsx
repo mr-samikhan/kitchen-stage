@@ -1,8 +1,9 @@
 import React from 'react'
+import { Api } from '@cookup/services'
 import { Box, Grid } from '@mui/material'
-import { SET_TAB_VALUE } from '@cookup/redux'
 import { useGetUsers } from '@cookup/hooks'
 import { SortModalUI } from '@cookup/modules'
+import { SET_TAB_VALUE } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
@@ -16,7 +17,6 @@ import {
   BUSINESS_USERS_HEADER,
   PERSONAL_USERS_HEADER,
 } from '@cookup/constant'
-import { Api } from '@cookup/services'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
@@ -24,7 +24,8 @@ export const UserContainer = () => {
 
   const { state } = useLocation()
 
-  const { tabValue, sortBy } = useSelector((state: any) => state.user)
+  const { tabValue, sortBy, filterBy } = useSelector((state: any) => state.user)
+  const { experience, ageRange, businessType, sortType, gender } = filterBy
 
   const { isSearchFocus, isSortModal, isFilterModal, searchValue } =
     useSelector((state: any) => state.header)
@@ -54,6 +55,24 @@ export const UserContainer = () => {
       setFilteredData(null)
     }
   }, [searchValue])
+
+  React.useEffect(() => {
+    if (
+      experience.length ||
+      gender.length ||
+      businessType.length ||
+      ageRange.length
+    ) {
+      const filter = Api.user.filterUsers(
+        users,
+        filterBy.experience,
+        filterBy.gender
+      )
+      setFilteredData(filter)
+    } else {
+      setFilteredData(null)
+    }
+  }, [filterBy])
 
   const onNavigation = (item: any) => {
     navigate(`${ROUTES.USERS}/${item.id}`, {

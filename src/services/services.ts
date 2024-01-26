@@ -22,6 +22,7 @@ const Api = {
     sortUsers: UserService.sortUsers,
     updateUser: UserService.updateUser,
     deleteUser: UserService.deleteUser,
+    filterUsers: UserService.filterUsers,
   },
 }
 export { Api }

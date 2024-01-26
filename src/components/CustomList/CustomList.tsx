@@ -79,7 +79,11 @@ const CustomList: React.FC<CustomListProps> = (props) => {
         {!isLoading &&
           data?.map((user: any, index: number) => {
             const filteredKeys = Object.keys(user).filter(
-              (key) => key !== 'id' && key !== 'uid'
+              (key) =>
+                key !== 'id' &&
+                key !== 'uid' &&
+                key !== 'experience' &&
+                key !== 'gender'
             )
             return (
               <React.Fragment key={index}>

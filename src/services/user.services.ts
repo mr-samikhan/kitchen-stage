@@ -22,6 +22,8 @@ type IUser = {
   lastName?: string
   firstName?: string
   country?: string
+  experience?: string
+  gender?: string
 }
 
 class User {
@@ -45,6 +47,8 @@ class User {
             name: name,
             email: data.email,
             city: data.city,
+            experience: data?.experience || '',
+            gender: data?.gender || '',
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
           }
           users?.push(user)
@@ -129,6 +133,16 @@ class User {
       } else {
         return bValue.localeCompare(aValue)
       }
+    })
+  }
+
+  filterUsers(users: any[], expArray: string[], genderArray: string[]) {
+    return users?.filter((user) => {
+      return (
+        expArray.length === 0 ||
+        (expArray.includes(user.experience) &&
+          (genderArray.length === 0 || genderArray.includes(user.gender)))
+      )
     })
   }
 }
