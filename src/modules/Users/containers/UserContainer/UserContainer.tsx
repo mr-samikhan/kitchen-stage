@@ -1,8 +1,9 @@
 import React from 'react'
+import { Api } from '@cookup/services'
 import { Box, Grid } from '@mui/material'
-import { SET_TAB_VALUE } from '@cookup/redux'
 import { useGetUsers } from '@cookup/hooks'
 import { SortModalUI } from '@cookup/modules'
+import { SET_TAB_VALUE } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
@@ -23,7 +24,8 @@ export const UserContainer = () => {
 
   const { state } = useLocation()
 
-  const { tabValue } = useSelector((state: any) => state.user)
+  const { tabValue, sortBy, filterBy } = useSelector((state: any) => state.user)
+  const { experience, ageRange, businessType, sortType, gender } = filterBy
 
   const { isSearchFocus, isSortModal, isFilterModal, searchValue } =
     useSelector((state: any) => state.header)
@@ -54,6 +56,26 @@ export const UserContainer = () => {
     }
   }, [searchValue])
 
+  React.useEffect(() => {
+    if (
+      experience.length ||
+      gender.length ||
+      businessType.length ||
+      ageRange.length
+    ) {
+      const filter = Api.user.filterUsers(
+        users,
+        filterBy.experience,
+        filterBy.gender,
+        filterBy.ageRange,
+        ['']
+      )
+      setFilteredData(filter)
+    } else {
+      setFilteredData(null)
+    }
+  }, [filterBy])
+
   const onNavigation = (item: any) => {
     navigate(`${ROUTES.USERS}/${item.id}`, {
       state: { ...item, type: tabValue === 'business' },
@@ -66,6 +88,12 @@ export const UserContainer = () => {
     registered: 'registered',
     deactivated: 'deactivated',
   }
+
+  const sortedByEmailAsc = Api.user.sortUsers(
+    users,
+    sortBy.sortValue !== '' ? sortBy.sortValue : '',
+    sortBy.sortType
+  )
 
   return (
     <Layout
@@ -99,21 +127,21 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
-            data={filteredData || users}
             isActionButton
             isBgColor="white"
             isLoading={usersLoading}
             onNavigation={onNavigation}
             headerData={PERSONAL_USERS_HEADER}
+            data={filteredData || sortedByEmailAsc}
           />
         )}
         {!isSearchFocus && tabValue === 'business' && (
           <CustomList
-            data={filteredData || users}
             isActionButton
             iconPosition="flex-end"
             isLoading={usersLoading}
             onNavigation={onNavigation}
+            data={filteredData || users}
             headerData={BUSINESS_USERS_HEADER}
           />
         )}
