@@ -16,6 +16,7 @@ import {
   BUSINESS_USERS_HEADER,
   PERSONAL_USERS_HEADER,
 } from '@cookup/constant'
+import { Api } from '@cookup/services'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ export const UserContainer = () => {
 
   const { state } = useLocation()
 
-  const { tabValue } = useSelector((state: any) => state.user)
+  const { tabValue, sortBy } = useSelector((state: any) => state.user)
 
   const { isSearchFocus, isSortModal, isFilterModal, searchValue } =
     useSelector((state: any) => state.header)
@@ -67,6 +68,12 @@ export const UserContainer = () => {
     deactivated: 'deactivated',
   }
 
+  const sortedByEmailAsc = Api.user.sortUsers(
+    users,
+    sortBy.sortValue !== '' ? sortBy.sortValue : '',
+    sortBy.sortType
+  )
+
   return (
     <Layout
       isExportCSV
@@ -99,7 +106,7 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
-            data={filteredData || users}
+            data={filteredData || sortedByEmailAsc}
             isActionButton
             isBgColor="white"
             isLoading={usersLoading}

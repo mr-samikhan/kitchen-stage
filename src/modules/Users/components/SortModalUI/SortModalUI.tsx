@@ -3,7 +3,7 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import { useDispatch, useSelector } from 'react-redux'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { SET_FILTER_TYPE, SET_SORT_TYPE } from '@cookup/redux'
+import { SET_FILTER_TYPE, SET_SORT_TYPE, SET_SORT_VALUE } from '@cookup/redux'
 import { Box, Chip, Divider, Grid, Typography } from '@mui/material'
 import {
   COLORS,
@@ -90,9 +90,8 @@ export const SortModalUI = (props: SortModalUIProps) => {
 
   const onSort = (value: string) => {
     dispatch(
-      SET_SORT_TYPE({
-        ...sortBy,
-        [value]: value,
+      SET_SORT_VALUE({
+        sortValue: value,
       })
     )
   }
@@ -107,11 +106,11 @@ export const SortModalUI = (props: SortModalUIProps) => {
             height={63}
             display="flex"
             alignItems="center"
-            bgcolor={COLORS.grey.dark}
+            bgcolor={sortBy.sortValue === 'name' ? COLORS.grey.dark : ''}
           >
             <Typography
-              variant="subtitle2"
               color="primary"
+              variant="subtitle2"
               onClick={() => onSort('name')}
             >
               Name
@@ -122,7 +121,8 @@ export const SortModalUI = (props: SortModalUIProps) => {
               color="primary"
               variant="subtitle2"
               fontFamily="SF Pro Display"
-              onClick={() => onSort('state')}
+              onClick={() => onSort('zipCode')}
+              bgcolor={sortBy.sortValue === 'country' ? COLORS.grey.dark : ''}
             >
               State
             </Typography>
@@ -132,7 +132,8 @@ export const SortModalUI = (props: SortModalUIProps) => {
               color="primary"
               variant="subtitle2"
               fontFamily="SF Pro Display"
-              onClick={() => onSort('joinedDate')}
+              onClick={() => onSort('createdAt')}
+              bgcolor={sortBy.sortValue === 'createdAt' ? COLORS.grey.dark : ''}
             >
               Date Joined
             </Typography>
@@ -143,6 +144,7 @@ export const SortModalUI = (props: SortModalUIProps) => {
               variant="subtitle2"
               fontFamily="SF Pro Display"
               onClick={() => onSort('all')}
+              bgcolor={sortBy.sortValue === 'all' ? COLORS.grey.dark : ''}
             >
               All
             </Typography>

@@ -118,6 +118,19 @@ class User {
       }
     })
   }
+
+  sortUsers = (users: any[], sortBy: string, sortOrder: string) => {
+    return users?.slice().sort((a, b) => {
+      const aValue = sortBy ? a[sortBy] : a.name
+      const bValue = sortBy ? b[sortBy] : b.name
+
+      if (sortOrder === 'ascending') {
+        return aValue.localeCompare(bValue)
+      } else {
+        return bValue.localeCompare(aValue)
+      }
+    })
+  }
 }
 
 const UserService = new User()

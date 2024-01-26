@@ -19,11 +19,8 @@ interface ITabs {
 }
 
 interface ISortBy {
-  all?: string
-  name?: string
-  state?: string
+  sortValue?: string
   sortType?: string
-  joinedDate?: string
 }
 
 interface IFilterBy {
@@ -47,10 +44,7 @@ const initialState: IUserSlice = {
   isPasswordSent: false,
   isUserUpdateModal: false,
   sortBy: {
-    all: '',
-    name: '',
-    state: '',
-    joinedDate: '',
+    sortValue: '',
     sortType: 'ascending',
   },
   filterBy: {
@@ -76,8 +70,10 @@ const userSlice = createSlice({
       state.isUserUpdateModal = action.payload
     },
     SET_SORT_TYPE: (state, action: PayloadAction<any>) => {
-      state.sortBy = action.payload
-      // state.sortBy = { ...state.sortBy, sortType: action.payload }
+      state.sortBy = { ...state.sortBy, ...action.payload }
+    },
+    SET_SORT_VALUE: (state, action: PayloadAction<any>) => {
+      state.sortBy = { ...state.sortBy, ...action.payload }
     },
     SET_FILTER_TYPE: (state, action: PayloadAction<any>) => {
       state.filterBy = { ...state.filterBy, ...action.payload }
@@ -88,6 +84,7 @@ const userSlice = createSlice({
 export const {
   SET_TAB_VALUE,
   SET_SORT_TYPE,
+  SET_SORT_VALUE,
   SET_FILTER_TYPE,
   USER_RESET_PASSWORD,
   USER_ACCOUNT_UPDATED,

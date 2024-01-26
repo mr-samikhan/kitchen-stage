@@ -58,7 +58,7 @@ export const useAdmins = ({ admins }: IAdmins) => {
     }
   }, [isAdminEditModal])
 
-  const { mutate, isError, isLoading } = useMutation(
+  const { mutate, isError, isLoading } = useMutation<any, any, any>(
     isAdminEditModal ? Api.admin.updateAdmin : Api.admin.addAdmin,
     {
       onSuccess: () => {
