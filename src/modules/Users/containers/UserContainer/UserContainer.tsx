@@ -66,7 +66,9 @@ export const UserContainer = () => {
       const filter = Api.user.filterUsers(
         users,
         filterBy.experience,
-        filterBy.gender
+        filterBy.gender,
+        filterBy.ageRange,
+        ['']
       )
       setFilteredData(filter)
     } else {
@@ -125,21 +127,21 @@ export const UserContainer = () => {
       <Box mt={4}>
         {!isSearchFocus && tabValue === 'personal' && (
           <CustomList
-            data={filteredData || sortedByEmailAsc}
             isActionButton
             isBgColor="white"
             isLoading={usersLoading}
             onNavigation={onNavigation}
             headerData={PERSONAL_USERS_HEADER}
+            data={filteredData || sortedByEmailAsc}
           />
         )}
         {!isSearchFocus && tabValue === 'business' && (
           <CustomList
-            data={filteredData || users}
             isActionButton
             iconPosition="flex-end"
             isLoading={usersLoading}
             onNavigation={onNavigation}
+            data={filteredData || users}
             headerData={BUSINESS_USERS_HEADER}
           />
         )}

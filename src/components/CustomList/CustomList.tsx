@@ -76,6 +76,13 @@ const CustomList: React.FC<CustomListProps> = (props) => {
       </Grid>
 
       <Grid item md={12} xs={12} my={1} height={height}>
+        {!isLoading && data?.length === 0 && (
+          <Grid container justifyContent="center" mt={2}>
+            <Typography variant="h5" color={COLORS.grey.main}>
+              No Data Found
+            </Typography>
+          </Grid>
+        )}
         {!isLoading &&
           data?.map((user: any, index: number) => {
             const filteredKeys = Object.keys(user).filter(
@@ -83,7 +90,8 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                 key !== 'id' &&
                 key !== 'uid' &&
                 key !== 'experience' &&
-                key !== 'gender'
+                key !== 'gender' &&
+                key !== 'dateOfBirth'
             )
             return (
               <React.Fragment key={index}>

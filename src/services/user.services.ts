@@ -13,6 +13,7 @@ import {
   DocumentSnapshot,
   deleteDoc,
 } from 'firebase/firestore'
+import { calculateAgeRange } from '@cookup/helpers'
 
 type IUser = {
   name: string
@@ -24,6 +25,7 @@ type IUser = {
   country?: string
   experience?: string
   gender?: string
+  dateOfBirth?: string
 }
 
 class User {
@@ -47,8 +49,9 @@ class User {
             name: name,
             email: data.email,
             city: data.city,
-            experience: data?.experience || '',
             gender: data?.gender || '',
+            experience: data?.experience || '',
+            dateOfBirth: data?.dateOfBirth || '',
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
           }
           users?.push(user)
@@ -136,12 +139,24 @@ class User {
     })
   }
 
-  filterUsers(users: any[], expArray: string[], genderArray: string[]) {
+  filterUsers(
+    users: any[],
+    expArray: string[],
+    genderArray: string[],
+    ageRangeArray: string[],
+    businessTypeArray: string[]
+  ) {
     return users?.filter((user) => {
       return (
         expArray.length === 0 ||
-        (expArray.includes(user.experience) &&
-          (genderArray.length === 0 || genderArray.includes(user.gender)))
+        (expArray.every((criteria) => user.experience === criteria) &&
+          genderArray.every((criteria) => user.gender === criteria) &&
+          ageRangeArray.every(
+            (criteria) => calculateAgeRange(user?.dateOfBirth) === criteria
+          )) ||
+        businessTypeArray.every(
+          (criteria) => calculateAgeRange(user?.businessType) === criteria
+        )
       )
     })
   }
