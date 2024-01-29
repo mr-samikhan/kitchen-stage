@@ -3,21 +3,33 @@ import { COLORS } from '@cookup/constant'
 import { ChevronRight } from '@mui/icons-material'
 import { Box, Grid, IconButton, TextField, Typography } from '@mui/material'
 
-export const ReviewAd = () => {
+interface IReviewAd {
+  data?: any
+}
+
+export const ReviewAd = (props: IReviewAd) => {
+  const { data } = props || {}
+
   return (
     <React.Fragment>
       <Grid item container>
         <Grid item md={5} xs={12} pl={{ xs: 0, md: 7 }}>
           <Box display="flex" flexDirection="column" gap={2}>
             {[
-              { label: 'Name', placeholder: 'AESOP' },
-              { label: 'Website', placeholder: 'AESOP.com' },
-              { label: 'Location', placeholder: 'New Port,CA' },
-              { label: 'Age Range', placeholder: '21-27, 28-35' },
-              { label: 'Gender', placeholder: 'Male, Non Binary' },
-              { label: 'Interests', placeholder: 'Pasta' },
-              { label: 'Start Date', placeholder: 'July 15,2021' },
-              { label: 'End Date', placeholder: 'July 30,2021' },
+              { label: 'Name', placeholder: data.adName },
+              { label: 'Website', placeholder: data.website },
+              { label: 'Location', placeholder: data.location },
+              { label: 'Age Range', placeholder: data.ageRange },
+              { label: 'Gender', placeholder: data.gender },
+              { label: 'Interests', placeholder: data?.interests || '' },
+              {
+                label: 'Start Date',
+                placeholder: new Date(data.startDate).toDateString(),
+              },
+              {
+                label: 'End Date',
+                placeholder: new Date(data.endDate).toDateString(),
+              },
             ].map(({ label, placeholder }) => (
               <Box key={label} display="flex" gap={2} alignItems="center">
                 <Typography variant="h6" width={95} fontFamily="Poppins">
@@ -25,7 +37,11 @@ export const ReviewAd = () => {
                 </Typography>
                 <TextField
                   fullWidth
-                  placeholder={placeholder}
+                  placeholder={
+                    typeof placeholder === 'string'
+                      ? placeholder
+                      : placeholder?.map((item: any) => item + '')
+                  }
                   className="grey-background"
                 />
               </Box>
@@ -72,12 +88,11 @@ export const ReviewAd = () => {
               alt=""
               width="100%"
               height="auto"
-              src="/assets/images/ad_card1.svg"
+              src={URL.createObjectURL(data?.image?.file)}
             />
           </Box>
           <Typography variant="h6" fontFamily="Poppins" color="primary" mt={2}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit
+            {data?.description}
           </Typography>
         </Grid>
       </Grid>

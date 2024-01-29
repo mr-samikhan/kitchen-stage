@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   customMenu: {
     width: '366px',
     color: 'white',
-    backgroundColor: COLORS.secondary.light,
+    // backgroundColor: COLORS.secondary.light,
     boxShadow: 'box-shadow: 0px 8px 24px 0px #0000001A',
   },
   noElevation: {

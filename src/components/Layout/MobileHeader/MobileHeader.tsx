@@ -31,7 +31,7 @@ interface MobileProps {
   button1ClassName?: string
   button2ClassName?: string
   onButton1Click?: () => void
-  onButton2Click?: () => void
+  onButton2Click?: (data: any) => void
   title?: string | null | undefined
 }
 

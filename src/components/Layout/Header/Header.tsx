@@ -34,7 +34,7 @@ interface HeaderProps {
   button1ClassName?: string
   button2ClassName?: string
   onButton1Click?: () => void
-  onButton2Click?: () => void
+  onButton2Click?: (data: any) => void
   title?: string | null | undefined
   button1Variant?: 'contained' | 'outlined'
   button2Variant?: 'contained' | 'outlined'
