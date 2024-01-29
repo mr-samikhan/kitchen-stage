@@ -8,9 +8,18 @@ import { CreateAdForm, ReviewAd, useAds } from '@cookup/modules'
 export const CreateAdContainer = () => {
   const navigate = useNavigate()
 
-  const { methods, onSubmit, onMultiSelect, adValues, setAdValues } = useAds()
-
-  const [step, setStep] = useState(0)
+  const {
+    mutate,
+    isLoading,
+    methods,
+    onSubmit,
+    onMultiSelect,
+    adValues,
+    setAdValues,
+    step,
+    setStep,
+    onModalClick,
+  } = useAds()
 
   const RenderAdSteps = () => {
     switch (step) {
@@ -23,18 +32,20 @@ export const CreateAdContainer = () => {
           />
         )
       case 1:
-        return <ReviewAd />
+        return (
+          <ReviewAd
+            data={{
+              ...adValues.data,
+              gender: adValues.gender,
+              ageRange: adValues.ageRange,
+            }}
+          />
+        )
 
       default:
         throw new Error('No Screen Found')
     }
   }
-
-  const onModalClick = (key: string, value: boolean) =>
-    setAdValues((prev) => ({
-      ...prev,
-      [key]: value,
-    }))
 
   return (
     <React.Fragment>
@@ -44,13 +55,14 @@ export const CreateAdContainer = () => {
             showButton1
             showButton2
             isNavigation
-            // button2Type="submit"
+            button2Type="submit"
+            button1Type="submit"
             button2Text="Save Draft"
             button2Variant="outlined"
             navigationTitle="Create Ad"
             onButton2Click={() => onModalClick('draftModal', true)}
             onButton1Click={() =>
-              step === 0 ? setStep(1) : onModalClick('publishModal', true)
+              step === 0 ? onSubmit : onModalClick('publishModal', true)
             }
             button1Text={step === 0 ? 'Review Ad' : 'Publish Ad'}
             onGoBack={() => (step === 1 ? setStep(0) : navigate(-1))}
@@ -71,10 +83,17 @@ export const CreateAdContainer = () => {
           fontFamily="Poppins"
           cancelButtonText="No"
           textVariant="subtitle2"
-          okButtonText="Yes, save ad"
           isOpen={adValues.publishModal}
           icon="/assets/icons/publish_icon.svg"
-          onConfirm={() => onModalClick('successModal', true)}
+          okButtonText={isLoading ? 'Loading...' : 'Yes, save ad'}
+          onConfirm={() =>
+            mutate({
+              ...adValues.data,
+              ageRange: adValues.ageRange,
+              gender: adValues.gender,
+            })
+          }
+          // onConfirm={() => onModalClick('successModal', true)}
           onClose={() => onModalClick('publishModal', false)}
           text="Are you sure you want to publish this ad? Action is not reversable."
         />

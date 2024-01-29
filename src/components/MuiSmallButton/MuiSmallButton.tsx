@@ -7,7 +7,7 @@ interface MuiSmallButtonProps {
   icon?: string
   btnText?: string
   className?: string
-  onClick?: () => void
+  onClick?: (data: any) => void
   size?: 'small' | 'large' | 'medium'
   variant?: 'contained' | 'outlined'
 }

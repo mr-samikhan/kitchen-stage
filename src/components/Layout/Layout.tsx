@@ -38,8 +38,8 @@ interface LayoutProps {
   button2Size?: 'small' | 'large' | 'medium'
   button1ClassName?: string
   button2ClassName?: string
-  onButton1Click?: () => void
-  onButton2Click?: () => void
+  onButton1Click?: any
+  onButton2Click?: (res: any) => void
 }
 
 export const Layout = (props: LayoutProps) => {
