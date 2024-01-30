@@ -1,29 +1,40 @@
 import React from 'react'
 import { AdsCard } from '../components'
 import { useSelector } from 'react-redux'
-import { ADS_CARD_DATA } from '@cookup/constant'
 
 interface ICurrentAds {
+  data: any[] | undefined
   selectedIndex: number | null
+  onDeleteAd: (item: any) => void
+  onSelectSingleAd: (item: any) => void
   setSelectedIndex: (index: any) => void
 }
 
 export const CurrentAds = (props: ICurrentAds) => {
-  const { selectedIndex, setSelectedIndex } = props || {}
+  const {
+    data,
+    onDeleteAd,
+    selectedIndex,
+    onSelectSingleAd,
+    setSelectedIndex,
+  } = props || {}
 
   const [selectedLable, setSelectedLable] = React.useState<string | null>(null)
   const { tabValue } = useSelector((state: any) => state.user)
 
   return (
     <React.Fragment>
-      {ADS_CARD_DATA.map((item, index) => (
+      {data?.map((item, index) => (
         <AdsCard
+          data_={item}
           index={index}
-          img={item.img}
-          title={item.title}
+          title={item.adName}
+          onDeleteAd={onDeleteAd}
+          img={item.image.fileUrl}
           clickRate={item.clickRate}
           selectedLable={selectedLable}
           selectedIndex={selectedIndex}
+          onSelectSingleAd={onSelectSingleAd}
           isTooltip={index === selectedIndex}
           setSelectedIndex={setSelectedIndex}
           setSelectedLable={setSelectedLable}

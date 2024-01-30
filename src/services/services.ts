@@ -28,6 +28,10 @@ const Api = {
   },
   ads: {
     addAds: AdsService.addAds,
+    getAds: AdsService.getAds,
+    deleteAds: AdsService.deleteAds,
+    saveDrafts: AdsService.saveDraft,
+    duplicateAds: AdsService.duplicateAds,
   },
   image: {
     uploadImage: ImageService.uploadFile,
