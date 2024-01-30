@@ -1,23 +1,29 @@
 import React, { useEffect } from 'react'
+import { useGetAds } from '@cookup/hooks'
 import { SET_TAB_VALUE } from '@cookup/redux'
 import { useNavigate } from 'react-router-dom'
 import { AdsTypes, useAds } from '@cookup/modules'
-import { Box, Container, Grid } from '@mui/material'
 import { ADS_TABS, ROUTES } from '@cookup/constant'
+import { Box, Container, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Layout, MuiCustomTab } from '@cookup/components'
+import { CustomLoader, Layout, MuiCustomTab } from '@cookup/components'
 
 export const AdsContainer = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { setSelectedIndex, selectedIndex } = useAds()
+  const { setSelectedIndex, selectedIndex, onSelectSingleAd, onDeleteAd } =
+    useAds()
 
   const { tabValue } = useSelector((state: any) => state.user)
 
   useEffect(() => {
     dispatch(SET_TAB_VALUE('current'))
   }, [])
+
+  const { ads, adsLoading, isFetching } = useGetAds({ value: tabValue })
+
+  if (adsLoading || isFetching) return <CustomLoader />
 
   return (
     <Layout
@@ -49,8 +55,11 @@ export const AdsContainer = () => {
               justifyContent={{ xs: 'center', md: 'start' }}
             >
               <AdsTypes
+                data={ads}
                 tabValue={tabValue}
+                onDeleteAd={onDeleteAd}
                 selectedIndex={selectedIndex}
+                onSelectSingleAd={onSelectSingleAd}
                 setSelectedIndex={setSelectedIndex}
               />
             </Grid>

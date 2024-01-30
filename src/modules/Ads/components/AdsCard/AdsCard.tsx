@@ -3,6 +3,7 @@ import { COLORS } from '@cookup/constant'
 import { Box, IconButton, Typography } from '@mui/material'
 
 interface IAddCard {
+  data_?: any
   img: string
   title: string
   index: number
@@ -12,21 +13,26 @@ interface IAddCard {
   data?: string[] | undefined
   selectedIndex: number | null
   selectedLable: string | null
+  onDeleteAd: (item: any) => void
+  onSelectSingleAd: (item: any) => void
   setSelectedIndex: (index: any) => void
   setSelectedLable: (index: string) => void
 }
 
 export const AdsCard = (props: IAddCard) => {
   const {
-    data,
     img,
+    data,
     title,
+    data_,
     isTooltip,
     clickRate,
+    onDeleteAd,
     onIconClick,
     selectedLable,
-    setSelectedLable,
+    onSelectSingleAd,
     setSelectedIndex,
+    setSelectedLable,
   } = props || {}
 
   let ARRAY_CHECK = data ? data : ['Duplicate', 'Delete']
@@ -52,6 +58,13 @@ export const AdsCard = (props: IAddCard) => {
                   height={24}
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
+                    if (item === 'Delete') {
+                      onDeleteAd(data_)
+                    } else if (item === 'Duplicate') {
+                      onSelectSingleAd(data_)
+                    } else if (item === 'Edit') {
+                      console.log('Edit')
+                    }
                     setSelectedLable(item)
                     setSelectedIndex(null)
                   }}
@@ -74,7 +87,15 @@ export const AdsCard = (props: IAddCard) => {
               <img src="/assets/icons/more-hor.svg" alt="more" />
             </IconButton>
           </Box>
-          <img src={img} alt="" width="100%" height="100%" />
+          <img
+            src={img}
+            alt=""
+            width="100%"
+            height="100%"
+            style={{
+              borderRadius: '8px',
+            }}
+          />
         </Box>
         <Typography py={0.5} variant="h5" color="primary" fontFamily="Poppins">
           {title}
