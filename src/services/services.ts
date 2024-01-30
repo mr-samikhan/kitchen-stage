@@ -28,6 +28,7 @@ const Api = {
   },
   ads: {
     addAds: AdsService.addAds,
+    saveDrafts: AdsService.saveDraft,
   },
   image: {
     uploadImage: ImageService.uploadFile,

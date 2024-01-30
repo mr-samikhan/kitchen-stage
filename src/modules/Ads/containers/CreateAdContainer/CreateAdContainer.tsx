@@ -60,9 +60,11 @@ export const CreateAdContainer = () => {
             button2Text="Save Draft"
             button2Variant="outlined"
             navigationTitle="Create Ad"
-            onButton2Click={() => onModalClick('draftModal', true)}
+            onButton2Click={() =>
+              setAdValues((prev) => ({ ...prev, isSaveDraft: true }))
+            }
             onButton1Click={() =>
-              step === 0 ? onSubmit : onModalClick('publishModal', true)
+              step === 0 ? '' : onModalClick('publishModal', true)
             }
             button1Text={step === 0 ? 'Review Ad' : 'Publish Ad'}
             onGoBack={() => (step === 1 ? setStep(0) : navigate(-1))}
@@ -110,8 +112,14 @@ export const CreateAdContainer = () => {
           title="You have unsaved changes"
           icon="/assets/icons/wine_warn.svg"
           onClose={() => onModalClick('draftModal', false)}
-          onConfirm={() => onModalClick('successModal', true)}
           text="You have unsaved changes. Would you like to save your ad?"
+          onConfirm={() =>
+            mutate({
+              ...adValues.data,
+              ageRange: adValues.ageRange,
+              gender: adValues.gender,
+            })
+          }
         />
       )}
       {adValues.successModal && (

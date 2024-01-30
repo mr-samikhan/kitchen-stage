@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import { AdsFormResolver } from '@cookup/utils'
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { useMutation } from 'react-query'
 import { Api } from '@cookup/services'
+import { useMutation } from 'react-query'
+import { AdsFormResolver } from '@cookup/utils'
 import { getErrorMessage } from '@cookup/constant'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 
 interface AdValues {
   data: any
-  ageRange: any[]
   gender: any[]
+  ageRange: any[]
   draftModal?: boolean
+  isSaveDraft?: boolean
   publishModal?: boolean
   successModal?: boolean
 }
@@ -37,6 +38,7 @@ export const useAds = (): UseAdsResult => {
     data: {},
     ageRange: [],
     gender: [],
+    isSaveDraft: false,
     draftModal: false,
     publishModal: false,
     successModal: false,
@@ -48,15 +50,18 @@ export const useAds = (): UseAdsResult => {
   })
 
   //mutation
-  const { mutate, isLoading } = useMutation(Api.ads.addAds, {
-    onSuccess: () => {
-      onModalClick('successModal', true)
-    },
-    onError: (err) => {
-      const errorMessage = getErrorMessage(err)
-      alert(errorMessage)
-    },
-  })
+  const { mutate, isLoading } = useMutation(
+    adValues.isSaveDraft ? Api.ads.saveDrafts : Api.ads.addAds,
+    {
+      onSuccess: () => {
+        onModalClick('successModal', true)
+      },
+      onError: (err) => {
+        const errorMessage = getErrorMessage(err)
+        alert(errorMessage || 'Something went wrong!')
+      },
+    }
+  )
 
   const onModalClick = (key: string, value: boolean) =>
     setAdValues((prev) => ({
@@ -85,8 +90,12 @@ export const useAds = (): UseAdsResult => {
   }
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setStep(1)
     console.log(data)
+    if (adValues.isSaveDraft) {
+      onModalClick('draftModal', true)
+    } else {
+      setStep(1)
+    }
     setAdValues((prev) => ({
       ...prev,
       data,

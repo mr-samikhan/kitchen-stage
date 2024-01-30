@@ -31,6 +31,35 @@ class Ads {
       }
     })
   }
+
+  saveDraft = (data: any) => {
+    return new Promise(async (resolve, reject) => {
+      console.log(data, '>>>data')
+      try {
+        const { file, fileName, fileSize } = data?.image || {}
+        const cover_img = file
+          ? await ImageService.uploadFile(file, `images/ads/${fileName}`)
+          : ''
+
+        const querySnapshot = await addDoc(
+          collection(firestore, COLLECTIONS.DRAFT_ADS),
+          {
+            ...data,
+            createdAt: new Date(),
+            image: {
+              fileName,
+              fileSize,
+              fileUrl: cover_img,
+            },
+          }
+        )
+
+        resolve(querySnapshot)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
 }
 
 const AdsService = new Ads()
