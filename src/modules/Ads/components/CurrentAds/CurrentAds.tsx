@@ -1,6 +1,7 @@
 import React from 'react'
 import { AdsCard } from '../components'
 import { useSelector } from 'react-redux'
+import { Grid, Typography } from '@mui/material'
 
 interface ICurrentAds {
   data: any[] | undefined
@@ -24,6 +25,13 @@ export const CurrentAds = (props: ICurrentAds) => {
 
   return (
     <React.Fragment>
+      {!data?.length && (
+        <Grid container justifyContent="center">
+          <Typography color="primary" variant="h5">
+            No Ads Found
+          </Typography>
+        </Grid>
+      )}
       {data?.map((item, index) => (
         <AdsCard
           data_={item}

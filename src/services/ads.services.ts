@@ -92,10 +92,10 @@ class Ads {
             return endDate < currentDate
           })
         }
-        if (type !== 'expired') {
+        if (type !== 'expired' && type !== 'drafts') {
           data = data.filter((ad: any) => {
             const endDate = new Date(ad.endDate)
-            return endDate > currentDate
+            return endDate >= currentDate
           })
         }
 
