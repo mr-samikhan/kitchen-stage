@@ -3,6 +3,7 @@ import { AuthService } from './auth.service'
 import { UserService } from './user.services'
 import { AdminService } from './admins.services'
 import { ImageService } from './images.services'
+import { SupportService } from './support.services'
 
 const Api = {
   auth: {
@@ -32,6 +33,9 @@ const Api = {
     deleteAds: AdsService.deleteAds,
     saveDrafts: AdsService.saveDraft,
     duplicateAds: AdsService.duplicateAds,
+  },
+  support: {
+    getSupports: SupportService.getSupportData,
   },
   image: {
     uploadImage: ImageService.uploadFile,

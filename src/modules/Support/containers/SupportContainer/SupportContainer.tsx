@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { useSupport } from '../../hooks/hooks'
 import { FormProvider } from 'react-hook-form'
-import { SUPPORT_TABS } from '@cookup/constant'
+import { COLLECTIONS, SUPPORT_TABS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { SortModalUI, SuspendModalUI } from '@cookup/modules'
 import { MessageModal, TabsUI } from '../../components/components'
@@ -13,6 +13,7 @@ import {
   MuiCustomTab,
   ExportCSVModal,
   CustomSortModal,
+  CustomLoader,
 } from '@cookup/components'
 import {
   SET_TOOL_TIP,
@@ -22,16 +23,24 @@ import {
   SET_CONFIRM_SUSPENSION,
   SET_SINGLE_SUPPORT_DATA,
 } from '@cookup/redux'
+import { useGetSupports } from '@cookup/hooks'
 
 export const SupportContainer = () => {
   const { methods, onSevenDaysSuspend, onSubmit } = useSupport()
-
   const dispatch = useDispatch()
 
   const { isFilterModal, isSortModal } = useSelector(
     (state: any) => state.header
   )
+
+  useEffect(() => {
+    dispatch(SET_TAB_VALUE('reports'))
+  }, [])
   const { tabValue } = useSelector((state: any) => state.user)
+
+  const { supportLoading, support_data, isFetching } = useGetSupports({
+    value: tabValue,
+  })
 
   const {
     isToolTip,
@@ -42,16 +51,14 @@ export const SupportContainer = () => {
     isConfirmSuspension,
   } = useSelector((state: any) => state.support)
 
-  useEffect(() => {
-    dispatch(SET_TAB_VALUE('reports'))
-  }, [])
+  if (supportLoading || isFetching) return <CustomLoader />
 
   return (
     <Layout
       isTitle
       isSort
       isFilter
-      isFooter
+      isFooter={support_data && support_data?.length > 7 ? true : false}
       isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       isPaginationIcons={tabValue !== 'suspended-users'}
     >
@@ -64,7 +71,7 @@ export const SupportContainer = () => {
           />
         </Grid>
         <Grid item md={12} mt={2} my={5}>
-          <TabsUI tabValue={tabValue} />
+          <TabsUI tabValue={tabValue} data={support_data} />
         </Grid>
       </Grid>
 
