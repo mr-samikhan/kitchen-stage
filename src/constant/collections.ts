@@ -5,6 +5,7 @@ const Collections = {
   GROUP: 'groups',
   BOOKING: 'bookings',
   DRAFT_ADS: 'draft_ads',
+  SUPPORT: 'customer_support',
   NOTIFICATION: 'notifications',
 }
 

@@ -17,6 +17,7 @@ interface CustomListProps {
   data?: any
   icon?: string
   height?: number
+  hiddenKeys?: string[]
   isLoading?: boolean
   headerData?: string[]
   isViewMessage?: boolean
@@ -35,6 +36,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
     icon,
     height,
     onDelete,
+    hiddenKeys,
     isBgColor,
     isLoading,
     headerData,
@@ -85,13 +87,15 @@ const CustomList: React.FC<CustomListProps> = (props) => {
         )}
         {!isLoading &&
           data?.map((user: any, index: number) => {
+            let keys = hiddenKeys || [
+              'id',
+              'uid',
+              'gender',
+              'dateOfBirth',
+              'experience',
+            ]
             const filteredKeys = Object.keys(user).filter(
-              (key) =>
-                key !== 'id' &&
-                key !== 'uid' &&
-                key !== 'experience' &&
-                key !== 'gender' &&
-                key !== 'dateOfBirth'
+              (key) => !keys.includes(key)
             )
             return (
               <React.Fragment key={index}>

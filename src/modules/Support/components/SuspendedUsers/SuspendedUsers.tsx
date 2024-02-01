@@ -7,15 +7,23 @@ import {
   SUPPORT_SUSPENDED_HEADER,
 } from '@cookup/constant'
 
-export const SuspendedUsers = () => {
+interface SuspendedUsersProps {
+  data: any
+  hiddenKeys?: string[]
+}
+
+export const SuspendedUsers = (props: SuspendedUsersProps) => {
+  const { data, hiddenKeys } = props || {}
+
   const navigate = useNavigate()
   return (
     <React.Fragment>
       <CustomList
+        data={data}
         height={400}
         isActionButton
+        hiddenKeys={hiddenKeys}
         iconPosition="flex-end"
-        data={SUPPORT_SUSPENDED_DATA}
         headerData={SUPPORT_SUSPENDED_HEADER}
         onNavigation={() => navigate(ROUTES.USERS)}
       />
