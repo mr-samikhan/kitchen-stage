@@ -1,16 +1,18 @@
 import React from 'react'
 import { EXPORT_CSV_DATA } from '@cookup/constant'
 import { Box, Button, Checkbox, Modal, Paper, Typography } from '@mui/material'
+import { CSVLink } from 'react-csv'
 
 interface IExportProps {
-  isOpen: boolean
   data?: {}[]
+  isOpen: boolean
   onClose: () => void
   onExport: () => void
+  csvData: any[] | undefined
 }
 
 export const ExportCSVModal = (props: IExportProps) => {
-  const { isOpen, data, onClose, onExport } = props || {}
+  const { isOpen, data, onClose, onExport, csvData } = props || {}
 
   let isArray = data ? data : EXPORT_CSV_DATA
 
@@ -91,14 +93,16 @@ export const ExportCSVModal = (props: IExportProps) => {
             ))}
           </Box>
           <Box mt={2} display="flex" gap={2}>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ width: 205 }}
-              onClick={onExport}
-            >
-              Export
-            </Button>
+            <CSVLink data={csvData || []} filename="support_file.csv">
+              <Button
+                fullWidth
+                onClick={onExport}
+                variant="contained"
+                sx={{ width: 205 }}
+              >
+                Export
+              </Button>
+            </CSVLink>
             <Button
               variant="outlined"
               size="medium"

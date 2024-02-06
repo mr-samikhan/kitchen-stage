@@ -2,13 +2,14 @@ import React from 'react'
 import { Box, Button, Divider, TextField, Typography } from '@mui/material'
 
 interface IMessageProps {
+  reason: string
   onReply: () => void
   onCancel: () => void
   isSender?: boolean
 }
 
 export const MessageModal = (props: IMessageProps) => {
-  const { onCancel, onReply, isSender } = props || {}
+  const { onCancel, onReply, isSender, reason } = props || {}
 
   return (
     <React.Fragment>
@@ -31,7 +32,7 @@ export const MessageModal = (props: IMessageProps) => {
         fontFamily="Poppins"
         py={3}
       >
-        Reason: [Support Reason]
+        Reason: [{reason || 'N/A'}]
       </Typography>
       <Typography variant="subtitle1" color="primary" fontFamily="Poppins">
         Message:

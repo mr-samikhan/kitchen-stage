@@ -636,3 +636,12 @@ export const ADS_ARRAY = [
   { img: '/assets/images/media_card4.svg', user: '/assets/icons/user1.svg' },
   { img: '/assets/images/media_card5.svg', user: '/assets/icons/user1.svg' },
 ]
+
+export const SUPPORT_HIDDEN_KEYS = [
+  'id',
+  'uid',
+  'gender',
+  'dateOfBirth',
+  'experience',
+  'createdAt',
+]
