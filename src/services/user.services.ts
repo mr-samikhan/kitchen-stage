@@ -126,7 +126,7 @@ class User {
     })
   }
 
-  sortUsers = (users: any[], sortBy: string, sortOrder: string) => {
+  sortUsers = (users: any[] | undefined, sortBy: string, sortOrder: string) => {
     return users?.slice().sort((a, b) => {
       const aValue = sortBy ? a[sortBy] : a.name
       const bValue = sortBy ? b[sortBy] : b.name
@@ -140,7 +140,7 @@ class User {
   }
 
   filterUsers(
-    users: any[],
+    users: any[] | undefined,
     expArray: string[],
     genderArray: string[],
     ageRangeArray: string[],

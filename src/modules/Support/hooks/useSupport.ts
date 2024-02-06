@@ -1,8 +1,10 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { Api } from '@cookup/services'
 import { useDispatch } from 'react-redux'
+import { useMutation } from 'react-query'
+import { useForm } from 'react-hook-form'
 import { SuspendUserResolver } from '@cookup/utils'
-import { SET_CONFIRM_SUSPENSION, SET_USER_SUSPENSION } from '@cookup/redux'
+import { SET_CONFIRM_SUSPENSION, SET_TOOL_TIP } from '@cookup/redux'
 
 export const useSupport = () => {
   const dispatch = useDispatch()
@@ -12,16 +14,52 @@ export const useSupport = () => {
 
   const isValid = methods.formState.isValid
 
+  //mutation
+  const { mutate: onSuspendUser, isLoading: isSuspendLoading } = useMutation<
+    any,
+    any,
+    any
+  >(Api.user.updateUser, {
+    onSuccess: (success) => {
+      if (success === 'suspended') {
+        dispatch(
+          SET_TOOL_TIP({
+            isToolTip: null,
+            isToolTipModal: false,
+          })
+        )
+        dispatch(SET_CONFIRM_SUSPENSION(false))
+      } else {
+        dispatch(
+          SET_TOOL_TIP({
+            isToolTip: null,
+            isToolTipModal: false,
+          })
+        )
+        dispatch(SET_CONFIRM_SUSPENSION(false))
+      }
+    },
+    onError: (error) => {
+      console.log(error)
+      alert('Something went wrong')
+    },
+  })
+
   const onSubmit = (data: any) => {
-    console.log(data)
     dispatch(SET_CONFIRM_SUSPENSION(true))
-    methods.reset()
   }
   const onSevenDaysSuspend = () => {
-    console.log('7 days')
     dispatch(SET_CONFIRM_SUSPENSION(true))
   }
-  return { onSubmit, isValid, methods, onSevenDaysSuspend }
+
+  return {
+    isValid,
+    methods,
+    onSubmit,
+    onSuspendUser,
+    isSuspendLoading,
+    onSevenDaysSuspend,
+  }
 }
 
 export default useSupport

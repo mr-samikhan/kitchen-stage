@@ -1,19 +1,22 @@
+import moment from 'moment'
 import { Grid } from '@mui/material'
-import React, { useEffect, useLayoutEffect } from 'react'
+import { Api } from '@cookup/services'
+import React, { useEffect } from 'react'
 import { useSupport } from '../../hooks/hooks'
+import { useGetSupports } from '@cookup/hooks'
 import { FormProvider } from 'react-hook-form'
-import { COLLECTIONS, SUPPORT_TABS } from '@cookup/constant'
+import { SUPPORT_TABS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { SortModalUI, SuspendModalUI } from '@cookup/modules'
 import { MessageModal, TabsUI } from '../../components/components'
 import {
   Form,
   Layout,
-  CustomDialog,
   MuiCustomTab,
+  CustomDialog,
+  CustomLoader,
   ExportCSVModal,
   CustomSortModal,
-  CustomLoader,
 } from '@cookup/components'
 import {
   SET_TOOL_TIP,
@@ -23,11 +26,18 @@ import {
   SET_CONFIRM_SUSPENSION,
   SET_SINGLE_SUPPORT_DATA,
 } from '@cookup/redux'
-import { useGetSupports } from '@cookup/hooks'
 
 export const SupportContainer = () => {
-  const { methods, onSevenDaysSuspend, onSubmit } = useSupport()
+  const {
+    methods,
+    onSubmit,
+    onSuspendUser,
+    isSuspendLoading,
+    onSevenDaysSuspend,
+  } = useSupport()
+
   const dispatch = useDispatch()
+  const [filteredData, setFilteredData] = React.useState<any>(null)
 
   const { isFilterModal, isSortModal } = useSelector(
     (state: any) => state.header
@@ -36,7 +46,9 @@ export const SupportContainer = () => {
   useEffect(() => {
     dispatch(SET_TAB_VALUE('reports'))
   }, [])
-  const { tabValue } = useSelector((state: any) => state.user)
+
+  const { tabValue, sortBy, filterBy } = useSelector((state: any) => state.user)
+  const { experience, ageRange, businessType, sortType, gender } = filterBy
 
   const { supportLoading, support_data, isFetching } = useGetSupports({
     value: tabValue,
@@ -49,7 +61,38 @@ export const SupportContainer = () => {
     isToolTipModal,
     isExportSuccess,
     isConfirmSuspension,
+    singleSupportData,
   } = useSelector((state: any) => state.support)
+
+  //filter
+  React.useEffect(() => {
+    if (
+      experience.length ||
+      gender.length ||
+      businessType.length ||
+      ageRange.length
+    ) {
+      const filter = Api.support.filterSupportData(
+        support_data,
+        filterBy.experience,
+        filterBy.gender,
+        filterBy.ageRange,
+        ['']
+      )
+      setFilteredData(filter)
+    } else {
+      setFilteredData(null)
+    }
+  }, [filterBy])
+
+  //sort
+  const sortedData = Api.support.sortSupportData(
+    support_data,
+    sortBy.sortValue !== ''
+      ? Api.support.getSortKeys(sortBy.sortValue) || ''
+      : '',
+    sortBy.sortType
+  )
 
   if (supportLoading || isFetching) return <CustomLoader />
 
@@ -58,9 +101,9 @@ export const SupportContainer = () => {
       isTitle
       isSort
       isFilter
-      isFooter={support_data && support_data?.length > 7 ? true : false}
-      isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       isPaginationIcons={tabValue !== 'suspended-users'}
+      isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
+      isFooter={support_data && support_data?.length > 7 ? true : false}
     >
       <Grid container>
         <Grid item xs={12} display="flex" justifyContent="center">
@@ -71,7 +114,7 @@ export const SupportContainer = () => {
           />
         </Grid>
         <Grid item md={12} mt={2} my={5}>
-          <TabsUI tabValue={tabValue} data={support_data} />
+          <TabsUI tabValue={tabValue} data={filteredData || sortedData} />
         </Grid>
       </Grid>
 
@@ -124,13 +167,30 @@ export const SupportContainer = () => {
             dispatch(SET_CONFIRM_SUSPENSION(false))
           }}
           onConfirm={() => {
-            dispatch(
-              SET_TOOL_TIP({
-                isToolTip: null,
-                isToolTipModal: false,
-              })
-            )
-            dispatch(SET_CONFIRM_SUSPENSION(false))
+            methods.watch('days')
+              ? onSuspendUser({
+                  id: 'id',
+                  data: {
+                    suspensionDays: methods.watch('days'),
+                    isSuspended: true,
+                    suspensionDate: new Date(),
+                    suspenseReason: methods.watch('reason'),
+                    suspensionDuration: moment(
+                      Date.now() + methods.watch('days') * 24 * 60 * 60 * 1000
+                    ).format('MMMM DD, YYYY'),
+                  },
+                })
+              : onSuspendUser({
+                  id: 'id',
+                  data: {
+                    suspensionDays: 7,
+                    isSuspended: true,
+                    suspensionDate: new Date(),
+                    suspensionDuration: moment(
+                      Date.now() + 7 * 24 * 60 * 60 * 1000
+                    ).format('MMMM DD, YYYY'),
+                  },
+                })
           }}
           okButtonStyle={{
             p: 2,
@@ -150,15 +210,12 @@ export const SupportContainer = () => {
           okButtonText="Yes, I Confirm"
           icon="/assets/icons/success.svg"
           text="Are you sure you want to resolve this report?"
-          onConfirm={() => {
-            dispatch(
-              SET_TOOL_TIP({
-                isToolTip: null,
-                isToolTipModal: false,
-              })
-            )
-            dispatch(SET_CONFIRM_SUSPENSION(false))
-          }}
+          onConfirm={() =>
+            onSuspendUser({
+              id: 'id',
+              data: { isResolved: true },
+            })
+          }
           onClose={() => {
             dispatch(
               SET_TOOL_TIP({
@@ -194,6 +251,7 @@ export const SupportContainer = () => {
 
       {isExportModal && (
         <ExportCSVModal
+          csvData={support_data}
           isOpen={isExportModal}
           onClose={() => dispatch(SET_EXPORT_MODAL(false))}
           onExport={() => dispatch(SET_EXPORT_SUCCESS(true))}
@@ -233,6 +291,7 @@ export const SupportContainer = () => {
           }}
         >
           <MessageModal
+            reason={singleSupportData?.supportReason}
             isSender
             onReply={() =>
               dispatch(

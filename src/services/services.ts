@@ -35,7 +35,10 @@ const Api = {
     duplicateAds: AdsService.duplicateAds,
   },
   support: {
+    getSortKeys: SupportService.getSortKeys,
     getSupports: SupportService.getSupportData,
+    sortSupportData: SupportService.sortSupportData,
+    filterSupportData: SupportService.filterSupportData,
   },
   image: {
     uploadImage: ImageService.uploadFile,
