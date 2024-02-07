@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "kitchen-stage"
+    "default": "kitchen-stage",
+    "kitchen-stage": "kitchen-stage"
   },
   "targets": {
     "kitchen-stage": {
@@ -10,5 +11,6 @@
         ]
       }
     }
-  }
+  },
+  "etags": {}
 }

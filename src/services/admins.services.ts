@@ -17,6 +17,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore'
+import axios from 'axios'
 
 interface IAdmin {
   uid: string
@@ -72,16 +73,18 @@ class Admin {
     }
   ) => {
     const { emailCheck, data } = values
+    const { email, userName, role, uid } = data || {}
     return new Promise(async (resolve, reject) => {
       try {
         if (emailCheck) {
           return reject('auth/email-already-in-use')
         }
-        resolve(
-          await updateDoc(doc(firestore, COLLECTIONS.ADMIN, data.uid), {
-            ...data,
-          })
+
+        const { data } = await axios.post(
+          'https://us-central1-kitchen-stage.cloudfunctions.net/updateAdmin',
+          { email: email, role: role, userName: userName, id: uid }
         )
+        resolve(data)
       } catch (error) {
         reject(error)
       }
@@ -98,31 +101,11 @@ class Admin {
     const { email, role, userName } = values || {}
     return new Promise(async (resolve, reject) => {
       try {
-        // const createdUser = await createUserWithEmailAndPassword(
-        //   auth,
-        //   email,
-        //   'Abcd@123'
-        // )
-
-        // const user = {
-        //   role,
-        //   createdAt: new Date(),
-        //   uid: createdUser.user.uid,
-        //   email: createdUser.user.email,
-        //   userName: userName,
-        // }
-
-        // const docRef = await setDoc(
-        //   doc(firestore, COLLECTIONS.ADMIN, createdUser?.user?.uid),
-        //   { ...user }
-        // )
-        const docRef = await addDoc(collection(firestore, COLLECTIONS.ADMIN), {
-          role,
-          email,
-          userName,
-          createdAt: new Date(),
-        })
-        resolve(docRef)
+        const { data } = await axios.post(
+          'https://us-central1-kitchen-stage.cloudfunctions.net/createAdmin',
+          { email, role, userName, password: 'Abcd@123' }
+        )
+        resolve(data)
       } catch (error) {
         const err = getErrorMessage(error)
         reject(err)
@@ -139,8 +122,11 @@ class Admin {
         if (currentUser.role === 'Admin' && role === 'Super Admin') {
           reject('permission-error')
         } else {
-          const docRef = doc(firestore, COLLECTIONS.ADMIN, uid)
-          await deleteDoc(docRef)
+          await axios.post(
+            'https://us-central1-kitchen-stage.cloudfunctions.net/deleteAdmin',
+            null,
+            { params: { id: uid } }
+          )
           resolve('user deleted successfully')
         }
       } catch (error) {
