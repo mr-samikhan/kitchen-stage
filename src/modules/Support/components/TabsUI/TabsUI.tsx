@@ -17,7 +17,15 @@ export const TabsUI = (props: TabsUIProps) => {
       return (
         <SuspendedUsers
           data={data}
-          hiddenKeys={['id', 'uid', 'gender', 'dateOfBirth', 'createdAt']}
+          hiddenKeys={[
+            'id',
+            'uid',
+            'gender',
+            'dateOfBirth',
+            'createdAt',
+            'firstName',
+            'lastName',
+          ]}
         />
       )
     case 'resolved':

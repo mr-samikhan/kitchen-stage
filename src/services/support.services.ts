@@ -31,6 +31,8 @@ class Support {
           data = querySnapshot.docs
             .filter((doc: any) => doc?.data()?.isSuspended)
             .map((doc: any) => ({
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
               id: doc.id,
               userName: `${doc.data().firstName} ${doc.data().lastName}`,
               email: doc.data().email,

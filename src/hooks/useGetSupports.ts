@@ -27,7 +27,7 @@ export const useGetSupports = (props: IGetAds): UseGetAdsResult => {
     data: support_data,
     isLoading: supportLoading,
   } = useQuery<any[], Error>(
-    ['getSupports' as QueryKey],
+    ['getSupports' as QueryKey, value],
     () => getSupportQuery(value),
     {
       enabled: enabled,
