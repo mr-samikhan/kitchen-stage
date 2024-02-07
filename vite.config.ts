@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   resolve: {
     alias: {
+      '@cookup/env': path.resolve(__dirname, './env'),
       '@cookup/assets': path.resolve(__dirname, './public/assets'),
       '@cookup/core': path.resolve(__dirname, './src/core/core.ts'),
       '@cookup/utils': path.resolve(__dirname, './src/utils/utils.ts'),
