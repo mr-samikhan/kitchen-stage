@@ -594,15 +594,15 @@ export const SUPPORT_TABS = [
 ]
 
 export const EXPORT_CSV_DATA = [
-  { label: 'First Name', value: 'firstName', isChecked: true },
-  { label: 'Last Name', value: 'lastName', isChecked: true },
-  { label: 'Email Address', value: 'email', isChecked: true },
-  { label: 'Joined Date', value: 'joinedDate', isChecked: true },
-  { label: 'State', value: 'state', isChecked: true },
-  { label: 'City', value: 'city', isChecked: true },
-  { label: 'Gender', value: 'gender', isChecked: true },
-  { label: 'Age', value: 'age', isChecked: true },
-  { label: 'Experience', value: 'experience', isChecked: true },
+  { label: 'First Name', value: 'firstName', isChecked: false },
+  { label: 'Last Name', value: 'lastName', isChecked: false },
+  { label: 'Email Address', value: 'email', isChecked: false },
+  { label: 'Joined Date', value: 'joinedDate', isChecked: false },
+  { label: 'State', value: 'state', isChecked: false },
+  { label: 'City', value: 'city', isChecked: false },
+  { label: 'Gender', value: 'gender', isChecked: false },
+  { label: 'Age', value: 'age', isChecked: false },
+  { label: 'Experience', value: 'experience', isChecked: false },
 ]
 
 export const ADS_TABS = [

@@ -251,6 +251,7 @@ export const SupportContainer = () => {
 
       {isExportModal && (
         <ExportCSVModal
+          record={support_data}
           csvData={support_data}
           isOpen={isExportModal}
           onClose={() => dispatch(SET_EXPORT_MODAL(false))}
@@ -291,8 +292,8 @@ export const SupportContainer = () => {
           }}
         >
           <MessageModal
-            reason={singleSupportData?.supportReason}
             isSender
+            reason={singleSupportData?.supportReason}
             onReply={() =>
               dispatch(
                 SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })

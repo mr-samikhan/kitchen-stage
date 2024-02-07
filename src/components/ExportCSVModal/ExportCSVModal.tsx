@@ -1,20 +1,51 @@
 import React from 'react'
+import { CSVLink } from 'react-csv'
 import { EXPORT_CSV_DATA } from '@cookup/constant'
 import { Box, Button, Checkbox, Modal, Paper, Typography } from '@mui/material'
-import { CSVLink } from 'react-csv'
 
 interface IExportProps {
   data?: {}[]
+  record?: any[]
   isOpen: boolean
+  filename?: string
   onClose: () => void
   onExport: () => void
   csvData: any[] | undefined
 }
 
 export const ExportCSVModal = (props: IExportProps) => {
-  const { isOpen, data, onClose, onExport, csvData } = props || {}
+  const { isOpen, data, onClose, onExport, csvData, record, filename } =
+    props || {}
 
   let isArray = data ? data : EXPORT_CSV_DATA
+  const [exportData, setExportData] = React.useState([])
+  const [selectedLabels, setSelectedLabels] = React.useState(isArray)
+
+  const handleCheckboxChange = (index: number) => {
+    const newArray: any = [...selectedLabels]
+    newArray[index].isChecked = !newArray[index].isChecked
+    setSelectedLabels(newArray)
+    handleExport()
+  }
+
+  const handleExport = () => {
+    let csvData_: any = []
+    record?.forEach((dataItem: any) => {
+      const filteredData: any = {}
+
+      selectedLabels.forEach((item: any) => {
+        if (item.isChecked) {
+          filteredData[item.value] =
+            dataItem[item.value] === undefined ? '' : dataItem[item.value]
+        }
+      })
+
+      csvData_.push(filteredData)
+    })
+    setExportData(csvData_)
+
+    return csvData_
+  }
 
   return (
     <React.Fragment>
@@ -67,7 +98,7 @@ export const ExportCSVModal = (props: IExportProps) => {
             justifyContent="center"
             flexDirection="column"
           >
-            {isArray.map((item: any, index) => (
+            {selectedLabels?.map((item: any, index) => (
               <Box
                 height={25}
                 key={index}
@@ -88,18 +119,20 @@ export const ExportCSVModal = (props: IExportProps) => {
                     {item.label}
                   </Typography>
                 </Box>
-                <Checkbox checked={item.isChecked} color="secondary" />
+                <Checkbox
+                  checked={item.isChecked}
+                  color="secondary"
+                  onChange={() => handleCheckboxChange(index)}
+                />
               </Box>
             ))}
           </Box>
           <Box mt={2} display="flex" gap={2}>
-            <CSVLink data={csvData || []} filename="support_file.csv">
-              <Button
-                fullWidth
-                onClick={onExport}
-                variant="contained"
-                sx={{ width: 205 }}
-              >
+            <CSVLink
+              data={exportData || []}
+              filename={filename || 'support_file.csv'}
+            >
+              <Button fullWidth variant="contained" sx={{ width: 205 }}>
                 Export
               </Button>
             </CSVLink>
