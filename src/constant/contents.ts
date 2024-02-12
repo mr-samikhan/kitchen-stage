@@ -328,10 +328,10 @@ export const USER_TAB_OPTIONS = [
     label: 'Uploaded Media',
     value: 'uploaded-media',
   },
-  {
-    label: 'Ads',
-    value: 'ads',
-  },
+  // {
+  //   label: 'Ads',
+  //   value: 'ads',
+  // },
 ]
 
 export const PERSONAL_USER_PROFILE_DATA = [
@@ -444,6 +444,14 @@ export const USER_ADS_DATA = [
   {
     key: 'Website',
     value: 'shakespeareandcompanycafe',
+  },
+  {
+    key: 'Likes',
+    value: '328',
+  },
+  {
+    key: 'Comments',
+    value: '54',
   },
 ]
 
@@ -644,4 +652,63 @@ export const SUPPORT_HIDDEN_KEYS = [
   'dateOfBirth',
   'experience',
   'createdAt',
+]
+
+export const LIKES_DATA = [
+  {
+    id: 1,
+    userName: 'Lance Stroll',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 2,
+    userName: 'Lewis Hamilton',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 2,
+    userName: 'Lewis Hamilton',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 3,
+    userName: 'Valtteri Bottas',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 4,
+    userName: 'Sergio Perez',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 5,
+    userName: 'Pierre Gasly',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 6,
+    userName: 'Max Verstappen',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
+  {
+    id: 7,
+    userName: 'Lewis Hamilton',
+    comment: 'Hello',
+    time: '2m ago',
+    totalLikes: '33 Likes',
+  },
 ]

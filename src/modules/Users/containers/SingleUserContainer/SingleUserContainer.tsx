@@ -3,10 +3,10 @@ import moment from 'moment'
 import useUser from '../../hooks/useUser'
 import { Delete } from '@mui/icons-material'
 import { FormProvider } from 'react-hook-form'
-import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { Box, Container, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useBreakPoints, useGetUser } from '@cookup/hooks'
+import { LIKES_DATA, USER_TAB_OPTIONS } from '@cookup/constant'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled'
 import {
@@ -28,6 +28,7 @@ import {
 } from '@cookup/redux'
 import {
   ViewAds,
+  LikesModal,
   SuspendModalUI,
   SuspensionAlert,
   UserAccountInfo,
@@ -61,12 +62,16 @@ export const SingleUserContainer = () => {
     methods,
     onSubmit,
     isValid,
-    onUnsuspend,
+    userValues,
     suspenseDays,
+    onUnsuspend,
     onUpdateUser,
     onDeleteUser,
     isDelLoading,
+    onDeleteLike,
+    onSelectLike,
     isResetLoading,
+    setUserValues,
     onSubmitSuspension,
     onSevenDaysSuspend,
   } = useUser({ user })
@@ -98,10 +103,10 @@ export const SingleUserContainer = () => {
         return (
           <UserProfileInfo isBusinessType={state.type} user={user && user} />
         )
+      // case 'uploaded-media':
+      //   return <UserUploadedMedia />
       case 'uploaded-media':
-        return <UserUploadedMedia />
-      case 'ads':
-        return <ViewAds />
+        return <ViewAds setUserValues={setUserValues} />
       default:
         return (
           <FormProvider {...methods}>
@@ -114,6 +119,8 @@ export const SingleUserContainer = () => {
   }
 
   if (userLoading) return <CustomLoader />
+
+  let likeORCommentModal = userValues.isLikesModal || userValues.isCommentsModal
 
   return (
     <Layout
@@ -150,7 +157,7 @@ export const SingleUserContainer = () => {
                 className="custom-tabs"
                 labels={USER_TAB_OPTIONS}
                 width={{ xs: '100px', md: '188px' }}
-                isBusinessType={state.type ? true : false}
+                // isBusinessType={state.type ? true : false}
               />
             </Grid>
             {RenderUserSteps()}
@@ -281,6 +288,45 @@ export const SingleUserContainer = () => {
             ).format('MMMM DD, YYYY')}
           />
         </Box>
+      )}
+      {likeORCommentModal && (
+        <LikesModal
+          data={LIKES_DATA}
+          isCommentsUI={!userValues.isLikesModal}
+          title={userValues.isLikesModal ? 'Likes' : 'Comments'}
+          length={300}
+          userName="Emma Gosling"
+          onDelete={onSelectLike}
+          open={likeORCommentModal}
+          onClose={() =>
+            setUserValues({
+              ...userValues,
+              isLikesModal: false,
+              isCommentsModal: false,
+            })
+          }
+        />
+      )}
+      {userValues.isSuccessModal && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          isOpen={userValues.isSuccessModal}
+          title={userValues.isLikesModal ? 'Like Deleted' : 'Comment Deleted'}
+          icon={
+            userValues.isLikesModal
+              ? '/assets/icons/likes.svg'
+              : '/assets/icons/comment.svg'
+          }
+          onConfirm={() => {
+            console.log('Like Deleted!')
+            onDeleteLike()
+          }}
+          okButtonStyle={{
+            width: '220px',
+          }}
+          text={`“${userValues.likesData.userName}” likes has been removed from the system successfully.`}
+        />
       )}
     </Layout>
   )
