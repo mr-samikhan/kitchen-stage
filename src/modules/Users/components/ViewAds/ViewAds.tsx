@@ -3,14 +3,20 @@ import { Avatar, Grid } from '@mui/material'
 import { ViewAdDetails } from '../components'
 import { IMAGES_ARRAY } from '@cookup/constant'
 
-export const ViewAds = () => {
+interface TViewAds {
+  setUserValues: any
+}
+
+export const ViewAds = (props: TViewAds) => {
+  const { setUserValues } = props || {}
+
   const [isImageClicked, setIsImageClicked] = React.useState(false)
 
   return (
     <React.Fragment>
       <Grid container justifyContent="center" mt={4} my={2}>
         {isImageClicked ? (
-          <ViewAdDetails />
+          <ViewAdDetails setUserValues={setUserValues} />
         ) : (
           <Grid
             item

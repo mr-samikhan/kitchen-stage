@@ -20,11 +20,21 @@ interface IUseUser {
   user: any
 }
 
+interface IUserValues {
+  isLikesModal: boolean
+}
+
 const useUser = ({ user }: IUseUser) => {
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
 
   const [suspenseDays, setSuspenseDays] = React.useState(null)
+  const [userValues, setUserValues] = React.useState<any>({
+    likesData: null,
+    isLikesModal: false,
+    isCommentsModal: false,
+    isSuccessModal: false,
+  })
 
   const { isSuspendModal } = useSelector((state: any) => state.header)
 
@@ -137,15 +147,36 @@ const useUser = ({ user }: IUseUser) => {
     queryClient.invalidateQueries('getUser')
   }
 
+  //delete like
+  const onDeleteLike = () => {
+    setUserValues((prev: any) => ({
+      ...prev,
+      isLikesModal: false,
+      isSuccessModal: false,
+    }))
+  }
+
+  //select like data
+  const onSelectLike = (item: {}) => {
+    setUserValues((prev: any) => ({
+      ...prev,
+      likesData: item,
+      isSuccessModal: true,
+    }))
+  }
   return {
     methods,
     onSubmit,
     isValid,
+    userValues,
     onUnsuspend,
     suspenseDays,
+    onSelectLike,
+    onDeleteLike,
     onUpdateUser,
     isDelLoading,
     onDeleteUser,
+    setUserValues,
     isResetLoading,
     isSuspendLoading,
     onSubmitSuspension,

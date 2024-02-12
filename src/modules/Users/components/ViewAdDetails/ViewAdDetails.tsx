@@ -1,14 +1,16 @@
 import React from 'react'
 import { COLORS, USER_ADS_DATA } from '@cookup/constant'
-import { Avatar, Box, Grid, Typography } from '@mui/material'
+import { Avatar, Box, Grid, IconButton, Typography } from '@mui/material'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 
 interface TViewDetails {
   img?: string
   isDashboardAidUI?: boolean
+  setUserValues: any
 }
 
 export const ViewAdDetails = (props: TViewDetails) => {
-  const { isDashboardAidUI, img } = props || {}
+  const { isDashboardAidUI, img, setUserValues } = props || {}
 
   let isAcive = true
 
@@ -48,20 +50,57 @@ export const ViewAdDetails = (props: TViewDetails) => {
             display="flex"
             alignItems="center"
             justifyContent="flex-start"
-            mt={isDashboardAidUI ? 2 : 4}
+            mt={isDashboardAidUI ? 2 : 1}
           >
             <Typography variant="h5" width={{ md: 150, xs: 100 }}>
               {item.key}
             </Typography>
-            {!isDashboardAidUI && (
+            {index !== 5 && index !== 6 && !isDashboardAidUI && (
               <Typography
+                p={2}
                 width={300}
                 variant="h5"
+                bgcolor="white"
+                borderRadius="8px"
                 color={COLORS.grey.main}
                 height={index === 3 ? 156 : 'auto'}
               >
                 {item.value}
               </Typography>
+            )}
+            {index === 5 && (
+              <Box display="flex" alignItems="center" pl={2}>
+                <Typography variant="h5" color="secondary">
+                  328
+                </Typography>
+                <IconButton
+                  onClick={() =>
+                    setUserValues((prev: any) => ({
+                      ...prev,
+                      isLikesModal: true,
+                    }))
+                  }
+                >
+                  <ChevronRight color="secondary" />
+                </IconButton>
+              </Box>
+            )}
+            {index === 6 && (
+              <Box display="flex" alignItems="center" pl={2}>
+                <Typography variant="h5" color="secondary">
+                  54
+                </Typography>
+                <IconButton
+                  onClick={() =>
+                    setUserValues((prev: any) => ({
+                      ...prev,
+                      isCommentsModal: true,
+                    }))
+                  }
+                >
+                  <ChevronRight color="secondary" />
+                </IconButton>
+              </Box>
             )}
             {isDashboardAidUI && (
               <Typography
