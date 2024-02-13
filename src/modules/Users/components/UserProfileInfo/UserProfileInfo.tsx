@@ -72,8 +72,11 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
         city: userData.City || '',
         lastName: uName[1] || user.lastName,
         firstName: uName[0] || user.firstName,
+        type: userData.Type || user.type || '',
         imageUrl: url || user?.imageUrl || '',
+        about: userData.About || user.about || '',
         gender: userData.Gender || user.gender || '',
+        country: userData.State || user.country || '',
         dateOfBirth: userData['Age Range'] || user.dateOfBirth,
       },
     })

@@ -234,12 +234,7 @@ export const PERSONAL_USERS_DATA = [
   },
 ]
 
-export const PERSONAL_USERS_HEADER = [
-  'NAME',
-  'EMAIL',
-  'CITY',
-  'STATE, ZIP CODE',
-]
+export const PERSONAL_USERS_HEADER = ['NAME', 'EMAIL', 'PHONE NUMBER', 'STATUS']
 
 export const BUSINESS_USERS_DATA = [
   {
