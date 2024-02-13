@@ -72,6 +72,8 @@ export const SingleUserContainer = () => {
     onSelectLike,
     isResetLoading,
     setUserValues,
+    onUpdateUser_rec,
+    isUpdateLoading,
     onSubmitSuspension,
     onSevenDaysSuspend,
   } = useUser({ user })
@@ -101,7 +103,11 @@ export const SingleUserContainer = () => {
         )
       case 'profile-info':
         return (
-          <UserProfileInfo isBusinessType={state.type} user={user && user} />
+          <UserProfileInfo
+            isBusinessType={state.type}
+            user={user && user}
+            updateUser={onUpdateUser_rec}
+          />
         )
       // case 'uploaded-media':
       //   return <UserUploadedMedia />
