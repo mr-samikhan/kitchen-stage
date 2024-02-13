@@ -95,6 +95,18 @@ const useUser = ({ user }: IUseUser) => {
     }
   )
 
+  //update user mutation
+  const { mutate: onUpdateUser_rec, isLoading: isUpdateLoading } = useMutation(
+    Api.user.updateUser,
+    {
+      onSuccess: () => {
+        onUpdateUser()
+        queryClient.invalidateQueries('getUser')
+      },
+      onError: (error) => console.log(error),
+    }
+  )
+
   const onSubmit = (data: any) => {
     console.log(data)
     onResetPassword(user.email)
@@ -164,6 +176,7 @@ const useUser = ({ user }: IUseUser) => {
       isSuccessModal: true,
     }))
   }
+
   return {
     methods,
     onSubmit,
@@ -178,6 +191,8 @@ const useUser = ({ user }: IUseUser) => {
     onDeleteUser,
     setUserValues,
     isResetLoading,
+    isUpdateLoading,
+    onUpdateUser_rec,
     isSuspendLoading,
     onSubmitSuspension,
     onSevenDaysSuspend,

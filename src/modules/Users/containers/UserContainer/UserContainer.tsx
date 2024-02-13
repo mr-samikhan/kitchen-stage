@@ -6,17 +6,13 @@ import { SortModalUI } from '@cookup/modules'
 import { SET_TAB_VALUE } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { COLORS, ROUTES, PERSONAL_USERS_HEADER } from '@cookup/constant'
 import {
   Layout,
   SubHeader,
   CustomList,
   CustomSortModal,
 } from '@cookup/components'
-import {
-  ROUTES,
-  BUSINESS_USERS_HEADER,
-  PERSONAL_USERS_HEADER,
-} from '@cookup/constant'
 
 export const UserContainer = () => {
   const navigate = useNavigate()
@@ -46,8 +42,12 @@ export const UserContainer = () => {
         (item) =>
           (item.email &&
             item.email.toLowerCase().includes(searchValue.toLowerCase())) ||
-          (item.city &&
-            item.city.toLowerCase().includes(searchValue.toLowerCase()))
+          (item.phone &&
+            item.phone.toLowerCase().includes(searchValue.toLowerCase())) ||
+          (item.name &&
+            item.name.toLowerCase().includes(searchValue.toLowerCase())) ||
+          (item.status &&
+            item.status.toLowerCase().includes(searchValue.toLowerCase()))
       )
 
       setFilteredData(filteredItems)
@@ -100,6 +100,7 @@ export const UserContainer = () => {
       isExportCSV
       isSearchInput
       isPaginationIcons
+      bgcolor={COLORS.background}
       isFooter={users?.length > 7}
       isTitle={state?.type !== undefined ? false : true}
       isTabs={state?.type !== undefined ? false : true}
@@ -115,7 +116,7 @@ export const UserContainer = () => {
       <Box my={3} mt={2}>
         <Grid container>
           <Grid item md={11} xs={12} textAlign="right">
-            <SubHeader />
+            <SubHeader isSort={false} isFilter />
             {isSearchFocus && (
               <Box mt={4}>
                 <img src="/assets/images/frame.svg" width="100%" alt="" />
@@ -133,16 +134,19 @@ export const UserContainer = () => {
             onNavigation={onNavigation}
             headerData={PERSONAL_USERS_HEADER}
             data={filteredData || sortedByEmailAsc}
+            showKeys={['name', 'email', 'phone', 'status']}
           />
         )}
         {!isSearchFocus && tabValue === 'business' && (
           <CustomList
             isActionButton
+            isBgColor="white"
             iconPosition="flex-end"
             isLoading={usersLoading}
             onNavigation={onNavigation}
             data={filteredData || users}
-            headerData={BUSINESS_USERS_HEADER}
+            headerData={PERSONAL_USERS_HEADER}
+            showKeys={['name', 'email', 'phone', 'status']}
           />
         )}
         {isSortModal && (

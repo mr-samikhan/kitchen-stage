@@ -17,7 +17,7 @@ interface CustomListProps {
   data?: any
   icon?: string
   height?: number
-  hiddenKeys?: string[]
+  showKeys?: string[]
   isLoading?: boolean
   headerData?: string[]
   isViewMessage?: boolean
@@ -36,7 +36,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
     icon,
     height,
     onDelete,
-    hiddenKeys,
+    showKeys,
     isBgColor,
     isLoading,
     headerData,
@@ -87,15 +87,15 @@ const CustomList: React.FC<CustomListProps> = (props) => {
         )}
         {!isLoading &&
           data?.map((user: any, index: number) => {
-            let keys = hiddenKeys || [
+            let keys = showKeys || [
               'id',
               'uid',
               'gender',
-              'dateOfBirth',
+              // 'dateOfBirth',
               'experience',
             ]
-            const filteredKeys = Object.keys(user).filter(
-              (key) => !keys.includes(key)
+            const filteredKeys = Object.keys(user).filter((key) =>
+              keys.includes(key)
             )
             return (
               <React.Fragment key={index}>
@@ -114,8 +114,8 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                   {filteredKeys?.map((key) => (
                     <Grid item xs={3} key={key}>
                       <Typography
-                        variant={mobileMode ? 'body1' : 'subtitle1'}
                         color="secondary"
+                        variant={mobileMode ? 'body1' : 'subtitle1'}
                       >
                         {user[key]}
                       </Typography>

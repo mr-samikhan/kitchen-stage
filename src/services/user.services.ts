@@ -13,7 +13,7 @@ import {
   DocumentSnapshot,
   deleteDoc,
 } from 'firebase/firestore'
-import { calculateAgeRange } from '@cookup/helpers'
+import { calculateAgeRange, formatPhoneNumber } from '@cookup/helpers'
 
 type IUser = {
   name: string
@@ -21,11 +21,13 @@ type IUser = {
   email: string
   zipCode: string
   lastName?: string
-  firstName?: string
   country?: string
-  experience?: string
   gender?: string
+  status?: string
+  firstName?: string
+  experience?: string
   dateOfBirth?: string
+  phone?: string
 }
 
 class User {
@@ -52,6 +54,8 @@ class User {
             gender: data?.gender || '',
             experience: data?.experience || '',
             dateOfBirth: data?.dateOfBirth || '',
+            phone: formatPhoneNumber(data?.phone) || '',
+            status: (data.status === 'active' && 'Active') || 'Pending',
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
           }
           users?.push(user)
