@@ -13,6 +13,7 @@ export interface IUser {
   role: string
   email: string
   userName: string
+  lastLogin?: string
 }
 
 interface LoginCredentials {

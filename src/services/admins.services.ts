@@ -1,29 +1,23 @@
+import axios from 'axios'
+import { firestore } from '@cookup/firebase'
+import { formatDateToToday } from '@cookup/helpers'
 import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
 import {
-  auth,
-  createUserWithEmailAndPassword,
-  firestore,
-} from '@cookup/firebase'
-import {
+  query,
+  orderBy,
+  getDocs,
+  collection,
   DocumentData,
   DocumentSnapshot,
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-  updateDoc,
 } from 'firebase/firestore'
-import axios from 'axios'
 
 interface IAdmin {
   uid: string
   email: string
-  userName: string
   role: string
+  status?: string
+  userName: string
+  lastLogin?: string
 }
 
 interface UpdateAdmin {
@@ -46,10 +40,12 @@ class Admin {
         querySnapshot.forEach((doc: DocumentSnapshot<DocumentData>) => {
           const data = doc.data() as IAdmin
           let admin = {
-            userName: data.userName,
-            email: data.email,
-            role: data.role,
             uid: data.uid,
+            role: data.role,
+            email: data.email,
+            userName: data.userName,
+            status: data.status === 'active' ? 'Active' : 'Pending',
+            lastLogin: formatDateToToday(data.lastLogin) || 'N/A',
           }
           admins?.push(admin)
         })
@@ -73,7 +69,7 @@ class Admin {
     }
   ) => {
     const { emailCheck, data } = values
-    const { email, userName, role, uid } = data || {}
+    const { email, userName, role, uid, status } = data || {}
     return new Promise(async (resolve, reject) => {
       try {
         if (emailCheck) {
@@ -82,7 +78,12 @@ class Admin {
 
         const { data } = await axios.post(
           'https://us-central1-kitchen-stage.cloudfunctions.net/updateAdmin',
-          { email: email, role: role, userName: userName, id: uid }
+          {
+            email: email,
+            role: role,
+            userName: userName,
+            id: uid,
+          }
         )
         resolve(data)
       } catch (error) {
@@ -96,14 +97,15 @@ class Admin {
       email: '',
       role: '',
       userName: '',
+      status: 'pending',
     }
   ) => {
-    const { email, role, userName } = values || {}
+    const { email, role, userName, status } = values || {}
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await axios.post(
           'https://us-central1-kitchen-stage.cloudfunctions.net/createAdmin',
-          { email, role, userName, password: 'Abcd@123' }
+          { email, role, userName, password: 'Abcd@123', status }
         )
         resolve(data)
       } catch (error) {

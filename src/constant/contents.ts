@@ -181,7 +181,13 @@ export const ADMINS_DATA = [
   },
 ]
 
-export const ADMINS_HEADER = ['NAME', 'EMAIL ADDRESS', 'ROLE']
+export const ADMINS_HEADER = [
+  'NAME',
+  'EMAIL ADDRESS',
+  'ROLE',
+  'STATUS',
+  'LAST LOGIN',
+]
 
 export const PERSONAL_USERS_DATA = [
   {
