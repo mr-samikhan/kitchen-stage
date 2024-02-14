@@ -1,11 +1,11 @@
 import React from 'react'
 import { Api } from '@cookup/services'
 import { Box, Grid } from '@mui/material'
-import { useGetUsers } from '@cookup/hooks'
 import { SortModalUI } from '@cookup/modules'
-import { SET_TAB_VALUE } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
+import { useGetUsers, usePagination } from '@cookup/hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { SET_SORT_VALUE, SET_TAB_VALUE } from '@cookup/redux'
 import { COLORS, ROUTES, PERSONAL_USERS_HEADER } from '@cookup/constant'
 import {
   Layout,
@@ -34,20 +34,22 @@ export const UserContainer = () => {
     dispatch(SET_TAB_VALUE('personal'))
   }, [])
 
+  //pagination
+  const { goToNextPage, currentItems, goToPreviousPage } = usePagination(
+    users,
+    7
+  )
+
   //filter
   React.useEffect(() => {
     if (searchValue.length) {
-      const items = [...users]
+      const items = [...currentItems]
       const filteredItems = items.filter(
-        (item) =>
-          (item.email &&
-            item.email.toLowerCase().includes(searchValue.toLowerCase())) ||
-          (item.phone &&
-            item.phone.toLowerCase().includes(searchValue.toLowerCase())) ||
-          (item.name &&
-            item.name.toLowerCase().includes(searchValue.toLowerCase())) ||
-          (item.status &&
-            item.status.toLowerCase().includes(searchValue.toLowerCase()))
+        (item: any) =>
+          item.email.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.phone.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.status.toLowerCase().includes(searchValue.toLowerCase())
       )
 
       setFilteredData(filteredItems)
@@ -57,24 +59,13 @@ export const UserContainer = () => {
   }, [searchValue])
 
   React.useEffect(() => {
-    if (
-      experience.length ||
-      gender.length ||
-      businessType.length ||
-      ageRange.length
-    ) {
-      const filter = Api.user.filterUsers(
-        users,
-        filterBy.experience,
-        filterBy.gender,
-        filterBy.ageRange,
-        ['']
-      )
+    if (sortBy.sortValue !== '') {
+      const filter = Api.user.filterUsers(users, sortBy.sortValue)
       setFilteredData(filter)
     } else {
       setFilteredData(null)
     }
-  }, [filterBy])
+  }, [sortBy])
 
   const onNavigation = (item: any) => {
     navigate(`${ROUTES.USERS}/${item.id}`, {
@@ -89,19 +80,21 @@ export const UserContainer = () => {
     deactivated: 'deactivated',
   }
 
-  const sortedByEmailAsc = Api.user.sortUsers(
-    users,
-    sortBy.sortValue !== '' ? sortBy.sortValue : '',
-    sortBy.sortType
-  )
+  // const sortedByEmailAsc = Api.user.sortUsers(
+  //   users,
+  //   sortBy.sortValue !== '' ? sortBy.sortValue : '',
+  //   sortBy.sortType
+  // )
 
   return (
     <Layout
       isExportCSV
       isSearchInput
       isPaginationIcons
+      onNextPage={goToNextPage}
       bgcolor={COLORS.background}
       isFooter={users?.length > 7}
+      onPreviousPage={goToPreviousPage}
       isTitle={state?.type !== undefined ? false : true}
       isTabs={state?.type !== undefined ? false : true}
       isNavigation={
@@ -117,11 +110,11 @@ export const UserContainer = () => {
         <Grid container>
           <Grid item md={11} xs={12} textAlign="right">
             <SubHeader isSort={false} isFilter />
-            {isSearchFocus && (
+            {isSearchFocus ? (
               <Box mt={4}>
                 <img src="/assets/images/frame.svg" width="100%" alt="" />
               </Box>
-            )}
+            ) : null}
           </Grid>
         </Grid>
       </Box>
@@ -130,10 +123,11 @@ export const UserContainer = () => {
           <CustomList
             isActionButton
             isBgColor="white"
+            iconPosition="flex-end"
             isLoading={usersLoading}
             onNavigation={onNavigation}
             headerData={PERSONAL_USERS_HEADER}
-            data={filteredData || sortedByEmailAsc}
+            data={filteredData || currentItems}
             showKeys={['name', 'email', 'phone', 'status']}
           />
         )}
@@ -144,7 +138,7 @@ export const UserContainer = () => {
             iconPosition="flex-end"
             isLoading={usersLoading}
             onNavigation={onNavigation}
-            data={filteredData || users}
+            data={filteredData || currentItems}
             headerData={PERSONAL_USERS_HEADER}
             showKeys={['name', 'email', 'phone', 'status']}
           />
@@ -155,10 +149,22 @@ export const UserContainer = () => {
           </CustomSortModal>
         )}
         {isFilterModal && (
-          <CustomSortModal top={160} padding="12px 0px 12px 0px" title="Filter">
+          <CustomSortModal
+            top={160}
+            padding="12px 0px 12px 0px"
+            title="Filter"
+            onClose={() => {
+              dispatch(
+                SET_SORT_VALUE({
+                  sortValue: '',
+                })
+              )
+            }}
+          >
             <SortModalUI
-              isFilterUI={tabValue === 'business' ? false : true}
-              isBusinessFilter={tabValue === 'business' ? true : false}
+              isNewFilterUI
+              // isFilterUI={tabValue === 'business' ? false : true}
+              // isBusinessFilter={tabValue === 'business' ? true : false}
             />
           </CustomSortModal>
         )}
