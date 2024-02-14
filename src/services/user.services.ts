@@ -143,25 +143,25 @@ class User {
     })
   }
 
-  filterUsers(
-    users: any[] | undefined,
-    expArray: string[],
-    genderArray: string[],
-    ageRangeArray: string[],
-    businessTypeArray: string[]
-  ) {
+  filterUsers(users: any[] | undefined, value: string) {
+    if (!value) return users
     return users?.filter((user) => {
-      return (
-        expArray.length === 0 ||
-        (expArray.every((criteria) => user.experience === criteria) &&
-          genderArray.every((criteria) => user.gender === criteria) &&
-          ageRangeArray.every(
-            (criteria) => calculateAgeRange(user?.dateOfBirth) === criteria
-          )) ||
-        businessTypeArray.every(
-          (criteria) => calculateAgeRange(user?.businessType) === criteria
-        )
-      )
+      if (value === 'Active Users') {
+        return user.status === 'Active'
+      } else if (value === 'Invited Users') {
+        return user.status === 'Pending'
+      } else if (value === 'Deactivated Users') {
+        return user.status === 'Deactivated' || user.status === 'Suspended'
+      }
+      // expArray.length === 0 ||
+      // (expArray.every((criteria) => user.experience === criteria) &&
+      //   genderArray.every((criteria) => user.gender === criteria) &&
+      //   ageRangeArray.every(
+      //     (criteria) => calculateAgeRange(user?.dateOfBirth) === criteria
+      //   )) ||
+      // businessTypeArray.every(
+      //   (criteria) => calculateAgeRange(user?.businessType) === criteria
+      // )
     })
   }
 }

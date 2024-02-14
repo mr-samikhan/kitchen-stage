@@ -14,14 +14,23 @@ import {
 } from '@cookup/constant'
 
 interface SortModalUIProps {
+  customArray?: any[]
   isSortUI?: boolean
   isFilterUI?: boolean
+  isNewFilterUI?: boolean
   isAccountTypes?: boolean
   isBusinessFilter?: boolean
 }
 
 export const SortModalUI = (props: SortModalUIProps) => {
-  const { isSortUI, isFilterUI, isBusinessFilter, isAccountTypes } = props || {}
+  const {
+    isSortUI,
+    isFilterUI,
+    customArray,
+    isNewFilterUI,
+    isAccountTypes,
+    isBusinessFilter,
+  } = props || {}
 
   const dispatch = useDispatch()
 
@@ -96,8 +105,31 @@ export const SortModalUI = (props: SortModalUIProps) => {
     )
   }
 
+  let LABELS = ['Active Users', 'Invited Users', 'Deactivated Users']
+
+  let isNewFilterUIArray = customArray || LABELS
+
   return (
     <React.Fragment>
+      {isNewFilterUI && (
+        <React.Fragment>
+          {isNewFilterUIArray.map((item) => (
+            <Box
+              key={item}
+              height={63}
+              borderRadius={2}
+              display="flex"
+              alignItems="center"
+              onClick={() => onSort(item)}
+              bgcolor={sortBy.sortValue === item ? COLORS.grey.dark : ''}
+            >
+              <Typography px={2} color="primary" variant="subtitle2">
+                {item}
+              </Typography>
+            </Box>
+          ))}
+        </React.Fragment>
+      )}
       {isSortUI && (
         <React.Fragment>
           <Box
@@ -318,22 +350,24 @@ export const SortModalUI = (props: SortModalUIProps) => {
         </>
       )}
 
-      <Box mt={2} px={2}>
-        <RadioGroup value={sortBy.sortType} onChange={handleChange}>
-          <FormControlLabel
-            sx={fontStyle}
-            value="ascending"
-            label="Ascending"
-            control={<Radio color="secondary" sx={iconStyle} />}
-          />
-          <FormControlLabel
-            sx={fontStyle}
-            value="descending"
-            label="Descending"
-            control={<Radio color="secondary" sx={iconStyle} />}
-          />
-        </RadioGroup>
-      </Box>
+      {!isNewFilterUI && (
+        <Box mt={2} px={2}>
+          <RadioGroup value={sortBy.sortType} onChange={handleChange}>
+            <FormControlLabel
+              sx={fontStyle}
+              value="ascending"
+              label="Ascending"
+              control={<Radio color="secondary" sx={iconStyle} />}
+            />
+            <FormControlLabel
+              sx={fontStyle}
+              value="descending"
+              label="Descending"
+              control={<Radio color="secondary" sx={iconStyle} />}
+            />
+          </RadioGroup>
+        </Box>
+      )}
     </React.Fragment>
   )
 }

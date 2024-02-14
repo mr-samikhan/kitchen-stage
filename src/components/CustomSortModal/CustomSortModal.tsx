@@ -21,11 +21,12 @@ interface CustomSortModalProps {
   padding?: any
   title?: string
   width?: any
+  onClose?: () => void
   children?: React.ReactNode
 }
 
 export const CustomSortModal = (props: CustomSortModalProps) => {
-  const { children, top, padding, height, title, width } = props || {}
+  const { children, top, padding, height, title, width, onClose } = props || {}
   const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
@@ -45,6 +46,7 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
     <Modal
       open={isSortModal || isFilterModal}
       onClose={() => {
+        onClose && onClose()
         dispatch(SET_FILTER_MODAL(false))
         dispatch(CLOSE_SORT_MODAL())
       }}
@@ -75,6 +77,7 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
           </Typography>
           <IconButton
             onClick={() => {
+              onClose && onClose()
               dispatch(SET_FILTER_MODAL(false))
               dispatch(CLOSE_SORT_MODAL())
             }}
