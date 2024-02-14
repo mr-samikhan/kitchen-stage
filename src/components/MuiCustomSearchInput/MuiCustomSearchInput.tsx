@@ -1,16 +1,31 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { InputAdornment, TextField } from '@mui/material'
 import { SET_SEARCH_FOCUS, onSearchChange } from '@cookup/redux'
 
 export const MuiCustomSearchInput = () => {
   const dispatch = useDispatch()
 
+  const { searchValue } = useSelector((state: any) => state.header)
+
+  useEffect(() => {
+    if (searchValue !== '') {
+      dispatch(SET_SEARCH_FOCUS(true))
+      setTimeout(() => {
+        dispatch(SET_SEARCH_FOCUS(false))
+      }, 500)
+    } else if (searchValue === '') {
+      setTimeout(() => {
+        dispatch(SET_SEARCH_FOCUS(false))
+      }, 500)
+    }
+  }, [searchValue])
+
   return (
     <React.Fragment>
       <TextField
-        onBlur={() => dispatch(SET_SEARCH_FOCUS(true))}
-        onFocus={() => dispatch(SET_SEARCH_FOCUS(false))}
+        // onBlur={() => dispatch(SET_SEARCH_FOCUS(true))}
+        // onFocus={() => dispatch(SET_SEARCH_FOCUS(false))}
         onChange={(e) => dispatch(onSearchChange(e.target.value))}
         variant="outlined"
         placeholder="Search Users"

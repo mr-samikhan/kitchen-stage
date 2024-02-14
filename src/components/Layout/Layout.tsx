@@ -32,6 +32,8 @@ interface LayoutProps {
   button2Type?: string
   button1Icon?: any
   button2Icon?: any
+  onNextPage?: any
+  onPreviousPage?: any
   button1Variant?: 'contained' | 'outlined'
   button2Variant?: 'contained' | 'outlined'
   button1Size?: 'small' | 'large' | 'medium'
@@ -54,6 +56,7 @@ export const Layout = (props: LayoutProps) => {
     isFilter,
     isFooter,
     mainHeight,
+    onNextPage,
     isExportCSV,
     isNavigation,
     isSearchInput,
@@ -69,6 +72,7 @@ export const Layout = (props: LayoutProps) => {
     button1Size,
     button2Size,
     button1Variant,
+    onPreviousPage,
     button2Variant,
     onButton1Click,
     onButton2Click,
@@ -179,7 +183,9 @@ export const Layout = (props: LayoutProps) => {
             >
               <TableFooter
                 isExportCSV={isExportCSV}
+                onNextPage={onNextPage && onNextPage}
                 isPaginationIcons={isPaginationIcons}
+                onPreviousPage={onPreviousPage && onPreviousPage}
               />
             </Grid>
           )}

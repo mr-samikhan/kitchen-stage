@@ -47,7 +47,7 @@ const headerSlice = createSlice({
       state.isOpenAdminModal = false
     },
     SET_SEARCH_FOCUS: (state, action: PayloadAction<boolean>) => {
-      state.isSearchFocus = !action.payload
+      state.isSearchFocus = action.payload
     },
     SET_SUSPEND_MODAL: (state, action: PayloadAction<boolean>) => {
       state.isSuspendModal = action.payload

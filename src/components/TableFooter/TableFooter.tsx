@@ -5,11 +5,14 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 
 interface TableFooterProps {
   isExportCSV?: any
+  onNextPage: () => void
+  onPreviousPage: () => void
   isPaginationIcons?: boolean
 }
 
 export const TableFooter = (props: TableFooterProps) => {
-  const { isExportCSV, isPaginationIcons } = props || {}
+  const { isExportCSV, isPaginationIcons, onNextPage, onPreviousPage } =
+    props || {}
 
   return (
     <React.Fragment>
@@ -23,14 +26,14 @@ export const TableFooter = (props: TableFooterProps) => {
           flexDirection="column"
         >
           <Box display="flex" gap={3} justifyContent="flex-end">
-            <IconButton>
+            <IconButton onClick={onNextPage}>
               <ChevronLeft
                 sx={{
                   color: COLORS.grey.main,
                 }}
               />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={onPreviousPage}>
               <ChevronRight color="error" />
             </IconButton>
           </Box>
