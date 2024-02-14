@@ -114,7 +114,11 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                   {filteredKeys?.map((key) => (
                     <Grid item xs={3} key={key}>
                       <Typography
-                        color="secondary"
+                        color={
+                          user[key] === 'Pending' || user[key] === 'pending'
+                            ? 'primary'
+                            : 'secondary'
+                        }
                         variant={mobileMode ? 'body1' : 'subtitle1'}
                       >
                         {user[key]}

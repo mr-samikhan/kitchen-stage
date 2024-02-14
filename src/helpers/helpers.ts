@@ -33,3 +33,39 @@ export const formatPhoneNumber = (phoneNumber: string | undefined) => {
 
   return formattedNumber
 }
+
+export const formatDateToToday = (dateString: any) => {
+  if (!dateString) return 'N/A'
+  const date = new Date(dateString)
+  const now = new Date()
+
+  now.setHours(0, 0, 0, 0)
+
+  const givenDate = new Date(dateString)
+  givenDate.setHours(0, 0, 0, 0)
+
+  // Calculate the difference in days
+  const diff = now.getTime() - givenDate.getTime()
+  const diffDays = diff / (1000 * 60 * 60 * 24)
+
+  let dayIndicator
+  if (diffDays === 0) {
+    dayIndicator = 'Today'
+  } else if (diffDays === 1) {
+    dayIndicator = 'Yesterday'
+  } else {
+    // Formatting the date as 'MM/DD/YYYY' if it's not today or yesterday
+    dayIndicator = givenDate.toLocaleDateString()
+  }
+
+  let hours = date.getHours()
+  const minutes = date.getMinutes()
+
+  const ampm = hours >= 12 ? 'PM' : 'AM'
+  hours = hours % 12
+  hours = hours ? hours : 12 // the hour '0' should be '12'
+  const minutesFormatted = minutes < 10 ? '0' + minutes : minutes
+
+  // Return formatted string
+  return `${dayIndicator} ${hours}:${minutesFormatted} ${ampm}`
+}

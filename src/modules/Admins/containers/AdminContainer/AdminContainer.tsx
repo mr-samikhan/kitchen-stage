@@ -4,7 +4,7 @@ import { useQueryClient } from 'react-query'
 import { FormProvider } from 'react-hook-form'
 import { useAdmins } from '../../hooks/useAdmin'
 import { useDispatch, useSelector } from 'react-redux'
-import { useBreakPoints, useGetAdmins } from '@cookup/hooks'
+import { useBreakPoints, useGetAdmins, usePagination } from '@cookup/hooks'
 import { ADMINS_DATA, ADMINS_HEADER } from '@cookup/constant'
 import { AdminFormsUI } from '../../components/AdminFormsUI/AdminFormsUI'
 import { CustomDialog, CustomList, Form, Layout } from '@cookup/components'
@@ -55,6 +55,11 @@ export const AdminContainer = () => {
 
   const { user } = useSelector((state: any) => state.auth)
 
+  const { currentItems, goToNextPage, goToPreviousPage } = usePagination(
+    admins,
+    7
+  )
+
   return (
     <Layout
       isTitle
@@ -63,29 +68,32 @@ export const AdminContainer = () => {
       isPaginationIcons
       button1ClassName="custom"
       button1Text="Add New Admin"
+      onNextPage={goToNextPage}
+      onPreviousPage={goToPreviousPage}
       button1Icon={mobileMode ? <Add /> : undefined}
-      isFooter={ADMINS_DATA.length > 7 ? true : false}
+      isFooter={currentItems?.length > 7 ? true : false}
       onButton1Click={() => dispatch(OPEN_ADMIN_MODAL())}
     >
       <Box mt={2}>
         <CustomList
-          data={admins}
+          data={currentItems}
           isActionButtons
           onDelete={onDelete}
           isLoading={adminLoading}
-          onSelectUser={onSelectUser}
           headerData={ADMINS_HEADER}
+          onSelectUser={onSelectUser}
+          showKeys={['userName', 'email', 'role', 'status', 'lastLogin']}
         />
       </Box>
       {MODAL_CHECK && (
         <CustomDialog
           isOpen={isOpenAdminModal || isAdminEditModal}
+          title={isAdminEditModal ? 'Update Admin' : 'Add New Admin'}
           onClose={() =>
             isOpenAdminModal
               ? dispatch(CLOSE_ADMIN_MODAL())
               : dispatch(CLOSE_EDIT_ADMIN_MODAL())
           }
-          title={isAdminEditModal ? 'Update Admin' : 'Add New Admin'}
         >
           <FormProvider {...methods}>
             <Form onSubmit={methods.handleSubmit(onSubmit)}>

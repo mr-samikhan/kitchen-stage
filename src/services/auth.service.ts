@@ -6,13 +6,14 @@ import {
   signInWithEmailAndPassword,
 } from '@cookup/firebase'
 import { IUser } from '@cookup/redux'
-import { getErrorMessage } from '@cookup/constant'
-import { getDocs, where } from 'firebase/firestore'
+import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
+import { doc, getDocs, updateDoc, where } from 'firebase/firestore'
 import {
   confirmPasswordReset,
   fetchSignInMethodsForEmail,
   sendPasswordResetEmail,
 } from 'firebase/auth'
+import { UserService } from './user.services'
 
 class Auth {
   login = async (data: any) => {
@@ -20,6 +21,11 @@ class Auth {
     try {
       let adminData: IUser | any = null
       let { user } = await signInWithEmailAndPassword(auth, email, password)
+      console.log('>>>user', user)
+      await updateDoc(doc(firestore, COLLECTIONS.ADMIN, user.uid), {
+        lastLogin: user.metadata.lastSignInTime,
+      })
+
       adminData = await this.checkAdminStatus(user)
 
       if (!adminData) {

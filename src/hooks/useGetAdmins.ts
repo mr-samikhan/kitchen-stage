@@ -9,7 +9,7 @@ interface IgetAdmins {
 const useGetAdmins = (props: IgetAdmins) => {
   const { enabled = true } = props || {}
 
-  const { isLoading: adminLoading, data: admins } = useQuery(
+  const { isLoading: adminLoading, data: admins } = useQuery<any>(
     ['getAdmins'],
     Api.admin.getAdmins,
     {

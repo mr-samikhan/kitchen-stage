@@ -26,14 +26,14 @@ export const TableFooter = (props: TableFooterProps) => {
           flexDirection="column"
         >
           <Box display="flex" gap={3} justifyContent="flex-end">
-            <IconButton onClick={onNextPage}>
+            <IconButton onClick={onPreviousPage}>
               <ChevronLeft
                 sx={{
                   color: COLORS.grey.main,
                 }}
               />
             </IconButton>
-            <IconButton onClick={onPreviousPage}>
+            <IconButton onClick={onNextPage}>
               <ChevronRight color="error" />
             </IconButton>
           </Box>
