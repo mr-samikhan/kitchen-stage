@@ -6,13 +6,15 @@ import { Box, Paper, Typography } from '@mui/material'
 
 interface snackBarProps {
   isOpen?: boolean
+  bgcolor?: string
+  errorMessage?: string
 }
 
 export const SnackBar = (props: snackBarProps) => {
-  const { isOpen } = props || {}
+  const { isOpen, errorMessage, bgcolor } = props || {}
 
   const error = useSelector(selectError)
-  const errorMsg = getErrorMessage(error)
+  const errorMsg = getErrorMessage(error ? error : '')
 
   return (
     <React.Fragment>
@@ -25,8 +27,7 @@ export const SnackBar = (props: snackBarProps) => {
           position: 'absolute',
           alignItems: 'center',
           justifyContent: 'center',
-          bgcolor: 'secondary.light',
-          background: 'secondary.light',
+          bgcolor: bgcolor ? bgcolor : 'secondary.light',
         }}
       >
         <Box
@@ -38,11 +39,11 @@ export const SnackBar = (props: snackBarProps) => {
         >
           <Typography
             variant="h4"
-            fontWeight={500}
-            textAlign="left"
             color="white"
+            fontWeight={500}
+            textAlign="center"
           >
-            {errorMsg}
+            {errorMessage || errorMsg}
           </Typography>
         </Box>
       </Paper>

@@ -3,6 +3,7 @@ import App from './core/App/App.tsx'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { ReduxProvider } from '@cookup/providers'
+import './styles/common.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ReduxProvider>

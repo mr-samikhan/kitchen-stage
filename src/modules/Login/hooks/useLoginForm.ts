@@ -22,6 +22,7 @@ export default function useLoginForm() {
 
   const user = useSelector(selectUser)
 
+  const [otp, setOtp] = React.useState('')
   const [isSnackBar, setIsSnackBar] = React.useState(false)
   const [isPasswordSent, setIsPasswordSent] = React.useState(false)
   const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
@@ -103,13 +104,26 @@ export default function useLoginForm() {
     }
   }
 
+  //otp
+  const onOTPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
+    let cleanedValue = value.replace(/\D/g, '')
+    if (cleanedValue.length > 3) {
+      cleanedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(3, 6)}`
+    }
+    setOtp(cleanedValue)
+  }
+
   return {
+    otp,
+    setOtp,
     navigate,
     onSubmit,
     methods,
     isError,
     pathname,
     isSnackBar,
+    onOTPChange,
     setIsSnackBar,
     isPasswordSent,
     onForgotPassword,

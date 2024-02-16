@@ -18,6 +18,7 @@ import {
   ManageSettings,
   CustomerSupport,
 } from '@cookup/screens'
+import { Login2FAContainer } from '@cookup/modules'
 
 const Routes = () => {
   const { isAuthenticated, isLoading } = useSelector((state: any) => state.auth)
@@ -27,6 +28,7 @@ const Routes = () => {
         <Route path={ROUTES.LOGIN_ACCOUNT} element={<Login />} />
         <Route path={ROUTES.FORGOT_PASSWORD} element={<Login />} />
         <Route path={ROUTES.RESET_PASSWORD} element={<Login />} />
+        <Route path={ROUTES.LOGIN_2FA} element={<Login2FAContainer />} />
       </ReactRoutes>
 
       <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
