@@ -11,9 +11,13 @@ import { doc, getDocs, updateDoc, where } from 'firebase/firestore'
 import {
   confirmPasswordReset,
   fetchSignInMethodsForEmail,
+  getAuth,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
+  updatePassword,
 } from 'firebase/auth'
 import { UserService } from './user.services'
+import { EmailAuthProvider } from 'firebase/auth/cordova'
 
 class Auth {
   login = async (data: any) => {
@@ -106,6 +110,27 @@ class Auth {
         if (!oobCode && !newPassword) return
 
         resolve(await confirmPasswordReset(auth, oobCode, newPassword))
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  reAuthenticateUser = async (
+    values = { currentPassword: '', newPassword: '', email: '' }
+  ) => {
+    return new Promise(async (resolve, reject) => {
+      const { currentPassword, newPassword, email } = values || {}
+      try {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (!user) throw new Error('No user is currently signed in.')
+
+        const credentials = EmailAuthProvider.credential(email, currentPassword)
+        await reauthenticateWithCredential(user, credentials)
+
+        await updatePassword(user, newPassword)
+        resolve('Password updated successfully.')
       } catch (error) {
         reject(error)
       }
