@@ -18,6 +18,7 @@ interface IAdmin {
   status?: string
   userName: string
   lastLogin?: string
+  phoneNumber?: string
 }
 
 interface UpdateAdmin {
@@ -40,12 +41,13 @@ class Admin {
         querySnapshot.forEach((doc: DocumentSnapshot<DocumentData>) => {
           const data = doc.data() as IAdmin
           let admin = {
-            uid: data.uid,
-            role: data.role,
-            email: data.email,
             userName: data.userName,
+            email: data.email,
+            role: data.role,
+            uid: data.uid,
             status: data.status === 'active' ? 'Active' : 'Pending',
             lastLogin: formatDateToToday(data.lastLogin) || 'N/A',
+            ...doc.data(),
           }
           admins?.push(admin)
         })
@@ -65,11 +67,12 @@ class Admin {
         email: '',
         userName: '',
         role: '',
+        phoneNumber: '',
       },
     }
   ) => {
     const { emailCheck, data } = values
-    const { email, userName, role, uid, status } = data || {}
+    const { email, userName, role, uid, status, phoneNumber } = data || {}
     return new Promise(async (resolve, reject) => {
       try {
         if (emailCheck) {
@@ -83,6 +86,7 @@ class Admin {
             role: role,
             userName: userName,
             id: uid,
+            phoneNumber: phoneNumber || '',
           }
         )
         resolve(data)

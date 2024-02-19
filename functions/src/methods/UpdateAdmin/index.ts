@@ -8,7 +8,8 @@ export const updateAdmin = () =>
   https.onRequest(async (request: Request, response: Response) => {
     cors(request, response, async () => {
       try {
-        const { id, email, userName, role } = request.body as UpdateAdminDto
+        const { id, email, userName, role, phoneNumber } =
+          request.body as UpdateAdminDto
 
         if (!email)
           response
@@ -38,11 +39,14 @@ export const updateAdmin = () =>
           displayName: userName,
         })
 
-        await firestore().doc(`/${COLLECTIONS.ADMINS}/${user.uid}`).update({
-          email,
-          userName,
-          role,
-        })
+        await firestore()
+          .doc(`/${COLLECTIONS.ADMINS}/${user.uid}`)
+          .update({
+            role,
+            email,
+            userName,
+            phoneNumber: phoneNumber || '',
+          })
 
         response.send(`${userName} account has been updated!`)
       } catch (error: any) {

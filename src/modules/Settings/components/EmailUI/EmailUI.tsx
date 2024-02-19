@@ -4,11 +4,13 @@ import { CustomTextField } from '@cookup/components'
 import { Box, Button, Grid, Typography } from '@mui/material'
 
 interface EmailUIProps {
+  methods?: any
   isValid?: boolean
+  isLoading?: boolean
 }
 
 export const EmailUI = (props: EmailUIProps) => {
-  const { isValid } = props || {}
+  const { isValid, methods, isLoading } = props || {}
 
   return (
     <Grid item width={{ md: 380, xs: 300 }}>
@@ -24,12 +26,34 @@ export const EmailUI = (props: EmailUIProps) => {
         email address below.
       </Typography>
       <Typography variant="h5" fontFamily="Poppins" mt={5}>
+        Name
+      </Typography>
+      <Box mt={1}>
+        <CustomTextField
+          name="userName"
+          fullWidth
+          className="settings-input"
+          placeholder="Enter your name"
+        />
+      </Box>
+      <Typography variant="h5" fontFamily="Poppins" mt={5}>
+        phone number
+      </Typography>
+      <Box mt={1}>
+        <CustomTextField
+          fullWidth
+          name="phoneNumber"
+          className="settings-input"
+          placeholder="Enter your phone number"
+        />
+      </Box>
+      <Typography variant="h5" fontFamily="Poppins" mt={5}>
         Email Address
       </Typography>
-      <Box mt={2}>
+      <Box mt={1}>
         <CustomTextField
-          name="email"
           fullWidth
+          name="email"
           className="settings-input"
           placeholder="heather@cookup.com"
         />
@@ -37,7 +61,7 @@ export const EmailUI = (props: EmailUIProps) => {
       <Box textAlign="center" mt={2}>
         <Button
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || isLoading}
           sx={{
             fontSize: 16,
             fontWeight: 600,
@@ -46,7 +70,7 @@ export const EmailUI = (props: EmailUIProps) => {
             bgcolor: isValid ? COLORS.wine.main : COLORS.grey.dark,
           }}
         >
-          Update
+          {isLoading ? 'Updating...' : 'Update'}
         </Button>
       </Box>
     </Grid>

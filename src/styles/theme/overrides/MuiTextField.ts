@@ -105,7 +105,7 @@ export const MuiTextField: Components['MuiTextField'] = {
           fontWeight: 600,
           borderRadius: '8px',
           fontFamily: 'Poppins',
-          background: '#F6F6F6',
+          // background: '#F6F6F6',
           border: '1px solid #EDEDED',
           '&.Mui-focused': {
             color: COLORS.primary.main,
@@ -116,7 +116,7 @@ export const MuiTextField: Components['MuiTextField'] = {
           },
         },
         '& .MuiOutlinedInput-notchedOutline': {
-          border: 'none',
+          border: '1px solid #BEBEBE',
         },
       },
       '&.grey-background': {

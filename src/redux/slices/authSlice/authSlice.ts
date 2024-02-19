@@ -14,6 +14,7 @@ export interface IUser {
   email: string
   userName: string
   lastLogin?: string
+  phoneNumber?: string
 }
 
 interface LoginCredentials {

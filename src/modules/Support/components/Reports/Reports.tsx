@@ -16,7 +16,12 @@ export const Reports = (props: ReportsProps) => {
         isViewMessage
         isActionButton
         data={data}
-        hiddenKeys={hiddenKeys}
+        showKeys={[
+          'requester',
+          'supportReason',
+          'supportDate',
+          'reportedUserName',
+        ]}
         headerData={SUPPORT_REPORT_HEADER}
         icon="/assets/icons/three-dots.svg"
       />

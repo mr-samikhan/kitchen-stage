@@ -1,3 +1,7 @@
+import { IUser } from '@cookup/redux'
+import { EmailAuthProvider } from 'firebase/auth/cordova'
+import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
+import { doc, getDocs, updateDoc, where } from 'firebase/firestore'
 import {
   auth,
   query,
@@ -5,15 +9,15 @@ import {
   firestore,
   signInWithEmailAndPassword,
 } from '@cookup/firebase'
-import { IUser } from '@cookup/redux'
-import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
-import { doc, getDocs, updateDoc, where } from 'firebase/firestore'
 import {
+  getAuth,
+  updateEmail,
+  updatePassword,
   confirmPasswordReset,
-  fetchSignInMethodsForEmail,
   sendPasswordResetEmail,
+  fetchSignInMethodsForEmail,
+  reauthenticateWithCredential,
 } from 'firebase/auth'
-import { UserService } from './user.services'
 
 class Auth {
   login = async (data: any) => {
@@ -106,6 +110,52 @@ class Auth {
         if (!oobCode && !newPassword) return
 
         resolve(await confirmPasswordReset(auth, oobCode, newPassword))
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  reAuthenticateUser = async (
+    values = { currentPassword: '', newPassword: '', email: '' }
+  ) => {
+    return new Promise(async (resolve, reject) => {
+      const { currentPassword, newPassword, email } = values || {}
+      try {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (!user) throw new Error('No user is currently signed in.')
+
+        const credentials = EmailAuthProvider.credential(email, currentPassword)
+        await reauthenticateWithCredential(user, credentials)
+
+        await updatePassword(user, newPassword)
+        resolve('Password updated successfully.')
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  updateUserEmail = async (values = { newEmail: '' }) => {
+    const { newEmail } = values || {}
+    return new Promise(async (resolve, reject) => {
+      try {
+        const auth = getAuth()
+        const user = auth.currentUser
+
+        if (user) {
+          try {
+            await updateEmail(user, newEmail)
+            resolve('Email updated successfully.')
+          } catch (error) {
+            reject(error)
+            console.error('Error updating email:', error)
+          }
+        } else {
+          console.log('No user is currently signed in.')
+          reject('No user is currently signed in.')
+        }
       } catch (error) {
         reject(error)
       }

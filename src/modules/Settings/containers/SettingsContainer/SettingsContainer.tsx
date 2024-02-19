@@ -20,13 +20,14 @@ export const SettingsContainer = () => {
   const { tabValue } = useSelector((state: any) => state.user)
   const { isLogoutModal } = useSelector((state: any) => state.settings)
 
-  const { methods, onSubmit, isValid } = useSettings({
+  const { methods, onSubmit, isValid, isLoading } = useSettings({
     isPasswordScreen: tabValue === 'password',
   })
 
   const onLogout = () => {
+    auth.signOut()
     dispatch(SET_LOGOUT_MODAL(false))
-    naviagte(ROUTES.LOGIN_ACCOUNT)
+    // naviagte(ROUTES.LOGIN_ACCOUNT)
   }
 
   useEffect(() => {
@@ -39,10 +40,7 @@ export const SettingsContainer = () => {
       button1Text="Logout"
       title="Personal Settings"
       button1Icon={mobileMode ? <LogoutIcon /> : undefined}
-      onButton1Click={() => {
-        auth.signOut()
-        dispatch(SET_LOGOUT_MODAL(true))
-      }}
+      onButton1Click={() => dispatch(SET_LOGOUT_MODAL(true))}
     >
       <Container maxWidth="xl">
         <FormProvider {...methods}>
@@ -59,7 +57,12 @@ export const SettingsContainer = () => {
                 <Grid item xs={12}>
                   <MuiCustomTab labels={SETTINGS_TAB_ARRAY} />
                 </Grid>
-                <SettingsTabsUI tabValue={tabValue} isValid={isValid} />
+                <SettingsTabsUI
+                  isValid={isValid}
+                  methods={methods}
+                  tabValue={tabValue}
+                  isLoading={isLoading}
+                />
               </Grid>
             </Grid>
           </Form>

@@ -1,14 +1,18 @@
 import React from 'react'
 import { COLORS } from '@cookup/constant'
+import { useSelector } from 'react-redux'
 import { CustomTextField } from '@cookup/components'
 import { Box, Button, Grid, Typography } from '@mui/material'
 
 interface PasswordUIProps {
   isValid?: boolean
+  isLoading?: boolean
 }
 
 export const PasswordUI = (props: PasswordUIProps) => {
-  const { isValid } = props || {}
+  const { isValid, isLoading } = props || {}
+
+  const { isError } = useSelector((state: any) => state.settings)
 
   return (
     <Grid item width={{ md: 464, xs: 300 }}>
@@ -56,7 +60,7 @@ export const PasswordUI = (props: PasswordUIProps) => {
           placeholder="Confirm Password"
         />
       </Box>
-      {isValid && (
+      {isError?.code && (
         <Typography variant="h5" fontFamily="Poppins" mt={5} color="error">
           The password you entered is incorrect. Please try again.
         </Typography>
@@ -64,7 +68,7 @@ export const PasswordUI = (props: PasswordUIProps) => {
       <Box textAlign="center" mt={2}>
         <Button
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || isLoading}
           sx={{
             fontSize: 16,
             fontWeight: 600,
@@ -73,7 +77,7 @@ export const PasswordUI = (props: PasswordUIProps) => {
             bgcolor: isValid ? COLORS.wine.main : COLORS.grey.dark,
           }}
         >
-          Update
+          {isLoading ? 'Updating...' : 'Update'}
         </Button>
       </Box>
     </Grid>

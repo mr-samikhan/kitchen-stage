@@ -82,6 +82,8 @@ export const UserPasswordResetResolver: any | Resolver<ILoginFormResolver> =
           'Email address invalid, please type again'
         )
         .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+      userName: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+      phoneNumber: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
     })
   )
 
