@@ -10,4 +10,5 @@ export interface UpdateAdminDto {
   role: string
   email: string
   userName: string
+  phoneNumber?: string
 }
