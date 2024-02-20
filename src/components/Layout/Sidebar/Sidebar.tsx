@@ -2,7 +2,7 @@ import React from 'react'
 import { useBreakPoints } from '@cookup/hooks'
 import CloseIcon from '@mui/icons-material/Close'
 import { COLORS, ROUTES } from '@cookup/constant'
-import { Avatar, Box, IconButton } from '@mui/material'
+import { Avatar, Box, IconButton, Typography } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 interface SidebarProps {
@@ -28,13 +28,13 @@ export const Sidebar = (props: SidebarProps) => {
         </Box>
       )}
       <Box
-        p={3}
+        p={1}
         display="flex"
         alignItems="center"
         flexDirection="column"
         justifyContent="space-between"
       >
-        <Box>
+        <Box my={2}>
           <img
             src="/assets/icons/kitchen-stage.svg"
             alt="logo"
@@ -42,10 +42,16 @@ export const Sidebar = (props: SidebarProps) => {
             height={72}
           />
         </Box>
-        <Box display="flex" flexDirection="column" mb={12}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          mb={12}
+          justifyContent="space-between"
+          alignItems="center"
+        >
           {sideBarOptions.map((item: any, index: number) => {
             return (
-              <Box p={1}>
+              <Box p={1} mt={1} textAlign="center">
                 <IconButton
                   onClick={() => navigate(item.path)}
                   sx={{
@@ -54,7 +60,8 @@ export const Sidebar = (props: SidebarProps) => {
                     height: '56px',
                     borderRadius: 2,
                     position: 'relative',
-                    bgcolor: item.active ? 'secondary.light' : 'trasparent',
+                    bgcolor: 'transparent',
+                    // bgcolor: item.active ? 'secondary.light' : 'trasparent',
                   }}
                 >
                   <img
@@ -72,6 +79,15 @@ export const Sidebar = (props: SidebarProps) => {
                     }}
                   />
                 </IconButton>
+                <Typography
+                  mt={1}
+                  fontSize={10}
+                  fontWeight={600}
+                  textAlign="center"
+                  color={COLORS.grey.main}
+                >
+                  {item?.label}
+                </Typography>
               </Box>
             )
           })}
