@@ -6,7 +6,7 @@ export const MuiPaper: Components['MuiPaper'] = {
       '&.dashboard_card': {
         padding: 10,
         borderRadius: 10,
-        backgroundColor: '#F0F0F0',
+        // backgroundColor: '#F0F0F0',
       },
     },
   },

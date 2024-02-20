@@ -1,6 +1,10 @@
 import React from 'react'
 import { CustomList } from '@cookup/components'
-import { SUPPORT_REPORT_DATA, SUPPORT_REPORT_HEADER } from '@cookup/constant'
+import {
+  COLORS,
+  SUPPORT_REPORT_DATA,
+  SUPPORT_REPORT_HEADER,
+} from '@cookup/constant'
 
 interface ReportsProps {
   data: any
@@ -22,6 +26,7 @@ export const Reports = (props: ReportsProps) => {
           'supportDate',
           'reportedUserName',
         ]}
+        isBgColor={COLORS.white}
         headerData={SUPPORT_REPORT_HEADER}
         icon="/assets/icons/three-dots.svg"
       />

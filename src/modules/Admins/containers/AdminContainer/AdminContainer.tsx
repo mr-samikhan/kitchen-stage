@@ -5,7 +5,7 @@ import { FormProvider } from 'react-hook-form'
 import { useAdmins } from '../../hooks/useAdmin'
 import { useDispatch, useSelector } from 'react-redux'
 import { useBreakPoints, useGetAdmins, usePagination } from '@cookup/hooks'
-import { ADMINS_DATA, ADMINS_HEADER } from '@cookup/constant'
+import { ADMINS_DATA, ADMINS_HEADER, COLORS } from '@cookup/constant'
 import { AdminFormsUI } from '../../components/AdminFormsUI/AdminFormsUI'
 import { CustomDialog, CustomList, Form, Layout } from '@cookup/components'
 import {
@@ -69,6 +69,7 @@ export const AdminContainer = () => {
       button1ClassName="custom"
       button1Text="Add New Admin"
       onNextPage={goToNextPage}
+      bgcolor={COLORS.background}
       onPreviousPage={goToPreviousPage}
       button1Icon={mobileMode ? <Add /> : undefined}
       isFooter={currentItems?.length > 7 ? true : false}
@@ -76,6 +77,7 @@ export const AdminContainer = () => {
     >
       <Box mt={2}>
         <CustomList
+          isBgColor={COLORS.white}
           data={currentItems}
           isActionButtons
           onDelete={onDelete}

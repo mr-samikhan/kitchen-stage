@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import { useSupport } from '../../hooks/hooks'
 import { useGetSupports } from '@cookup/hooks'
 import { FormProvider } from 'react-hook-form'
-import { SUPPORT_TABS } from '@cookup/constant'
+import { COLORS, SUPPORT_TABS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { SortModalUI, SuspendModalUI } from '@cookup/modules'
 import { MessageModal, TabsUI } from '../../components/components'
@@ -101,6 +101,7 @@ export const SupportContainer = () => {
       isTitle
       isSort
       isFilter
+      bgcolor={COLORS.background}
       isPaginationIcons={tabValue !== 'suspended-users'}
       isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       isFooter={support_data && support_data?.length > 7 ? true : false}

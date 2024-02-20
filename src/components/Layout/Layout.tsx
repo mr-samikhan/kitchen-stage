@@ -113,10 +113,12 @@ export const Layout = (props: LayoutProps) => {
         ) : (
           <Grid
             item
-            md={1}
+            // md={1.4}
+            width={136}
             sm={1}
-            maxHeight="900px"
-            bgcolor={COLORS.background}
+            maxHeight="950px"
+            // bgcolor={COLORS.background}
+            bgcolor={COLORS.white}
           >
             <Sidebar sideBarOptions={ARRAY} />
           </Grid>
