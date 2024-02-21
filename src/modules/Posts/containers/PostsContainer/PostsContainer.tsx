@@ -1,17 +1,17 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { ADS_ARRAY } from '@cookup/constant'
 import { useNavigate } from 'react-router-dom'
-import { Avatar, Box, Container, Grid } from '@mui/material'
-import { CustomSortModal, Layout } from '@cookup/components'
+import { ADS_ARRAY, COLORS } from '@cookup/constant'
 import { SortModalUI, ViewAdDetails } from '@cookup/modules'
+import { Avatar, Box, Container, Grid, IconButton } from '@mui/material'
+import { CustomSortModal, Layout, TableFooter } from '@cookup/components'
 
 type TAdCard = {
   user: string
   img: string
 }
 
-export const DashboardAdsContainer = () => {
+export const PostsContainer = () => {
   const navigate = useNavigate()
 
   const { isSortModal, isFilterModal } = useSelector(
@@ -20,6 +20,9 @@ export const DashboardAdsContainer = () => {
 
   const [adsSteps, setAdsSteps] = React.useState(0)
   const [singleItem, setSingleItem] = React.useState<TAdCard | null>(null)
+
+  const { searchValue } = useSelector((state: any) => state.header)
+  // console.log(searchValue, '>>>>searchValue')
 
   const renderSteps = () => {
     switch (adsSteps) {
@@ -40,8 +43,8 @@ export const DashboardAdsContainer = () => {
                   mt={1}
                   key={index}
                   position={'relative'}
-                  width={{ xs: '150px', md: '230px' }}
-                  height={{ xs: '150px', md: '230px' }}
+                  width={{ xs: '150px', md: '200px' }}
+                  height={{ xs: '150px', md: '200px' }}
                   sx={{
                     cursor: 'pointer',
                   }}
@@ -68,6 +71,13 @@ export const DashboardAdsContainer = () => {
                   <img alt="" width="100%" height="100%" src={item.img} />
                 </Box>
               ))}
+              <Grid item md={11} display="flex" justifyContent="center" my={2}>
+                <TableFooter
+                  isPaginationIcons
+                  onNextPage={() => console.log('nextPage')}
+                  onPreviousPage={() => console.log('prePage')}
+                />
+              </Grid>
             </Grid>
           </Grid>
         )
@@ -83,10 +93,7 @@ export const DashboardAdsContainer = () => {
                   </Box>
                 </Box>
               </Grid>
-              <ViewAdDetails
-                isDashboardAidUI
-                img="/assets/images/card_img.svg"
-              />
+              <ViewAdDetails img="/assets/images/card_img.svg" />
             </Grid>
           </Grid>
         )
@@ -99,9 +106,12 @@ export const DashboardAdsContainer = () => {
   return (
     <Layout
       isNavigation
+      bgcolor={COLORS.background}
+      isSearchInput={adsSteps === 0}
       isSort={adsSteps === 0}
-      isFilter={adsSteps === 0}
-      navigationTitle={singleItem === null ? 'Posts' : 'The Appetizers Bar'}
+      navigationTitle={
+        singleItem === null ? 'Manage Posts' : 'The Appetizers Bar'
+      }
       navTitleColor={singleItem === null ? 'secondary.light' : 'primary.main'}
       onGoBack={() => {
         singleItem === null ? navigate(-1) : setAdsSteps(0)
@@ -110,19 +120,11 @@ export const DashboardAdsContainer = () => {
     >
       <Container maxWidth="xl">
         {renderSteps()}
-        {isSortModal && (
-          <CustomSortModal top={100} padding="12px 0px 12px 0px">
-            <SortModalUI isSortUI />
-          </CustomSortModal>
-        )}
-        {isFilterModal && (
-          <CustomSortModal top={100} padding="12px 0px 12px 0px" title="Filter">
-            <SortModalUI isBusinessFilter />
-          </CustomSortModal>
-        )}
+
+        {isSortModal && <CustomSortModal />}
       </Container>
     </Layout>
   )
 }
 
-export default DashboardAdsContainer
+export default PostsContainer

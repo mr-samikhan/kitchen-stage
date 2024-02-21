@@ -69,3 +69,37 @@ export const formatDateToToday = (dateString: any) => {
   // Return formatted string
   return `${dayIndicator} ${hours}:${minutesFormatted} ${ampm}`
 }
+
+export const generateWeekGap = () => {
+  const start = new Date()
+
+  const end = new Date(start)
+  end.setDate(start.getDate() + 6)
+
+  const startMonth = start.toLocaleString('default', { month: 'short' })
+  const startDay = start.getDate()
+  const endMonth = end.toLocaleString('default', { month: 'short' })
+  const endDay = end.getDate()
+
+  return `${startMonth} ${startDay} - ${endMonth} ${endDay}`
+}
+
+export const getLastMonthDateRange = () => {
+  const today = new Date()
+  const year = today.getFullYear()
+
+  const firstDayOfLastMonth = new Date(
+    today.getFullYear(),
+    today.getMonth() - 1,
+    1
+  )
+  const lastDayOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0) // Last day of last month
+
+  const monthName = firstDayOfLastMonth.toLocaleString('default', {
+    month: 'short',
+  })
+
+  const formattedDateRange = `${monthName} ${firstDayOfLastMonth.getDate()} - ${monthName} ${lastDayOfLastMonth.getDate()}`
+
+  return formattedDateRange
+}

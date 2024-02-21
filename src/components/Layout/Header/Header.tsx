@@ -75,6 +75,9 @@ export const Header = (props: HeaderProps) => {
   const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
+  const { pathname } = window.location
+
+  let post_path = pathname === '/posts'
 
   return (
     <React.Fragment>
@@ -102,7 +105,7 @@ export const Header = (props: HeaderProps) => {
           container
           display="flex"
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent={post_path ? 'start' : 'space-between'}
         >
           <Grid item md={4} sm={6} p={4}>
             {isTabs && (
@@ -129,7 +132,7 @@ export const Header = (props: HeaderProps) => {
           )}
           <Grid
             item
-            md={4}
+            md={post_path ? 6 : 4}
             sm={title === null ? 6 : 12}
             p={{
               sm: 0,
@@ -137,6 +140,11 @@ export const Header = (props: HeaderProps) => {
             }}
           >
             <Box display="flex" width="100%" justifyContent="center" gap={2}>
+              {isSearchInput && (
+                <Box width={post_path ? '50%' : tabMode ? '100%' : '80%'}>
+                  <MuiCustomSearchInput />
+                </Box>
+              )}
               {isSort && (
                 <CustomFilterButton
                   onClick={() => dispatch(OPEN_SORT_MODAL())}
@@ -148,11 +156,6 @@ export const Header = (props: HeaderProps) => {
                   icon="/assets/icons/filter_alt.svg"
                   onClick={() => dispatch(SET_FILTER_MODAL(true))}
                 />
-              )}
-              {isSearchInput && (
-                <Box width={tabMode ? '100%' : '80%'}>
-                  <MuiCustomSearchInput />
-                </Box>
               )}
               {showButton1 && (
                 <MuiSmallButton

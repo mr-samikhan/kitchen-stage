@@ -90,8 +90,20 @@ export const Layout = (props: LayoutProps) => {
   let ARRAY = SIDEBAR_ARRAY
   let SELECTED_TITLE = ''
 
+  const getFirstThreePathComponents = (path: string) => {
+    const components = path.split('/').filter(Boolean)
+    return components.slice(0, 3).join('/')
+  }
+
   ARRAY = ARRAY.map((item) => {
-    if (pathname === item.path) {
+    const itemFirstThreeComponents = getFirstThreePathComponents(item.path)
+    const pathnameFirstThreeComponents = getFirstThreePathComponents(pathname)
+
+    if (
+      pathname === item.path ||
+      pathname.startsWith(item.path + (item.path === '/' ? '/' : '')) ||
+      pathnameFirstThreeComponents === itemFirstThreeComponents
+    ) {
       SELECTED_TITLE = item.title
       return { ...item, active: true }
     } else {

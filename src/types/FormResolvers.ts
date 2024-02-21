@@ -13,6 +13,7 @@ export type IResetPasswordFormResolver = {
 }
 
 export type ISortItem = {
+  type: string
   value: string
   title: string
 }

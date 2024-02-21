@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 interface TViewDetails {
   img?: string
   isDashboardAidUI?: boolean
-  setUserValues: any
+  setUserValues?: any
 }
 
 export const ViewAdDetails = (props: TViewDetails) => {
