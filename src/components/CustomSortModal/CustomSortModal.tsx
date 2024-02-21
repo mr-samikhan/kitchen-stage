@@ -121,6 +121,7 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
                 name="startDate"
                 icon={ChevronRight}
                 className="start-end-date"
+                setDate={(date) => console.log('start date', date)}
               />
             </Box>
             <Box px={2} mt={2}>
@@ -129,6 +130,7 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
                 name="endDate"
                 icon={ChevronRight}
                 className="start-end-date"
+                setDate={(date) => console.log('end date', date)}
               />
             </Box>
           </>

@@ -2,6 +2,7 @@ const Routes = {
   ROOT: '/',
   ADS: '/ads',
   EDIT: '/edit',
+  POSTS: '/posts',
   USERS: '/users',
   ADMINS: '/admins',
   GROUPS: '/groups',

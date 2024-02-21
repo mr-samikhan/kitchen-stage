@@ -1,3 +1,4 @@
+import { generateWeekGap, getLastMonthDateRange } from '@cookup/helpers'
 import ROUTES from './routes'
 import { ISortItem } from '@cookup/types'
 
@@ -42,7 +43,7 @@ export let SIDEBAR_ARRAY = [
   // },
   {
     active: false,
-    path: ROUTES.ADS,
+    path: ROUTES.POSTS,
     title: 'Manage Posts',
     label: 'Manage Posts',
     icon: '/assets/icons/post.svg',
@@ -99,27 +100,27 @@ export const DASHBOARD_ACTIVITES = [
     percentage: +4.5,
     duration: 'last week',
     title: 'Posts Submitted',
-    navigate: ROUTES.DASHBOARD_ADS,
+    navigate: ROUTES.POSTS,
   },
   {
     counter: 98,
     percentage: -1.8,
     duration: 'last week',
     title: 'Comments Submitted',
-    navigate: ROUTES.DASHBOARD_ADS,
+    navigate: ROUTES.POSTS,
   },
   {
     counter: 159,
     percentage: 4.5,
     duration: 'last week',
     title: 'Likes Submitted',
-    navigate: ROUTES.DASHBOARD_ADS,
+    navigate: ROUTES.POSTS,
   },
   {
     counter: 159,
     percentage: 4.5,
     duration: 'last week',
-    navigate: ROUTES.DASHBOARD_ADS,
+    navigate: ROUTES.POSTS,
     title: 'User Accounts Followed',
   },
 ]
@@ -130,14 +131,14 @@ export const DASHBOARD_BUSINESS_ACTIVITES = [
     percentage: +4.5,
     duration: 'last week',
     title: 'Partners Submitted',
-    navigate: ROUTES.DASHBOARD_ADS,
+    navigate: ROUTES.POSTS,
   },
   {
     counter: 98,
     percentage: -1.8,
     duration: 'last week',
     title: 'Partners Clicked',
-    navigate: ROUTES.DASHBOARD_ADS,
+    navigate: ROUTES.POSTS,
   },
 ]
 
@@ -182,15 +183,21 @@ export const DASHBOARD_POPULAR_RESTAURANTS = [
 export const SORT_MODAL_ARRAY: ISortItem[] = [
   {
     title: 'Today',
-    value: 'Jul 9',
+    type: 'today',
+    value: new Date().toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+    }),
   },
   {
+    type: 'lastWeek',
     title: 'Last Week',
-    value: 'June 27 - July 3',
+    value: generateWeekGap(),
   },
   {
+    type: 'lastMonth',
     title: 'Last Month',
-    value: 'June 1 - June 30',
+    value: getLastMonthDateRange(),
   },
 ]
 

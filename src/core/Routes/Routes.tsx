@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { ROUTES } from '@cookup/constant'
+import { Login2FAContainer } from '@cookup/modules'
 import { ProtectedRoute } from './components/components'
 import { Route, Routes as ReactRoutes } from 'react-router-dom'
 import {
@@ -14,11 +15,11 @@ import {
   Dashboard,
   CreateAds,
   SingleUser,
+  ManagePosts,
   DashboardAds,
   ManageSettings,
   CustomerSupport,
 } from '@cookup/screens'
-import { Login2FAContainer } from '@cookup/modules'
 
 const Routes = () => {
   const { isAuthenticated, isLoading } = useSelector((state: any) => state.auth)
@@ -45,6 +46,7 @@ const Routes = () => {
           <Route path={ROUTES.ROOT} element={<Dashboard />} />
           <Route path={ROUTES.BOOKINGS} element={<Bookings />} />
           <Route path={ROUTES.ANALYTICS} element={<Dashboard />} />
+          <Route path={ROUTES.POSTS} element={<ManagePosts />} />
           <Route path={ROUTES.CREATE_AD} element={<CreateAds />} />
           <Route path={ROUTES.SETTINGS} element={<ManageSettings />} />
           <Route path={ROUTES.DASHBOARD_ADS} element={<DashboardAds />} />
