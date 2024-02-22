@@ -1,15 +1,34 @@
 import React from 'react'
-import { Box, Button, Divider, TextField, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  TextField,
+  Typography,
+} from '@mui/material'
+import { COLORS } from '@cookup/constant'
 
 interface IMessageProps {
   reason: string
-  onReply: () => void
-  onCancel: () => void
   isSender?: boolean
+  onReply: () => void
+  attachment?: string
+  onCancel: () => void
+  isAttachment?: boolean
+  onViewAttachment?: () => void
 }
 
 export const MessageModal = (props: IMessageProps) => {
-  const { onCancel, onReply, isSender, reason } = props || {}
+  const {
+    reason,
+    onReply,
+    onCancel,
+    isSender,
+    attachment,
+    isAttachment,
+    onViewAttachment,
+  } = props || {}
 
   return (
     <React.Fragment>
@@ -47,9 +66,32 @@ export const MessageModal = (props: IMessageProps) => {
         tortor aliquam id augue at scelerisque. Arcu justo, id sed mauris, fusce
         nunc. Duis in vel pellentesque vitae arcu.
       </Typography>
+
       <Box py={2}>
         <Divider />
       </Box>
+      {isAttachment && (
+        <Box display="flex" gap={2}>
+          <img
+            alt=""
+            src={attachment || '/assets/icons/attachment.svg'}
+            style={{
+              width: 70,
+              height: 70,
+            }}
+          />
+          <Button
+            variant="text"
+            onClick={onViewAttachment}
+            sx={{
+              bgcolor: 'transparent',
+              color: COLORS.blue,
+            }}
+          >
+            View attachement
+          </Button>
+        </Box>
+      )}
       <Box py={2}>
         <TextField placeholder="Type Message..." fullWidth rows={5} multiline />
       </Box>

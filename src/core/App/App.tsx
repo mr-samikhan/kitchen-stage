@@ -35,6 +35,7 @@ const App = () => {
             })
           )
         } else {
+          auth.signOut()
           dispath(LOGOUT())
           navigate(ROUTES.LOGIN_ACCOUNT)
         }
