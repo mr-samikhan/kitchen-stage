@@ -133,6 +133,23 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
                 setDate={(date) => console.log('end date', date)}
               />
             </Box>
+            <Box mt={2} px={2}>
+              {[
+                'User Profile',
+                'User Post',
+                'User Comment',
+                'Support Reason',
+              ].map((item, index) => (
+                <Typography
+                  mt={2}
+                  key={index}
+                  color="black"
+                  variant="subtitle2"
+                >
+                  {item}
+                </Typography>
+              ))}
+            </Box>
           </>
         )}
       </Paper>

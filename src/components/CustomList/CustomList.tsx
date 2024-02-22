@@ -159,9 +159,11 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                         <Grid
                           item
                           gap={1}
+                          pr={2}
                           xs={12}
                           display="flex"
                           alignItems="center"
+                          justifyContent="flex-end"
                         >
                           {singleSupportData &&
                             isMessage &&

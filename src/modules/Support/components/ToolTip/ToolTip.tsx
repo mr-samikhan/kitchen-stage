@@ -47,15 +47,12 @@ export const ToolTip = (props: IToolTips) => {
         alignContent="center"
         flexDirection="column"
         justifyContent="center"
-        bgcolor={COLORS.secondary.light}
+        bgcolor={'#D9D9D9'}
       >
-        {['Suspended User', 'Resolved Report'].map((item) => (
+        {['Suspended User', 'Resolved Report'].map((item, index) => (
           <Typography
             key={item}
-            width={140}
-            height={24}
             variant="h6"
-            color="white"
             textAlign="center"
             fontFamily="Poppins"
             onClick={() => {

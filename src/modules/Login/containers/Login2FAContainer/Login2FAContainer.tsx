@@ -1,21 +1,29 @@
+import React from 'react'
 import { COLORS } from '@cookup/constant'
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
-import React, { useRef, useState } from 'react'
 import { SnackBar, useLoginForm } from '@cookup/modules'
 import {
   Box,
-  Button,
   Grid,
-  IconButton,
+  Button,
   TextField,
+  IconButton,
   Typography,
 } from '@mui/material'
 
 export const Login2FAContainer = () => {
-  const [step, setStep] = useState(0)
-
-  const { otp, onOTPChange } = useLoginForm()
+  const {
+    otp,
+    step,
+    phone,
+    setPhone,
+    onSendOTP,
+    onVerifyOTP,
+    onOTPChange,
+    phoneStatus,
+    onResendOTP,
+  } = useLoginForm()
 
   const renderStep = () => {
     switch (step) {
@@ -67,13 +75,14 @@ export const Login2FAContainer = () => {
                   backgroundColor: '#FFFF',
                 }}
                 country={'us'}
-                value="+1 000 000 0000"
-                onChange={(phone) => console.log({ phone })}
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
               />
             </Box>
-            <IconButton onClick={() => setStep(1)}>
+            <IconButton onClick={onSendOTP}>
               <img src="/assets/icons/login-btn.svg" alt="eye" />
             </IconButton>
+            <Box id="recaptcha-container"></Box>
           </>
         )
       case 1:
@@ -105,7 +114,7 @@ export const Login2FAContainer = () => {
               </Box>
 
               <Button
-                onClick={() => console.log('verify')}
+                onClick={onVerifyOTP}
                 fullWidth
                 variant="contained"
                 sx={{
@@ -117,9 +126,9 @@ export const Login2FAContainer = () => {
                 Verfiy
               </Button>
               <Button
-                onClick={() => console.log('resend')}
                 fullWidth
                 variant="outlined"
+                onClick={onResendOTP}
                 sx={{
                   outline: 'none',
                   border: 'none',
@@ -158,16 +167,13 @@ export const Login2FAContainer = () => {
         </Box>
         {renderStep()}
       </Grid>
-      {step === 0 && (
+      {(step === 0 && phoneStatus.isError) || phoneStatus.isSuccess ? (
         <SnackBar
           isOpen={true}
-          // bgcolor={COLORS.info.main}
-          errorMessage={
-            `Mobile number wasn’t entered properly. Please try again` ||
-            'Code resent! Check your SMS'
-          }
+          errorMessage={phoneStatus.message}
+          bgcolor={phoneStatus.isSuccess ? COLORS.info.main : ''}
         />
-      )}
+      ) : null}
     </React.Fragment>
   )
 }

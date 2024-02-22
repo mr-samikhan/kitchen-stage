@@ -137,6 +137,7 @@ export const Layout = (props: LayoutProps) => {
         )}
         <Grid
           item
+          my={1}
           md={11}
           xs={12}
           sm={11}

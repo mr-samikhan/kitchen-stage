@@ -1,7 +1,7 @@
 import { Api } from '@cookup/services'
 import React, { useEffect } from 'react'
 import { ROUTES } from '@cookup/constant'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { AppDispatch } from 'redux/store/store'
 import { loginUser, selectUser } from '@cookup/redux'
@@ -13,6 +13,8 @@ import {
   ForgotPasswordFormResolver,
   ResetPasswordFormResolver,
 } from '@cookup/utils'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { auth } from '@cookup/firebase'
 
 export default function useLoginForm() {
   const navigate = useNavigate()
@@ -22,9 +24,17 @@ export default function useLoginForm() {
 
   const user = useSelector(selectUser)
 
+  const [step, setStep] = React.useState(0)
   const [otp, setOtp] = React.useState('')
+  const [phone, setPhone] = React.useState('')
+  const [phoneStatus, setPhoneStatus] = React.useState({
+    isError: false,
+    isSuccess: false,
+    message: '',
+  })
   const [isSnackBar, setIsSnackBar] = React.useState(false)
   const [isPasswordSent, setIsPasswordSent] = React.useState(false)
+  const [confirmationObject, setConfirmationObject] = React.useState<any>({})
   const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
 
   //oobCode
@@ -89,6 +99,7 @@ export default function useLoginForm() {
               password,
             })
           )
+          navigate(ROUTES.LOGIN_2FA)
         } catch (error: any) {
           if (error?.message === 'auth/not-admin') {
             setIsSnackBar(true)
@@ -104,6 +115,56 @@ export default function useLoginForm() {
     }
   }
 
+  //reCapcha
+  const reCapcha = (phone: string) => {
+    const recaptchaVerifier = new RecaptchaVerifier(
+      auth,
+      'recaptcha-container',
+      {}
+    )
+    recaptchaVerifier.render()
+    return signInWithPhoneNumber(auth, phone, recaptchaVerifier)
+  }
+
+  //send otp
+  const onSendOTP = async () => {
+    try {
+      if (!phone)
+        return setPhoneStatus((prev) => ({
+          ...prev,
+          isError: true,
+          message: `Mobile number wasn’t entered properly. Please try again`,
+        }))
+      const response = await reCapcha(`+${phone}`)
+      setConfirmationObject(response)
+      setPhoneStatus((prev) => ({
+        ...prev,
+        isError: false,
+        message: '',
+      }))
+      setStep(1)
+    } catch (error: any) {
+      let errorCode = ''
+      if (error.code === 'auth/invalid-phone-number') {
+        errorCode = 'Invalid phone number'
+      }
+      setPhoneStatus((prev) => ({
+        ...prev,
+        isError: true,
+        message: errorCode || error.message,
+      }))
+    }
+  }
+
+  //verify otp
+  const onVerifyOTP = async () => {
+    try {
+      await confirmationObject.confirm(otp.replace(/-/g, ''))
+    } catch (error) {
+      console.log('>>>error', error)
+    }
+  }
+
   //otp
   const onOTPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
@@ -114,16 +175,38 @@ export default function useLoginForm() {
     setOtp(cleanedValue)
   }
 
+  //resent otp
+  const onResendOTP = async () => {
+    try {
+      await onSendOTP()
+      setPhoneStatus((prev) => ({
+        ...prev,
+        isSuccess: true,
+        message: 'Code resent! Check your SMS',
+      }))
+    } catch (error) {
+      console.log('>>>error', error)
+    }
+  }
+
   return {
     otp,
+    step,
+    phone,
     setOtp,
+    setPhone,
     navigate,
     onSubmit,
+    setStep,
     methods,
     isError,
     pathname,
+    onSendOTP,
     isSnackBar,
     onOTPChange,
+    phoneStatus,
+    onResendOTP,
+    onVerifyOTP,
     setIsSnackBar,
     isPasswordSent,
     onForgotPassword,

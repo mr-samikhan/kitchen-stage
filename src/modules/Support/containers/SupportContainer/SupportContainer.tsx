@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { Api } from '@cookup/services'
 import React, { useEffect } from 'react'
 import { useSupport } from '../../hooks/hooks'
@@ -17,6 +17,8 @@ import {
   CustomLoader,
   ExportCSVModal,
   CustomSortModal,
+  MuiCustomSearchInput,
+  CustomFilterButton,
 } from '@cookup/components'
 import {
   SET_TOOL_TIP,
@@ -25,6 +27,7 @@ import {
   SET_EXPORT_SUCCESS,
   SET_CONFIRM_SUSPENSION,
   SET_SINGLE_SUPPORT_DATA,
+  SET_FILTER_MODAL,
 } from '@cookup/redux'
 
 export const SupportContainer = () => {
@@ -99,20 +102,39 @@ export const SupportContainer = () => {
   return (
     <Layout
       isTitle
-      isSort
-      isFilter
+      // isSort
+      // isFilter
       bgcolor={COLORS.background}
       isPaginationIcons={tabValue !== 'suspended-users'}
       isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       isFooter={support_data && support_data?.length > 7 ? true : false}
     >
       <Grid container>
-        <Grid item xs={12} display="flex" justifyContent="center">
+        <Grid item xs={12} md={6} display="flex" justifyContent="start">
           <MuiCustomTab
             width="180px"
             labels={SUPPORT_TABS}
             className="support-tabs"
           />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          display="flex"
+          justifyContent="center"
+          gap={2}
+        >
+          <Box width="40%">
+            <MuiCustomSearchInput />
+          </Box>
+          <Box>
+            <CustomFilterButton
+              placeholder="Filter"
+              icon="/assets/icons/filter_alt.svg"
+              onClick={() => dispatch(SET_FILTER_MODAL(true))}
+            />
+          </Box>
         </Grid>
         <Grid item md={12} mt={2} my={5}>
           <TabsUI tabValue={tabValue} data={filteredData || sortedData} />
@@ -241,12 +263,12 @@ export const SupportContainer = () => {
 
       {isFilterModal && (
         <CustomSortModal
-          top={40}
-          title="Filter"
-          padding="12px 0px 12px 0px"
-          width={{ md: 380, xs: 300 }}
+        // top={40}
+        // title="Filter"
+        // padding="12px 0px 12px 0px"
+        // width={{ md: 380, xs: 300 }}
         >
-          <SortModalUI isFilterUI isAccountTypes />
+          {/* <SortModalUI isFilterUI isAccountTypes /> */}
         </CustomSortModal>
       )}
 
@@ -293,8 +315,10 @@ export const SupportContainer = () => {
           }}
         >
           <MessageModal
-            isSender
+            isAttachment
+            isSender={false}
             reason={singleSupportData?.supportReason}
+            onViewAttachment={() => alert('view attachment')}
             onReply={() =>
               dispatch(
                 SET_SINGLE_SUPPORT_DATA({ user: null, isViewMessage: false })

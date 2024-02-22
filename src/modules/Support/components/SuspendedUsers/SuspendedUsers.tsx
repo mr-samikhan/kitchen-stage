@@ -22,7 +22,7 @@ export const SuspendedUsers = (props: SuspendedUsersProps) => {
         data={data}
         height={400}
         isActionButton
-        hiddenKeys={hiddenKeys}
+        showKeys={hiddenKeys}
         iconPosition="flex-end"
         headerData={SUPPORT_SUSPENDED_HEADER}
         onNavigation={() => navigate(ROUTES.USERS)}
