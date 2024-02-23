@@ -86,6 +86,7 @@ export const DashboardAdsContainer = () => {
               <ViewAdDetails
                 isDashboardAidUI
                 img="/assets/images/card_img.svg"
+                onVideoClick={() => alert('you clicked on video icon')}
               />
             </Grid>
           </Grid>

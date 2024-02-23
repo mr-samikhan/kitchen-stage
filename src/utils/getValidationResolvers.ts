@@ -87,6 +87,18 @@ export const UserPasswordResetResolver: any | Resolver<ILoginFormResolver> =
     })
   )
 
+export const EmailResolver: any | Resolver<any> = yupResolver(
+  yup.object().shape({
+    email: yup
+      .string()
+      .matches(
+        VALIDATION_PATTERNS.EMAIL,
+        'Email address invalid, please type again'
+      )
+      .required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+  })
+)
+
 export const SuspendUserResolver: any | Resolver<any> = yupResolver(
   yup.object().shape({
     days: yup

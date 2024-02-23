@@ -85,7 +85,7 @@ export const PostsContainer = () => {
       case 1:
         return (
           <Grid container>
-            <Grid item md={12} pl={8} container alignItems="center">
+            <Grid item md={12} pl={8} container>
               <Grid item md={12} px={2}>
                 <Box width="100%" mt={5}>
                   <Box width={50} height={50}>
@@ -93,7 +93,9 @@ export const PostsContainer = () => {
                   </Box>
                 </Box>
               </Grid>
-              <ViewAdDetails img="/assets/images/card_img.svg" />
+              <ViewAdDetails
+                onVideoClick={() => alert('you clicked on video icon')}
+              />
             </Grid>
           </Grid>
         )

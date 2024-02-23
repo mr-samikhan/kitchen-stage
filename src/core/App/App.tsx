@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Routes } from '@cookup/core'
 import { auth } from '@cookup/firebase'
 import { ROUTES } from '@cookup/constant'
@@ -15,6 +15,7 @@ const App = () => {
   const queryClient = new QueryClient()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const [isLoading, setIsLoading] = React.useState(false)
   const { userLoading } = useSelector((state: any) => state.auth)
 
   let oobCode: string | null = searchParams.get('oobCode')
@@ -26,6 +27,7 @@ const App = () => {
     } else {
       const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
+          setIsLoading(true)
           dispath(
             getCurrentUserData({
               uid: user.uid,
@@ -34,18 +36,40 @@ const App = () => {
               userName: user.displayName,
             })
           )
+          setIsLoading(false)
         } else {
           auth.signOut()
           dispath(LOGOUT())
+          setIsLoading(false)
           navigate(ROUTES.LOGIN_ACCOUNT)
         }
       })
+
+      //2FA code
+      // const unsubscribe = auth.onAuthStateChanged((user) => {
+      //   if (user && !user.phoneNumber) {
+      //     navigate(ROUTES.LOGIN_2FA)
+      //   } else if (user && user.phoneNumber) {
+      //     dispath(
+      //       getCurrentUserData({
+      //         uid: user.uid,
+      //         email: user.email,
+      //         role: '',
+      //         userName: user.displayName,
+      //       })
+      //     )
+      //   } else {
+      //     auth.signOut()
+      //     dispath(LOGOUT())
+      //     navigate(ROUTES.LOGIN_ACCOUNT)
+      //   }
+      // })
 
       return unsubscribe
     }
   }, [dispath, auth])
 
-  if (userLoading === 'pending') {
+  if (userLoading === 'pending' || isLoading) {
     return <CustomLoader />
   }
 

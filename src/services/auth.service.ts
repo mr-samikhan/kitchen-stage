@@ -17,6 +17,10 @@ import {
   sendPasswordResetEmail,
   fetchSignInMethodsForEmail,
   reauthenticateWithCredential,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
+  PhoneAuthProvider,
+  linkWithCredential,
 } from 'firebase/auth'
 
 class Auth {
@@ -156,6 +160,64 @@ class Auth {
           console.log('No user is currently signed in.')
           reject('No user is currently signed in.')
         }
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  //2FA
+
+  //send otp
+  sendOTP = async (
+    values: any = {
+      phone: '',
+      setConfirmationObject: () => {},
+      setClearCaptcha: () => {},
+    }
+  ) => {
+    return new Promise(async (resolve, reject) => {
+      const { phone, setConfirmationObject, setClearCaptcha } = values || {}
+      try {
+        const recaptchaVerifier = new RecaptchaVerifier(
+          auth,
+          'recaptcha-container',
+          {}
+        )
+        const phoneNumberWithCountryCode = '+' + phone
+        const appVerifier = recaptchaVerifier
+
+        const confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phoneNumberWithCountryCode,
+          appVerifier
+        )
+        // console.log('>>>confirmationResult', confirmationResult)
+        setConfirmationObject(confirmationResult)
+        if (setClearCaptcha) {
+          setClearCaptcha(true)
+        }
+        resolve('OTP sent successfully.')
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  //verify otp
+  verifyOTP = async (values: any = { confirmationObject: '', otp: '' }) => {
+    return new Promise(async (resolve, reject) => {
+      const { confirmationObject, otp } = values || {}
+      let currentUser: any = auth.currentUser
+      try {
+        let credential = PhoneAuthProvider.credential(
+          confirmationObject.verificationId,
+          otp.replace(/-/g, '')
+        )
+        const userCreds = await linkWithCredential(currentUser, credential)
+        const user = userCreds.user
+        console.log('>>>user', user)
+        resolve('Phone number linked')
       } catch (error) {
         reject(error)
       }

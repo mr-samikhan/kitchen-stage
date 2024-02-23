@@ -5,7 +5,11 @@ import { useForm } from 'react-hook-form'
 import { IUserEmailresolver } from '@cookup/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from 'react-query'
-import { SuspendUserResolver, UserPasswordResetResolver } from '@cookup/utils'
+import {
+  EmailResolver,
+  SuspendUserResolver,
+  UserPasswordResetResolver,
+} from '@cookup/utils'
 import {
   SET_DELETE_MODAL,
   SET_SUCCESS_DELETE,
@@ -39,7 +43,8 @@ const useUser = ({ user }: IUseUser) => {
   const { isSuspendModal } = useSelector((state: any) => state.header)
 
   const methods = useForm<IUserEmailresolver>({
-    resolver: isSuspendModal ? SuspendUserResolver : UserPasswordResetResolver,
+    resolver: isSuspendModal ? SuspendUserResolver : EmailResolver,
+    mode: 'onChange',
   })
 
   const isValid = methods.formState.isValid

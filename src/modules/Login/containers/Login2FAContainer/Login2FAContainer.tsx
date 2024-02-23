@@ -79,10 +79,10 @@ export const Login2FAContainer = () => {
                 onChange={(phone) => setPhone(phone)}
               />
             </Box>
+            <Box id="recaptcha-container"></Box>
             <IconButton onClick={onSendOTP}>
               <img src="/assets/icons/login-btn.svg" alt="eye" />
             </IconButton>
-            <Box id="recaptcha-container"></Box>
           </>
         )
       case 1:
@@ -125,6 +125,7 @@ export const Login2FAContainer = () => {
               >
                 Verfiy
               </Button>
+              {!phoneStatus.recaptcha && <Box id="recaptcha-container"></Box>}
               <Button
                 fullWidth
                 variant="outlined"

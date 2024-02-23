@@ -463,27 +463,31 @@ export const IMAGES_ARRAY = [
 ]
 
 export const USER_ADS_DATA = [
+  // {
+  //   key: 'Budget',
+  //   value: '$400.00',
+  // },
+  // {
+  //   key: 'Start Date',
+  //   value: 'July 9, 2021',
+  // },
+  // {
+  //   key: 'End Date',
+  //   value: 'July 13, 2021',
+  // },
   {
-    key: 'Budget',
-    value: '$400.00',
-  },
-  {
-    key: 'Start Date',
-    value: 'July 9, 2021',
-  },
-  {
-    key: 'End Date',
-    value: 'July 13, 2021',
+    key: 'Post Date',
+    value: 'July 9, 2021, 10:30 AM',
   },
   {
     key: 'Description',
     value:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit. Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit.',
   },
-  {
-    key: 'Website',
-    value: 'shakespeareandcompanycafe',
-  },
+  // {
+  //   key: 'Website',
+  //   value: 'shakespeareandcompanycafe',
+  // },
   {
     key: 'Likes',
     value: '328',
