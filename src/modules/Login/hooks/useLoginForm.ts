@@ -31,6 +31,7 @@ export default function useLoginForm() {
     isError: false,
     isSuccess: false,
     message: '',
+    recaptcha: false,
   })
   const [isSnackBar, setIsSnackBar] = React.useState(false)
   const [isPasswordSent, setIsPasswordSent] = React.useState(false)
@@ -86,6 +87,29 @@ export default function useLoginForm() {
     }
   )
 
+  //send otp mutation
+  const { mutate: onSendOTP_ } = useMutation<any, any, any>(Api.auth.sendOTP, {
+    onSuccess: () => {
+      setPhoneStatus((prev) => ({
+        ...prev,
+        isError: false,
+        message: '',
+      }))
+      setStep(1)
+    },
+    onError: (error) => {
+      let errorCode = ''
+      if (error.code === 'auth/invalid-phone-number') {
+        errorCode = 'Invalid phone number'
+      }
+      setPhoneStatus((prev) => ({
+        ...prev,
+        isError: true,
+        message: errorCode || error.message,
+      }))
+    },
+  })
+
   const onSubmit = async (data: any) => {
     if (PATH_CHECK) {
       onForgotPassword_(data.email)
@@ -115,51 +139,22 @@ export default function useLoginForm() {
     }
   }
 
-  //reCapcha
-  const reCapcha = (phone: string) => {
-    const recaptchaVerifier = new RecaptchaVerifier(
-      auth,
-      'recaptcha-container',
-      {}
-    )
-    recaptchaVerifier.render()
-    return signInWithPhoneNumber(auth, phone, recaptchaVerifier)
-  }
-
   //send otp
   const onSendOTP = async () => {
-    try {
-      if (!phone)
-        return setPhoneStatus((prev) => ({
-          ...prev,
-          isError: true,
-          message: `Mobile number wasn’t entered properly. Please try again`,
-        }))
-      const response = await reCapcha(`+${phone}`)
-      setConfirmationObject(response)
-      setPhoneStatus((prev) => ({
-        ...prev,
-        isError: false,
-        message: '',
-      }))
-      setStep(1)
-    } catch (error: any) {
-      let errorCode = ''
-      if (error.code === 'auth/invalid-phone-number') {
-        errorCode = 'Invalid phone number'
-      }
-      setPhoneStatus((prev) => ({
+    if (!phone)
+      return setPhoneStatus((prev) => ({
         ...prev,
         isError: true,
-        message: errorCode || error.message,
+        message: `Mobile number wasn’t entered properly. Please try again`,
       }))
-    }
+
+    onSendOTP_({ phone, setConfirmationObject })
   }
 
   //verify otp
   const onVerifyOTP = async () => {
     try {
-      await confirmationObject.confirm(otp.replace(/-/g, ''))
+      Api.auth.verifyOTP({ confirmationObject, otp })
     } catch (error) {
       console.log('>>>error', error)
     }
@@ -177,16 +172,12 @@ export default function useLoginForm() {
 
   //resent otp
   const onResendOTP = async () => {
-    try {
-      await onSendOTP()
-      setPhoneStatus((prev) => ({
-        ...prev,
-        isSuccess: true,
-        message: 'Code resent! Check your SMS',
-      }))
-    } catch (error) {
-      console.log('>>>error', error)
-    }
+    onSendOTP_({
+      phone,
+      setConfirmationObject,
+      setClearCaptcha: () =>
+        setPhoneStatus((prev) => ({ ...prev, recaptcha: true })),
+    })
   }
 
   return {

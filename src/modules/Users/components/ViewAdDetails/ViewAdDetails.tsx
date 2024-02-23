@@ -5,27 +5,48 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 
 interface TViewDetails {
   img?: string
-  isDashboardAidUI?: boolean
   setUserValues?: any
+  isDashboardAidUI?: boolean
+  onVideoClick: () => void
 }
 
 export const ViewAdDetails = (props: TViewDetails) => {
-  const { isDashboardAidUI, img, setUserValues } = props || {}
+  const { isDashboardAidUI, img, setUserValues, onVideoClick } = props || {}
 
   let isAcive = true
 
   return (
     <>
-      <Grid item xs={12} md={4} px={2}>
+      <Grid
+        item
+        xs={12}
+        md={4}
+        px={2}
+        width={400}
+        height={400}
+        position="relative"
+      >
         <Avatar
           variant="rounded"
           src={img || '/assets/images/card-img.svg'}
           sx={{
-            height: 400,
-            width: { xs: 'auto', md: 400 },
+            height: '100%',
+            width: { xs: 'auto', md: '100%' },
           }}
         />
         <Box
+          position="absolute"
+          sx={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <IconButton onClick={onVideoClick}>
+            <img src="/assets/icons/video-icon.svg" alt="video-icon" />
+          </IconButton>
+        </Box>
+        {/* <Box
           mt={2}
           width={260}
           height={50}
@@ -41,7 +62,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
           >
             {isAcive ? ' Active: Day 3 of 4' : 'Expired'}
           </Typography>
-        </Box>
+        </Box> */}
       </Grid>
       <Grid item xs={12} md={6} px={2}>
         {USER_ADS_DATA.map((item, index) => (
@@ -55,7 +76,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
             <Typography variant="h5" width={{ md: 150, xs: 100 }}>
               {item.key}
             </Typography>
-            {index !== 5 && index !== 6 && !isDashboardAidUI && (
+            {index !== 2 && index !== 3 && !isDashboardAidUI && (
               <Typography
                 p={2}
                 width={300}
@@ -68,7 +89,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
                 {item.value}
               </Typography>
             )}
-            {index === 5 && (
+            {index === 2 && (
               <Box display="flex" alignItems="center" pl={2}>
                 <Typography variant="h5" color="secondary">
                   328
@@ -85,7 +106,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
                 </IconButton>
               </Box>
             )}
-            {index === 6 && (
+            {index === 3 && (
               <Box display="flex" alignItems="center" pl={2}>
                 <Typography variant="h5" color="secondary">
                   54

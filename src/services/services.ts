@@ -8,6 +8,8 @@ import { SupportService } from './support.services'
 const Api = {
   auth: {
     login: AuthService.login,
+    sendOTP: AuthService.sendOTP,
+    verifyOTP: AuthService.verifyOTP,
     checkEmailExists: AuthService.checkEmail,
     getCurrentUser: AuthService.getCurrentUser,
     forgotPassword: AuthService.forgotPassword,

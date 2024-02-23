@@ -16,7 +16,10 @@ export const ViewAds = (props: TViewAds) => {
     <React.Fragment>
       <Grid container justifyContent="center" mt={4} my={2}>
         {isImageClicked ? (
-          <ViewAdDetails setUserValues={setUserValues} />
+          <ViewAdDetails
+            setUserValues={setUserValues}
+            onVideoClick={() => alert('you clicked on video icon')}
+          />
         ) : (
           <Grid
             item
@@ -30,21 +33,19 @@ export const ViewAds = (props: TViewAds) => {
               md: 'flex-start',
             }}
           >
-            {IMAGES_ARRAY.slice(0, IMAGES_ARRAY.length - 12).map(
-              (item, index) => (
-                <Avatar
-                  src={item}
-                  key={index}
-                  variant="rounded"
-                  onClick={() => setIsImageClicked(true)}
-                  sx={{
-                    cursor: 'pointer',
-                    width: { md: 180, xs: 120 },
-                    height: { md: 180, xs: 120 },
-                  }}
-                />
-              )
-            )}
+            {IMAGES_ARRAY.map((item, index) => (
+              <Avatar
+                src={item}
+                key={index}
+                variant="rounded"
+                onClick={() => setIsImageClicked(true)}
+                sx={{
+                  cursor: 'pointer',
+                  width: { md: 180, xs: 120 },
+                  height: { md: 180, xs: 120 },
+                }}
+              />
+            ))}
           </Grid>
         )}
       </Grid>
