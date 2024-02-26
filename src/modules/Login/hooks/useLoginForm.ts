@@ -1,8 +1,9 @@
 import { Api } from '@cookup/services'
+import { auth } from '@cookup/firebase'
 import React, { useEffect } from 'react'
+import { useMutation } from 'react-query'
 import { ROUTES } from '@cookup/constant'
 import { set, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 import { AppDispatch } from 'redux/store/store'
 import { loginUser, selectUser } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,8 +14,6 @@ import {
   ForgotPasswordFormResolver,
   ResetPasswordFormResolver,
 } from '@cookup/utils'
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { auth } from '@cookup/firebase'
 
 export default function useLoginForm() {
   const navigate = useNavigate()
@@ -38,12 +37,17 @@ export default function useLoginForm() {
   const [confirmationObject, setConfirmationObject] = React.useState<any>({})
   const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
 
-  //oobCode
-  console.log('>>>oobCode', oobCode)
-
   useEffect(() => {
-    if (user) {
-      return navigate(ROUTES.ROOT)
+    if (oobCode) {
+      navigate(ROUTES.RESET_PASSWORD)
+    } else {
+      if (auth.currentUser && auth.currentUser?.phoneNumber) {
+        return navigate(ROUTES.ROOT)
+      } else if (auth.currentUser && auth.currentUser?.phoneNumber === null) {
+        return navigate(ROUTES.LOGIN_2FA)
+      } else {
+        return navigate(ROUTES.LOGIN_ACCOUNT)
+      }
     }
   }, [])
 
@@ -87,6 +91,13 @@ export default function useLoginForm() {
     }
   )
 
+  //mutation confirm password reset
+  const { isLoading: isResetConfirm, mutate: onConfirmResetPassword } =
+    useMutation(Api.auth.confirmPasswordReset, {
+      onSuccess: () => setIsPasswordResetModal(true),
+      onError: (error) => alert(error),
+    })
+
   //send otp mutation
   const { mutate: onSendOTP_ } = useMutation<any, any, any>(Api.auth.sendOTP, {
     onSuccess: () => {
@@ -113,6 +124,11 @@ export default function useLoginForm() {
   const onSubmit = async (data: any) => {
     if (PATH_CHECK) {
       onForgotPassword_(data.email)
+    } else if (RESET_PATH_CHECK) {
+      onConfirmResetPassword({
+        newPassword: data.password,
+        oobCode: localStorage.getItem('oobCode') as string,
+      })
     } else {
       const { email, password } = data || {}
       if (email && password) {
