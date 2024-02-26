@@ -112,9 +112,11 @@ class Auth {
     return new Promise(async (resolve, reject) => {
       try {
         if (!oobCode && !newPassword) return
-
-        resolve(await confirmPasswordReset(auth, oobCode, newPassword))
+        await confirmPasswordReset(auth, oobCode, newPassword)
+        localStorage.removeItem('oobCode')
+        resolve('Password reset successfully.')
       } catch (error) {
+        localStorage.removeItem('oobCode')
         reject(error)
       }
     })

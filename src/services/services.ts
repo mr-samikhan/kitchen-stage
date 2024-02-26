@@ -16,6 +16,7 @@ const Api = {
     updateUserEmail: AuthService.updateUserEmail,
     checkAdminStatus: AuthService.checkAdminStatus,
     reAuthenticateUser: AuthService.reAuthenticateUser,
+    confirmPasswordReset: AuthService.confirmPasswordReset,
   },
   admin: {
     addAdmin: AdminService.addAdmin,

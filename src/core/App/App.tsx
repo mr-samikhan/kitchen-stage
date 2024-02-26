@@ -19,15 +19,43 @@ const App = () => {
   const { userLoading } = useSelector((state: any) => state.auth)
 
   let oobCode: string | null = searchParams.get('oobCode')
-  console.log('>>>oobCode', oobCode)
+  oobCode === null
+    ? ''
+    : localStorage.setItem('oobCode', oobCode ? oobCode : '')
 
   useEffect(() => {
+    // if (oobCode) {
+    //   navigate(ROUTES.RESET_PASSWORD, { state: { oobCode } })
+    // } else {
+    // const unsubscribe = auth.onAuthStateChanged((user) => {
+    //   if (user) {
+    //     console.log(user, '>>>')
+    //     setIsLoading(true)
+    //     dispath(
+    //       getCurrentUserData({
+    //         uid: user.uid,
+    //         email: user.email,
+    //         role: '',
+    //         userName: user.displayName,
+    //       })
+    //     )
+    //     setIsLoading(false)
+    //   } else {
+    //     auth.signOut()
+    //     dispath(LOGOUT())
+    //     setIsLoading(false)
+    //     navigate(ROUTES.LOGIN_ACCOUNT)
+    //   }
+    // })
+
+    //2FA code
     if (oobCode) {
-      navigate(ROUTES.RESET_PASSWORD, { state: { oobCode } })
+      navigate(ROUTES.RESET_PASSWORD)
     } else {
       const unsubscribe = auth.onAuthStateChanged((user) => {
-        if (user) {
-          setIsLoading(true)
+        if (user && user.phoneNumber === null) {
+          navigate(ROUTES.LOGIN_2FA)
+        } else if (user && user.phoneNumber) {
           dispath(
             getCurrentUserData({
               uid: user.uid,
@@ -36,37 +64,17 @@ const App = () => {
               userName: user.displayName,
             })
           )
-          setIsLoading(false)
         } else {
           auth.signOut()
           dispath(LOGOUT())
-          setIsLoading(false)
           navigate(ROUTES.LOGIN_ACCOUNT)
         }
       })
-
-      //2FA code
-      // const unsubscribe = auth.onAuthStateChanged((user) => {
-      //   if (user && !user.phoneNumber) {
-      //     navigate(ROUTES.LOGIN_2FA)
-      //   } else if (user && user.phoneNumber) {
-      //     dispath(
-      //       getCurrentUserData({
-      //         uid: user.uid,
-      //         email: user.email,
-      //         role: '',
-      //         userName: user.displayName,
-      //       })
-      //     )
-      //   } else {
-      //     auth.signOut()
-      //     dispath(LOGOUT())
-      //     navigate(ROUTES.LOGIN_ACCOUNT)
-      //   }
-      // })
-
-      return unsubscribe
+      return () => unsubscribe()
     }
+
+    // return unsubscribe
+    // }
   }, [dispath, auth])
 
   if (userLoading === 'pending' || isLoading) {
