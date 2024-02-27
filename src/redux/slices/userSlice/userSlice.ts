@@ -32,17 +32,21 @@ interface IFilterBy {
 }
 
 interface IUserSlice {
-  tabValue: ITabs['tabValue']
-  isPasswordSent?: boolean
-  isUserUpdateModal?: boolean
+  endDate?: string | Date
+  startDate?: string | Date
   sortBy?: ISortBy
   filterBy?: IFilterBy
+  isPasswordSent?: boolean
+  tabValue: ITabs['tabValue']
+  isUserUpdateModal?: boolean
 }
 
 const initialState: IUserSlice = {
   tabValue: 'personal',
   isPasswordSent: false,
   isUserUpdateModal: false,
+  startDate: '',
+  endDate: '',
   sortBy: {
     sortValue: '',
     sortType: 'ascending',
@@ -78,6 +82,12 @@ const userSlice = createSlice({
     SET_FILTER_TYPE: (state, action: PayloadAction<any>) => {
       state.filterBy = { ...state.filterBy, ...action.payload }
     },
+    SET_START_DATE: (state, action: PayloadAction<any>) => {
+      state.startDate = action.payload
+    },
+    SET_END_DATE: (state, action: PayloadAction<any>) => {
+      state.endDate = action.payload
+    },
   },
 })
 
@@ -85,6 +95,8 @@ export const {
   SET_TAB_VALUE,
   SET_SORT_TYPE,
   SET_SORT_VALUE,
+  SET_START_DATE,
+  SET_END_DATE,
   SET_FILTER_TYPE,
   USER_RESET_PASSWORD,
   USER_ACCOUNT_UPDATED,
