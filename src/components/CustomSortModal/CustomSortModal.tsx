@@ -13,7 +13,13 @@ import { ChevronRight } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { MuiCustomDatePicker } from '@cookup/components'
 import { COLORS, SORT_MODAL_ARRAY } from '@cookup/constant'
-import { CLOSE_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
+import {
+  CLOSE_SORT_MODAL,
+  SET_END_DATE,
+  SET_FILTER_MODAL,
+  SET_SORT_VALUE,
+  SET_START_DATE,
+} from '@cookup/redux'
 
 interface CustomSortModalProps {
   height?: any
@@ -22,11 +28,13 @@ interface CustomSortModalProps {
   title?: string
   width?: any
   onClose?: () => void
+  isSupportUI?: boolean
   children?: React.ReactNode
 }
 
 export const CustomSortModal = (props: CustomSortModalProps) => {
-  const { children, top, padding, height, title, width, onClose } = props || {}
+  const { children, top, padding, height, title, width, onClose, isSupportUI } =
+    props || {}
   const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
@@ -36,6 +44,7 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
   )
 
   const onSelectValues = (item: ISortItem) => {
+    dispatch(SET_SORT_VALUE(item))
     console.log(item)
   }
 
@@ -121,7 +130,7 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
                 name="startDate"
                 icon={ChevronRight}
                 className="start-end-date"
-                setDate={(date) => console.log('start date', date)}
+                setDate={(date) => dispatch(SET_START_DATE(date.$d))}
               />
             </Box>
             <Box px={2} mt={2}>
@@ -130,26 +139,28 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
                 name="endDate"
                 icon={ChevronRight}
                 className="start-end-date"
-                setDate={(date) => console.log('end date', date)}
+                setDate={(date) => dispatch(SET_END_DATE(date.$d))}
               />
             </Box>
-            <Box mt={2} px={2}>
-              {[
-                'User Profile',
-                'User Post',
-                'User Comment',
-                'Support Reason',
-              ].map((item, index) => (
-                <Typography
-                  mt={2}
-                  key={index}
-                  color="black"
-                  variant="subtitle2"
-                >
-                  {item}
-                </Typography>
-              ))}
-            </Box>
+            {isSupportUI && (
+              <Box mt={2} px={2}>
+                {[
+                  'User Profile',
+                  'User Post',
+                  'User Comment',
+                  'Support Reason',
+                ].map((item, index) => (
+                  <Typography
+                    mt={2}
+                    key={index}
+                    color="black"
+                    variant="subtitle2"
+                  >
+                    {item}
+                  </Typography>
+                ))}
+              </Box>
+            )}
           </>
         )}
       </Paper>

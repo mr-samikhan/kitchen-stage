@@ -47,6 +47,7 @@ class User {
           const name = `${data?.firstName || ''} ${data?.lastName || ''}`
 
           const user = {
+            ...doc.data(),
             id: doc.id,
             name: name,
             email: data.email,
@@ -55,7 +56,7 @@ class User {
             experience: data?.experience || '',
             dateOfBirth: data?.dateOfBirth || '',
             phone: formatPhoneNumber(data?.phone) || '',
-            status: (data.status === 'active' && 'Active') || 'Pending',
+            status: data.status === 'active' ? 'Active' : 'Pending',
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
           }
           users?.push(user)

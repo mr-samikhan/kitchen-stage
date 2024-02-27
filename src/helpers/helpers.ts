@@ -103,3 +103,10 @@ export const getLastMonthDateRange = () => {
 
   return formattedDateRange
 }
+
+export const calculatePercentageIncrease = (
+  currentWeek: number,
+  lastWeek: number
+) => {
+  return lastWeek > 0 ? ((currentWeek / lastWeek) * 100).toFixed(2) : 0
+}
