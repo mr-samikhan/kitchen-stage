@@ -4,12 +4,14 @@ import { ViewAdDetails } from '../components'
 import { IMAGES_ARRAY } from '@cookup/constant'
 
 interface TViewAds {
+  user?: any
   setUserValues: any
 }
 
 export const ViewAds = (props: TViewAds) => {
-  const { setUserValues } = props || {}
+  const { setUserValues, user } = props || {}
 
+  const [recipe, setRecipe] = React.useState(null)
   const [isImageClicked, setIsImageClicked] = React.useState(false)
 
   return (
@@ -17,6 +19,7 @@ export const ViewAds = (props: TViewAds) => {
       <Grid container justifyContent="center" mt={4} my={2}>
         {isImageClicked ? (
           <ViewAdDetails
+            recipe={recipe}
             setUserValues={setUserValues}
             onVideoClick={() => alert('you clicked on video icon')}
           />
@@ -33,12 +36,15 @@ export const ViewAds = (props: TViewAds) => {
               md: 'flex-start',
             }}
           >
-            {IMAGES_ARRAY.map((item, index) => (
+            {user?.userUploadedRecipes?.map((item: any, index: number) => (
               <Avatar
                 src={item}
                 key={index}
                 variant="rounded"
-                onClick={() => setIsImageClicked(true)}
+                onClick={() => {
+                  setRecipe(item)
+                  setIsImageClicked(true)
+                }}
                 sx={{
                   cursor: 'pointer',
                   width: { md: 180, xs: 120 },

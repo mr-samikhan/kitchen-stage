@@ -46,7 +46,7 @@ export const SingleUserContainer = () => {
 
   const { state } = useLocation()
   const { mobileMode } = useBreakPoints()
-  console.log(state, 'state')
+  console.log(user, 'user')
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
   const {
@@ -112,7 +112,7 @@ export const SingleUserContainer = () => {
       // case 'uploaded-media':
       //   return <UserUploadedMedia />
       case 'uploaded-media':
-        return <ViewAds setUserValues={setUserValues} />
+        return <ViewAds setUserValues={setUserValues} user={user} />
       default:
         return (
           <FormProvider {...methods}>
@@ -297,13 +297,17 @@ export const SingleUserContainer = () => {
       )}
       {likeORCommentModal && (
         <LikesModal
-          data={LIKES_DATA}
+          onDelete={onSelectLike}
+          userName={user?.userName}
+          open={likeORCommentModal}
           isCommentsUI={!userValues.isLikesModal}
           title={userValues.isLikesModal ? 'Likes' : 'Comments'}
-          length={300}
-          userName="Emma Gosling"
-          onDelete={onSelectLike}
-          open={likeORCommentModal}
+          data={userValues.isLikesModal ? user?.userLikes : user?.userComments}
+          length={
+            userValues.isLikesModal
+              ? user?.userLikes?.length
+              : user?.userComments?.length
+          }
           onClose={() =>
             setUserValues({
               ...userValues,

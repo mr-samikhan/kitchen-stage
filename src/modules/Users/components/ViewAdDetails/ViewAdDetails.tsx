@@ -1,9 +1,10 @@
 import React from 'react'
-import { COLORS, USER_ADS_DATA } from '@cookup/constant'
+import { COLORS } from '@cookup/constant'
+import { ChevronRight } from '@mui/icons-material'
 import { Avatar, Box, Grid, IconButton, Typography } from '@mui/material'
-import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 
 interface TViewDetails {
+  recipe?: any
   img?: string
   setUserValues?: any
   isDashboardAidUI?: boolean
@@ -11,9 +12,41 @@ interface TViewDetails {
 }
 
 export const ViewAdDetails = (props: TViewDetails) => {
-  const { isDashboardAidUI, img, setUserValues, onVideoClick } = props || {}
+  const { isDashboardAidUI, img, setUserValues, onVideoClick, recipe } =
+    props || {}
 
   let isAcive = true
+
+  const date = new Date(recipe.createdAt.seconds * 1000)
+
+  const formattedDate = date.toLocaleString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  })
+
+  const USER_ADS_DATA = [
+    {
+      key: 'Post Date',
+      value: formattedDate,
+    },
+    {
+      key: 'Description',
+      value: recipe.description,
+    },
+
+    {
+      key: 'Likes',
+      value: recipe.likedBy.length || 0,
+    },
+    {
+      key: 'Comments',
+      value: recipe.comments.length || 0,
+    },
+  ]
 
   return (
     <>
@@ -92,7 +125,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
             {index === 2 && (
               <Box display="flex" alignItems="center" pl={2}>
                 <Typography variant="h5" color="secondary">
-                  328
+                  {item.value}
                 </Typography>
                 <IconButton
                   onClick={() =>
@@ -109,7 +142,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
             {index === 3 && (
               <Box display="flex" alignItems="center" pl={2}>
                 <Typography variant="h5" color="secondary">
-                  54
+                  {item.value}
                 </Typography>
                 <IconButton
                   onClick={() =>

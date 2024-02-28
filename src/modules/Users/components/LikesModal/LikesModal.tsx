@@ -16,6 +16,7 @@ interface ILikesModal {
   title: string
   length: number
   userName: string
+  userImage?: string
   onClose: () => void
   isCommentsUI: boolean
   onDelete: (id: string | number) => void
@@ -90,6 +91,7 @@ export const LikesModal = (props: ILikesModal) => {
               >
                 <Box display="flex" gap={2}>
                   <Avatar
+                    src={item.userImage}
                     sx={{
                       width: 24,
                       height: 24,
