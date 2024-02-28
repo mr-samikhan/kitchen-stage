@@ -4,6 +4,7 @@ import { UserService } from './user.services'
 import { AdminService } from './admins.services'
 import { ImageService } from './images.services'
 import { SupportService } from './support.services'
+import { RecipeService } from './recipe.services'
 
 const Api = {
   auth: {
@@ -47,6 +48,11 @@ const Api = {
   },
   image: {
     uploadImage: ImageService.uploadFile,
+  },
+  recipe: {
+    getRecipe: RecipeService.getRecipe,
+    getRecipes: RecipeService.getRecipes,
+    removeLikedById: RecipeService.removeLikedById,
   },
 }
 export { Api }

@@ -174,7 +174,8 @@ const useUser = ({ user }: IUseUser) => {
   }
 
   //select like data
-  const onSelectLike = (item: {}) => {
+  const onSelectLike = async (item: {}) => {
+    console.log(item, '>>>item')
     setUserValues((prev: any) => ({
       ...prev,
       likesData: item,

@@ -12,8 +12,10 @@ import {
   DocumentData,
   DocumentSnapshot,
   deleteDoc,
+  where,
 } from 'firebase/firestore'
 import { calculateAgeRange, formatPhoneNumber } from '@cookup/helpers'
+import { Api } from './services'
 
 type IUser = {
   name: string
@@ -47,7 +49,6 @@ class User {
           const name = `${data?.firstName || ''} ${data?.lastName || ''}`
 
           const user = {
-            ...doc.data(),
             id: doc.id,
             name: name,
             email: data.email,
@@ -58,6 +59,7 @@ class User {
             phone: formatPhoneNumber(data?.phone) || '',
             status: data.status === 'active' ? 'Active' : 'Pending',
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
+            ...doc.data(),
           }
           users?.push(user)
         })
@@ -78,9 +80,45 @@ class User {
         if (userDoc.exists()) {
           const userData = userDoc.data()
 
+          let userUploadedRecipes: any = await Api.recipe.getRecipe(id)
+
+          let allUsers: any = await Api.user.getUsers()
+          let userLikes: any = []
+          let userComments: any = []
+          allUsers.map(
+            (user: any) =>
+              user.id ===
+              userUploadedRecipes.map((recipe: any) =>
+                recipe.likedBy.includes(user.id)
+                  ? userLikes.push({ ...user, id: recipe.id })
+                  : []
+              )
+          )
+          allUsers.map(
+            (user: any) =>
+              user.id ===
+              userUploadedRecipes.map((recipe: any) =>
+                recipe.comments.map((comment: any) =>
+                  comment.user === user.id
+                    ? userComments.push({
+                        time: '2 pm',
+                        id: recipe.id,
+                        comment: comment.comment,
+                        userImage: user?.imageUrl || '',
+                        totalLikes: recipe.likedBy.length,
+                        userName: `${user.firstName} ${user.lastName}`,
+                      })
+                    : []
+                )
+              )
+          )
+
           resolve({
             id: userDoc.id,
             ...userData,
+            userUploadedRecipes,
+            userLikes,
+            userComments,
           })
         } else {
           throw new Error('user/not-found')
@@ -90,6 +128,61 @@ class User {
         reject(errorMessage)
       }
     })
+    // return new Promise(async (resolve, reject) => {
+    //   try {
+    //     //single user
+    //     const userDoc = await getDoc(doc(firestore, COLLECTIONS.USER, id))
+    //     //get recipes
+    //     const recipesRef = collection(firestore, 'recipes')
+    //     //get all users data
+    //     const usersRef = collection(firestore, 'users')
+    //     if (userDoc.exists()) {
+    //       //single user data
+    //       const userData = userDoc.data()
+
+    //       //get all users
+    //       const userQuerySnapshot = await getDocs(usersRef)
+    //       const users = userQuerySnapshot.docs.map((doc) => ({
+    //         id: doc.id,
+    //         ...doc.data(),
+    //       }))
+
+    //       //get all recipes
+    //       const q = query(recipesRef, where('userId', '==', id))
+    //       const querySnapshot = await getDocs(q)
+    //       const recipes = querySnapshot.docs.map((doc) => ({
+    //         id: doc.id,
+    //         ...doc.data(),
+    //         usersWIthLikes: users.map((user) =>
+    //           doc.data().likedBy.includes(user.id) ? user : []
+    //         ),
+    //         usersWithComments: users.map((user: any) =>
+    //           doc.data().comments.map((comment: any) =>
+    //             comment.user === user.id
+    //               ? {
+    //                   comment: comment.comment,
+    //                   userName: `${user.firstName} ${user.lastName}`,
+    //                   userImage: user?.imageUrl || '',
+    //                 }
+    //               : []
+    //           )
+    //         ),
+    //       }))
+
+    //       resolve({
+    //         id: userDoc.id,
+    //         ...userData,
+    //         recipes,
+    //         users,
+    //         likesLength: recipes.map((recipe: any) => recipe.likedBy.length),
+    //       })
+    //     } else {
+    //       throw new Error('user/not-found')
+    //     }
+    //   } catch (error) {
+    //     reject(error)
+    //   }
+    // })
   }
 
   updateUser = async (
