@@ -1,6 +1,7 @@
 export * from './Ads/hook/hook'
 export * from './Posts/hooks/hooks'
 export * from './Login/hooks/hooks'
+export * from './Users/hooks/hooks'
 export * from './Dashboard/hooks/hooks'
 export * from './Login/components/components'
 export * from './Login/containers/containers'

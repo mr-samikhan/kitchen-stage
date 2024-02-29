@@ -7,13 +7,20 @@ interface TViewDetails {
   recipe?: any
   img?: string
   setUserValues?: any
-  isDashboardAidUI?: boolean
   onVideoClick: () => void
+  isDashboardAidUI?: boolean
+  userLikesCommentsData?: any
 }
 
 export const ViewAdDetails = (props: TViewDetails) => {
-  const { isDashboardAidUI, img, setUserValues, onVideoClick, recipe } =
-    props || {}
+  const {
+    isDashboardAidUI,
+    img,
+    setUserValues,
+    onVideoClick,
+    recipe,
+    userLikesCommentsData,
+  } = props || {}
 
   let isAcive = true
 
@@ -40,7 +47,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
 
     {
       key: 'Likes',
-      value: recipe.likedBy.length || 0,
+      value: userLikesCommentsData?.userLikes?.length || 0,
     },
     {
       key: 'Comments',
