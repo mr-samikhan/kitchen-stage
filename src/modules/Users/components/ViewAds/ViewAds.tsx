@@ -6,10 +6,13 @@ import { IMAGES_ARRAY } from '@cookup/constant'
 interface TViewAds {
   user?: any
   setUserValues: any
+  userLikesCommentsData?: any
+  onSelectRecipe?: (recipe: any) => void
 }
 
 export const ViewAds = (props: TViewAds) => {
-  const { setUserValues, user } = props || {}
+  const { setUserValues, user, onSelectRecipe, userLikesCommentsData } =
+    props || {}
 
   const [recipe, setRecipe] = React.useState(null)
   const [isImageClicked, setIsImageClicked] = React.useState(false)
@@ -17,10 +20,11 @@ export const ViewAds = (props: TViewAds) => {
   return (
     <React.Fragment>
       <Grid container justifyContent="center" mt={4} my={2}>
-        {isImageClicked ? (
+        {userLikesCommentsData && isImageClicked ? (
           <ViewAdDetails
             recipe={recipe}
             setUserValues={setUserValues}
+            userLikesCommentsData={userLikesCommentsData}
             onVideoClick={() => alert('you clicked on video icon')}
           />
         ) : (
@@ -42,6 +46,7 @@ export const ViewAds = (props: TViewAds) => {
                 key={index}
                 variant="rounded"
                 onClick={() => {
+                  onSelectRecipe && onSelectRecipe(item)
                   setRecipe(item)
                   setIsImageClicked(true)
                 }}

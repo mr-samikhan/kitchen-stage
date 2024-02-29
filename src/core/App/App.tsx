@@ -24,31 +24,6 @@ const App = () => {
     : localStorage.setItem('oobCode', oobCode ? oobCode : '')
 
   useEffect(() => {
-    // if (oobCode) {
-    //   navigate(ROUTES.RESET_PASSWORD, { state: { oobCode } })
-    // } else {
-    // const unsubscribe = auth.onAuthStateChanged((user) => {
-    //   if (user) {
-    //     console.log(user, '>>>')
-    //     setIsLoading(true)
-    //     dispath(
-    //       getCurrentUserData({
-    //         uid: user.uid,
-    //         email: user.email,
-    //         role: '',
-    //         userName: user.displayName,
-    //       })
-    //     )
-    //     setIsLoading(false)
-    //   } else {
-    //     auth.signOut()
-    //     dispath(LOGOUT())
-    //     setIsLoading(false)
-    //     navigate(ROUTES.LOGIN_ACCOUNT)
-    //   }
-    // })
-
-    //2FA code
     if (oobCode) {
       navigate(ROUTES.RESET_PASSWORD)
     } else {
@@ -72,9 +47,6 @@ const App = () => {
       })
       return () => unsubscribe()
     }
-
-    // return unsubscribe
-    // }
   }, [dispath, auth])
 
   if (userLoading === 'pending' || isLoading) {

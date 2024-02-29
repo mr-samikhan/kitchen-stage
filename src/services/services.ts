@@ -53,6 +53,9 @@ const Api = {
     getRecipe: RecipeService.getRecipe,
     getRecipes: RecipeService.getRecipes,
     removeLikedById: RecipeService.removeLikedById,
+    removeCommentById: RecipeService.removeCommentById,
+    getUserRecipeLikes: RecipeService.getUserRecipeLikes,
+    getUserRecipeLikesAndComments: RecipeService.getUserRecipeLikesAndComments,
   },
 }
 export { Api }

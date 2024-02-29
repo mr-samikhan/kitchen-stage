@@ -1,10 +1,23 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useGetPosts } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
 import { ADS_ARRAY, COLORS } from '@cookup/constant'
-import { SortModalUI, ViewAdDetails } from '@cookup/modules'
+import {
+  LikesModal,
+  SortModalUI,
+  ViewAdDetails,
+  usePosts,
+  useUser,
+} from '@cookup/modules'
 import { Avatar, Box, Container, Grid, IconButton } from '@mui/material'
-import { CustomSortModal, Layout, TableFooter } from '@cookup/components'
+import {
+  CustomDialog,
+  CustomLoader,
+  CustomSortModal,
+  Layout,
+  TableFooter,
+} from '@cookup/components'
 
 type TAdCard = {
   user: string
@@ -14,15 +27,35 @@ type TAdCard = {
 export const PostsContainer = () => {
   const navigate = useNavigate()
 
+  const { posts, postsLoading } = useGetPosts({ enabled: true })
+
+  console.log(posts, '>>>>posts')
+
   const { isSortModal, isFilterModal } = useSelector(
     (state: any) => state.header
   )
 
   const [adsSteps, setAdsSteps] = React.useState(0)
   const [singleItem, setSingleItem] = React.useState<TAdCard | null>(null)
+  console.log(singleItem, '>>>>singleItem')
+
+  const {
+    userValues,
+    setUserValues,
+    onSelectLike,
+    onSelectRecipe,
+    userLikesCommentsData,
+  } = usePosts({
+    singleItem,
+    posts,
+  })
 
   const { searchValue } = useSelector((state: any) => state.header)
   // console.log(searchValue, '>>>>searchValue')
+
+  if (postsLoading) return <CustomLoader />
+
+  let likeORCommentModal = userValues.isLikesModal || userValues.isCommentsModal
 
   const renderSteps = () => {
     switch (adsSteps) {
@@ -38,7 +71,7 @@ export const PostsContainer = () => {
               position="relative"
               justifyContent={{ xs: 'center', md: 'start' }}
             >
-              {ADS_ARRAY.map((item: TAdCard, index) => (
+              {posts?.map((item: TAdCard, index: number) => (
                 <Box
                   mt={1}
                   key={index}
@@ -62,7 +95,7 @@ export const PostsContainer = () => {
                     borderRadius="100%"
                   >
                     <Avatar
-                      src={item.user}
+                      src={item.user.userImage}
                       sx={{
                         border: '4px solid white',
                       }}
@@ -94,6 +127,8 @@ export const PostsContainer = () => {
                 </Box>
               </Grid>
               <ViewAdDetails
+                recipe={singleItem}
+                setUserValues={setUserValues}
                 onVideoClick={() => alert('you clicked on video icon')}
               />
             </Grid>
@@ -125,6 +160,54 @@ export const PostsContainer = () => {
 
         {isSortModal && <CustomSortModal />}
       </Container>
+
+      {likeORCommentModal && (
+        <LikesModal
+          onDelete={onSelectLike}
+          userName={singleItem?.user?.firstName}
+          open={likeORCommentModal}
+          isCommentsUI={!userValues.isLikesModal}
+          title={userValues.isLikesModal ? 'Likes' : 'Comments'}
+          data={
+            userValues.isLikesModal
+              ? userLikesCommentsData.userLikes
+              : userLikesCommentsData.userComments
+          }
+          length={
+            userValues.isLikesModal
+              ? userLikesCommentsData.userLikes?.length
+              : userLikesCommentsData.userComments?.length
+          }
+          onClose={() =>
+            setUserValues({
+              ...userValues,
+              isLikesModal: false,
+              isCommentsModal: false,
+            })
+          }
+        />
+      )}
+      {userValues.isSuccessModal && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          isOpen={userValues.isSuccessModal}
+          title={userValues.isLikesModal ? 'Like Deleted' : 'Comment Deleted'}
+          icon={
+            userValues.isLikesModal
+              ? '/assets/icons/likes.svg'
+              : '/assets/icons/comment.svg'
+          }
+          // onConfirm={() => {
+          //   console.log('Like Deleted!')
+          //   onDeleteLike()
+          // }}
+          okButtonStyle={{
+            width: '220px',
+          }}
+          text={`“${userValues.likesData.userName}” likes has been removed from the system successfully.`}
+        />
+      )}
     </Layout>
   )
 }

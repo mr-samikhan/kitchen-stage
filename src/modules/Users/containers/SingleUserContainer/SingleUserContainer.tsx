@@ -72,10 +72,12 @@ export const SingleUserContainer = () => {
     onSelectLike,
     isResetLoading,
     setUserValues,
-    onUpdateUser_rec,
+    onSelectRecipe,
     isUpdateLoading,
+    onUpdateUser_rec,
     onSubmitSuspension,
     onSevenDaysSuspend,
+    userLikesCommentsData,
   } = useUser({ user })
 
   const { tabValue } = useSelector((state: any) => state.user)
@@ -104,15 +106,22 @@ export const SingleUserContainer = () => {
       case 'profile-info':
         return (
           <UserProfileInfo
-            isBusinessType={state.type}
             user={user && user}
+            isBusinessType={state.type}
             updateUser={onUpdateUser_rec}
           />
         )
       // case 'uploaded-media':
       //   return <UserUploadedMedia />
       case 'uploaded-media':
-        return <ViewAds setUserValues={setUserValues} user={user} />
+        return (
+          <ViewAds
+            user={user}
+            setUserValues={setUserValues}
+            onSelectRecipe={onSelectRecipe}
+            userLikesCommentsData={userLikesCommentsData}
+          />
+        )
       default:
         return (
           <FormProvider {...methods}>
@@ -302,11 +311,15 @@ export const SingleUserContainer = () => {
           open={likeORCommentModal}
           isCommentsUI={!userValues.isLikesModal}
           title={userValues.isLikesModal ? 'Likes' : 'Comments'}
-          data={userValues.isLikesModal ? user?.userLikes : user?.userComments}
+          data={
+            userValues.isLikesModal
+              ? userLikesCommentsData.userLikes
+              : userLikesCommentsData.userComments
+          }
           length={
             userValues.isLikesModal
-              ? user?.userLikes?.length
-              : user?.userComments?.length
+              ? userLikesCommentsData.userLikes?.length
+              : userLikesCommentsData.userComments?.length
           }
           onClose={() =>
             setUserValues({

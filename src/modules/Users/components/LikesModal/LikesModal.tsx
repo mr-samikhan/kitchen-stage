@@ -19,7 +19,7 @@ interface ILikesModal {
   userImage?: string
   onClose: () => void
   isCommentsUI: boolean
-  onDelete: (id: string | number) => void
+  onDelete: (res: { id: string; userId: string }) => void
 }
 
 export const LikesModal = (props: ILikesModal) => {
@@ -118,7 +118,7 @@ export const LikesModal = (props: ILikesModal) => {
                               bgcolor={COLORS.input.main}
                             ></Box>
                             <Typography variant="h6" color={COLORS.input.main}>
-                              {`${item.totalLikes}`}
+                              {`${data.length} ${title}`}
                             </Typography>
                           </Box>
                         </Box>

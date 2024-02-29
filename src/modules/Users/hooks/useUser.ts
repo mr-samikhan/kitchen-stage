@@ -112,6 +112,28 @@ const useUser = ({ user }: IUseUser) => {
     }
   )
 
+  //get user likes and comments
+  const { mutate: getUserLikesAndComments, data: userLikesCommentsData } =
+    useMutation<any, any, any>(Api.recipe.getUserRecipeLikesAndComments, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('getUser')
+      },
+      onError: (error) => console.log(error),
+    })
+
+  //delete user likes and comments
+  const { mutate: deleteUserLikesAndComments } = useMutation<any, any, any>(
+    userValues.isLikesModal
+      ? Api.recipe.removeLikedById
+      : Api.recipe.removeCommentById,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('getUser')
+      },
+      onError: (error) => console.log(error),
+    }
+  )
+
   const onSubmit = (data: any) => {
     console.log(data)
     onResetPassword(user.email)
@@ -174,13 +196,29 @@ const useUser = ({ user }: IUseUser) => {
   }
 
   //select like data
-  const onSelectLike = async (item: {}) => {
-    console.log(item, '>>>item')
+  const onSelectLike: any = async (item: {
+    id: string
+    userId: string
+    comment: string
+  }) => {
+    deleteUserLikesAndComments({
+      recipeId: item.id,
+      userId: item.userId,
+      comment: item.comment,
+    })
     setUserValues((prev: any) => ({
       ...prev,
       likesData: item,
       isSuccessModal: true,
     }))
+  }
+
+  //select recipe data
+  const onSelectRecipe = async (item: { id: string }) => {
+    getUserLikesAndComments({
+      userUploadedRecipes: user.userUploadedRecipes,
+      recipeId: item.id,
+    })
   }
 
   return {
@@ -196,8 +234,10 @@ const useUser = ({ user }: IUseUser) => {
     isDelLoading,
     onDeleteUser,
     setUserValues,
+    onSelectRecipe,
     isResetLoading,
     isUpdateLoading,
+    userLikesCommentsData,
     onUpdateUser_rec,
     isSuspendLoading,
     onSubmitSuspension,
