@@ -208,6 +208,22 @@ class Recipe {
               }
             })
           })
+
+          singleRecipe.comments.map((comment: any) => {
+            allUsers.map((user: any) => {
+              if (user.id === comment.user) {
+                userComments.push({
+                  time: '2 pm',
+                  id: recipeId,
+                  userId: user.id,
+                  comment: comment.comment,
+                  userImage: user?.imageUrl || '',
+                  totalLikes: singleRecipe.likedBy.length,
+                  userName: user.name || `${user.firstName} ${user.lastName}`,
+                })
+              }
+            })
+          })
         } else {
           allUsers.map(
             (user: any) =>

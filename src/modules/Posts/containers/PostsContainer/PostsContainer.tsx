@@ -1,61 +1,63 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { COLORS } from '@cookup/constant'
 import { useGetPosts } from '@cookup/hooks'
 import { useNavigate } from 'react-router-dom'
-import { ADS_ARRAY, COLORS } from '@cookup/constant'
+import { LikesModal, ViewAdDetails, usePosts } from '@cookup/modules'
+import { Box, Grid, Avatar, Container, Typography } from '@mui/material'
 import {
-  LikesModal,
-  SortModalUI,
-  ViewAdDetails,
-  usePosts,
-  useUser,
-} from '@cookup/modules'
-import { Avatar, Box, Container, Grid, IconButton } from '@mui/material'
-import {
+  Layout,
+  TableFooter,
   CustomDialog,
   CustomLoader,
   CustomSortModal,
-  Layout,
-  TableFooter,
 } from '@cookup/components'
 
 type TAdCard = {
-  user: string
   img: string
+  user: {} | any
 }
 
 export const PostsContainer = () => {
   const navigate = useNavigate()
 
-  const { posts, postsLoading } = useGetPosts({ enabled: true })
+  let { posts, postsLoading } = useGetPosts({
+    enabled: true,
+  })
 
-  console.log(posts, '>>>>posts')
+  const {
+    userValues,
+    singleItem,
+    filterPosts,
+    onSelectLike,
+    onSearchPosts,
+    setSingleItem,
+    setUserValues,
+    onDeleteLike,
+    setFilterPosts,
+    userLikesCommentsData,
+  } = usePosts()
+
+  const [adsSteps, setAdsSteps] = React.useState(0)
 
   const { isSortModal, isFilterModal } = useSelector(
     (state: any) => state.header
   )
-
-  const [adsSteps, setAdsSteps] = React.useState(0)
-  const [singleItem, setSingleItem] = React.useState<TAdCard | null>(null)
-  console.log(singleItem, '>>>>singleItem')
-
-  const {
-    userValues,
-    setUserValues,
-    onSelectLike,
-    onSelectRecipe,
-    userLikesCommentsData,
-  } = usePosts({
-    singleItem,
-    posts,
-  })
-
   const { searchValue } = useSelector((state: any) => state.header)
-  // console.log(searchValue, '>>>>searchValue')
+
+  useEffect(() => {
+    if (searchValue.length) {
+      onSearchPosts(searchValue, posts)
+    } else {
+      setFilterPosts(null)
+    }
+  }, [searchValue])
 
   if (postsLoading) return <CustomLoader />
 
   let likeORCommentModal = userValues.isLikesModal || userValues.isCommentsModal
+
+  let postsCheck = filterPosts || posts
 
   const renderSteps = () => {
     switch (adsSteps) {
@@ -71,7 +73,14 @@ export const PostsContainer = () => {
               position="relative"
               justifyContent={{ xs: 'center', md: 'start' }}
             >
-              {posts?.map((item: TAdCard, index: number) => (
+              {!postsLoading && postsCheck?.length === 0 && (
+                <Grid container md={11} justifyContent="center" mt={2}>
+                  <Typography variant="h5" color={COLORS.grey.main}>
+                    No Data Found
+                  </Typography>
+                </Grid>
+              )}
+              {postsCheck?.map((item: TAdCard, index: number) => (
                 <Box
                   mt={1}
                   key={index}
@@ -84,6 +93,7 @@ export const PostsContainer = () => {
                   onClick={() => {
                     setAdsSteps(1)
                     setSingleItem(item)
+                    setFilterPosts(null)
                   }}
                 >
                   <Box
@@ -95,7 +105,7 @@ export const PostsContainer = () => {
                     borderRadius="100%"
                   >
                     <Avatar
-                      src={item.user.userImage}
+                      src={item?.user?.userImage}
                       sx={{
                         border: '4px solid white',
                       }}
@@ -129,6 +139,7 @@ export const PostsContainer = () => {
               <ViewAdDetails
                 recipe={singleItem}
                 setUserValues={setUserValues}
+                userLikesCommentsData={userLikesCommentsData}
                 onVideoClick={() => alert('you clicked on video icon')}
               />
             </Grid>
@@ -147,7 +158,7 @@ export const PostsContainer = () => {
       isSearchInput={adsSteps === 0}
       isSort={adsSteps === 0}
       navigationTitle={
-        singleItem === null ? 'Manage Posts' : 'The Appetizers Bar'
+        singleItem === null ? 'Manage Posts' : singleItem?.user?.name || ''
       }
       navTitleColor={singleItem === null ? 'secondary.light' : 'primary.main'}
       onGoBack={() => {
@@ -170,13 +181,13 @@ export const PostsContainer = () => {
           title={userValues.isLikesModal ? 'Likes' : 'Comments'}
           data={
             userValues.isLikesModal
-              ? userLikesCommentsData.userLikes
-              : userLikesCommentsData.userComments
+              ? userLikesCommentsData?.userLikes
+              : userLikesCommentsData?.userComments
           }
           length={
             userValues.isLikesModal
-              ? userLikesCommentsData.userLikes?.length
-              : userLikesCommentsData.userComments?.length
+              ? userLikesCommentsData?.userLikes?.length
+              : userLikesCommentsData?.userComments?.length
           }
           onClose={() =>
             setUserValues({
@@ -198,10 +209,10 @@ export const PostsContainer = () => {
               ? '/assets/icons/likes.svg'
               : '/assets/icons/comment.svg'
           }
-          // onConfirm={() => {
-          //   console.log('Like Deleted!')
-          //   onDeleteLike()
-          // }}
+          onConfirm={() => {
+            console.log('Like Deleted!')
+            onDeleteLike()
+          }}
           okButtonStyle={{
             width: '220px',
           }}
