@@ -14,11 +14,11 @@ interface TViewDetails {
 
 export const ViewAdDetails = (props: TViewDetails) => {
   const {
-    isDashboardAidUI,
     img,
-    setUserValues,
-    onVideoClick,
     recipe,
+    onVideoClick,
+    setUserValues,
+    isDashboardAidUI,
     userLikesCommentsData,
   } = props || {}
 
@@ -51,7 +51,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
     },
     {
       key: 'Comments',
-      value: recipe.comments.length || 0,
+      value: userLikesCommentsData?.userComments?.length || 0,
     },
   ]
 
