@@ -105,6 +105,12 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
                 mt={1}
                 key={index}
                 onClick={() => onSelectValues(item)}
+                sx={{
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: COLORS.input.light,
+                  },
+                }}
               >
                 <Typography variant="subtitle2">{item.title}</Typography>
                 <Typography variant="subtitle2" color="grey">

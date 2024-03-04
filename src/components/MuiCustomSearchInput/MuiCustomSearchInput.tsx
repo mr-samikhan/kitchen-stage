@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { InputAdornment, TextField } from '@mui/material'
 import { SET_SEARCH_FOCUS, onSearchChange } from '@cookup/redux'
 
-export const MuiCustomSearchInput = () => {
+interface MuiCustomSearchInputProps {
+  placeholder?: string
+}
+
+export const MuiCustomSearchInput = (props: MuiCustomSearchInputProps) => {
+  const { placeholder } = props || {}
+
   const dispatch = useDispatch()
 
   const { searchValue } = useSelector((state: any) => state.header)
@@ -28,7 +34,7 @@ export const MuiCustomSearchInput = () => {
         // onFocus={() => dispatch(SET_SEARCH_FOCUS(false))}
         onChange={(e) => dispatch(onSearchChange(e.target.value))}
         variant="outlined"
-        placeholder="Search Users"
+        placeholder={placeholder || 'Search Users'}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

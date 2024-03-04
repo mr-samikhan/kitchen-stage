@@ -1,25 +1,23 @@
+import { Api } from './services'
 import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
+import { collection, firestore, query } from '@cookup/firebase'
 import {
-  collection,
-  firestore,
-  getDownloadURL,
-  query,
-  ref,
-  storage,
-  uploadBytes,
-} from '@cookup/firebase'
-import {
-  DocumentData,
-  DocumentSnapshot,
-  arrayRemove,
   doc,
+  where,
   getDoc,
   getDocs,
   orderBy,
   updateDoc,
-  where,
+  arrayRemove,
 } from 'firebase/firestore'
-import { Api } from './services'
+import {
+  endOfDay,
+  endOfWeek,
+  endOfMonth,
+  startOfDay,
+  startOfWeek,
+  startOfMonth,
+} from 'date-fns'
 
 class Recipe {
   getRecipes = async () => {
@@ -180,7 +178,7 @@ class Recipe {
     })
   }
 
-  getUserRecipeLikesAndComments = async ({
+  getUserRecipeLikesAndComments: any = async ({
     userUploadedRecipes,
     recipeId,
     singleRecipe,
@@ -266,6 +264,116 @@ class Recipe {
         resolve({ userComments, userLikes })
       } catch (error) {
         reject(error)
+      }
+    })
+  }
+
+  getRecipesByDate = async ({
+    startDate,
+    endDate,
+  }: {
+    startDate: string | Date
+    endDate: string | Date
+  }) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const querySnapshot = await getDocs(
+          query(
+            collection(firestore, COLLECTIONS.RECIPE),
+            where('createdAt', '>=', startDate),
+            where('createdAt', '<=', endDate)
+          )
+        )
+        const recipes: any[] = []
+        const allUsers: any = await Api.user.getUsers()
+        querySnapshot.docs.map((doc: any) => {
+          let data = doc.data() as any
+          recipes.push({
+            ...doc.data(),
+            id: doc.id,
+            name: data.name,
+            description: data.description,
+            image: data.image,
+            ingredients: data.ingredients,
+            steps: data.steps,
+            createdAt: data.createdAt,
+            user: allUsers.find((user: any) => user.id === data.userId) || {},
+          })
+        })
+        resolve(recipes)
+      } catch (error) {
+        console.error('Error getting recipes by date:', error)
+        const errorMessage = getErrorMessage(error)
+        reject(errorMessage)
+      }
+    })
+  }
+
+  getRcipeByType = async ({ type }: { type: string }) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const recipesCol = collection(firestore, COLLECTIONS.RECIPE)
+
+        //daily
+        const today = new Date()
+        const startOfToday = startOfDay(today)
+        const endOfToday = endOfDay(today)
+
+        //weekly
+        const startOfThisWeek = startOfWeek(today)
+        const endOfThisWeek = endOfWeek(today)
+
+        //monthly
+        const startOfThisMonth = startOfMonth(today)
+        const endOfThisMonth = endOfMonth(today)
+
+        const getStartType = (type: string) => {
+          switch (type) {
+            case 'lastMonth':
+              return startOfThisMonth
+            case 'lastWeek':
+              return startOfThisWeek
+            default:
+              return startOfToday
+          }
+        }
+
+        const getEndType = (type: string) => {
+          switch (type) {
+            case 'lastMonth':
+              return endOfThisMonth
+            case 'lastWeek':
+              return endOfThisWeek
+            default:
+              return endOfToday
+          }
+        }
+
+        const q = query(
+          recipesCol,
+          where('createdAt', '>=', getStartType(type)),
+          where('createdAt', '<=', getEndType(type))
+        )
+
+        const allUser: any = await Api.user.getUsers()
+        const querySnapshot = await getDocs(q)
+        const recipesPromises = querySnapshot.docs.map(async (doc: any) => {
+          const data = doc.data() as any
+
+          return {
+            ...data,
+            id: doc.id,
+            user: allUser.find((user: any) => user.id === data.userId) || {},
+          }
+        })
+
+        const recipes = await Promise.all(recipesPromises)
+        console.log('recipes', recipes)
+        resolve(recipes)
+      } catch (error) {
+        console.error('Error getting recipes by type:', error)
+        const errorMessage = getErrorMessage(error)
+        reject(errorMessage)
       }
     })
   }

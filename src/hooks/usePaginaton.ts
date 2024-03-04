@@ -3,10 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 type ItemType = {
   name: string
   email: string
-  // Add other fields as necessary
 }
 
-// Define a type for the hook's return value
 type UsePaginationReturnType = {
   currentItems: ItemType[]
   goToNextPage: () => void
@@ -22,7 +20,6 @@ export const usePagination = (data: any[], itemsPerPage: number) => {
   )
   const [currentItems, setCurrentItems] = useState<ItemType[]>([])
 
-  // Use useCallback to ensure these functions are stable and don't change on every render
   const goToNextPage = useCallback(
     () => setCurrentPage((page) => Math.min(page + 1, totalPages - 1)),
     [totalPages]
@@ -38,9 +35,6 @@ export const usePagination = (data: any[], itemsPerPage: number) => {
     setCurrentItems(data?.slice(start, end))
   }, [currentPage, itemsPerPage, data])
 
-  // Remove data from the dependency array to prevent infinite loop
-  // if the data is recreated every render in the parent component.
-  // Instead, use the length of the data as the dependency.
   useEffect(() => {
     setTotalPages(Math.ceil(data?.length / itemsPerPage))
   }, [data, itemsPerPage])

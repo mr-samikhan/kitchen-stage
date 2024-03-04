@@ -4,7 +4,7 @@ import { IconButton, InputAdornment, TextField } from '@mui/material'
 
 interface CustomFilterButtonProps {
   icon?: string
-  value?: string
+  value?: string | Date
   className?: string
   placeholder?: string
   onClick?: () => void

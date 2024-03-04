@@ -22,7 +22,26 @@ export const ViewAdDetails = (props: TViewDetails) => {
     userLikesCommentsData,
   } = props || {}
 
-  let isAcive = true
+  const [isPlay, setIsPlay] = React.useState(false)
+
+  const videoRef = React.useRef<HTMLVideoElement>(null)
+
+  const playVideo = () => {
+    videoRef?.current?.play()
+  }
+
+  const pauseVideo = () => {
+    videoRef?.current?.pause()
+  }
+
+  const onVideoClickHandler = () => {
+    if (isPlay) {
+      pauseVideo()
+    } else {
+      playVideo()
+    }
+    setIsPlay((prev) => !prev)
+  }
 
   const date = new Date(recipe.createdAt.seconds * 1000)
 
@@ -66,14 +85,10 @@ export const ViewAdDetails = (props: TViewDetails) => {
         height={400}
         position="relative"
       >
-        <Avatar
-          variant="rounded"
-          src={img || '/assets/images/card-img.svg'}
-          sx={{
-            height: '100%',
-            width: { xs: 'auto', md: '100%' },
-          }}
-        />
+        <video ref={videoRef} width="100%" height="100%">
+          <source type="video/mp4" src={recipe.videoUrl || ''} />
+          Your browser does not support the video tag.
+        </video>
         <Box
           position="absolute"
           sx={{
@@ -82,7 +97,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <IconButton onClick={onVideoClick}>
+          <IconButton onClick={onVideoClickHandler}>
             <img src="/assets/icons/video-icon.svg" alt="video-icon" />
           </IconButton>
         </Box>
