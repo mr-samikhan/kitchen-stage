@@ -52,7 +52,9 @@ const Api = {
   recipe: {
     getRecipe: RecipeService.getRecipe,
     getRecipes: RecipeService.getRecipes,
+    getRcipeByType: RecipeService.getRcipeByType,
     removeLikedById: RecipeService.removeLikedById,
+    getRecipesByDate: RecipeService.getRecipesByDate,
     removeCommentById: RecipeService.removeCommentById,
     getUserRecipeLikes: RecipeService.getUserRecipeLikes,
     getUserRecipeLikesAndComments: RecipeService.getUserRecipeLikesAndComments,

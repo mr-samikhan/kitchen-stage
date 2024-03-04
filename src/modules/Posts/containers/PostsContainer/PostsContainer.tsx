@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { COLORS } from '@cookup/constant'
-import { useGetPosts } from '@cookup/hooks'
+import { Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { LikesModal, ViewAdDetails, usePosts } from '@cookup/modules'
-import { Box, Grid, Avatar, Container, Typography } from '@mui/material'
+import { useGetPosts, usePagination } from '@cookup/hooks'
+import { ImageCard, LikesModal, PostDetails, usePosts } from '@cookup/modules'
 import {
   Layout,
-  TableFooter,
   CustomDialog,
   CustomLoader,
   CustomSortModal,
 } from '@cookup/components'
-
-type TAdCard = {
-  img: string
-  user: {} | any
-}
 
 export const PostsContainer = () => {
   const navigate = useNavigate()
@@ -24,6 +18,13 @@ export const PostsContainer = () => {
   let { posts, postsLoading } = useGetPosts({
     enabled: true,
   })
+  const { sortBy, startDate, endDate } = useSelector((state: any) => state.user)
+
+  //pagination
+  const { goToNextPage, currentItems, goToPreviousPage } = usePagination(
+    posts && posts,
+    15
+  )
 
   const {
     userValues,
@@ -35,19 +36,30 @@ export const PostsContainer = () => {
     setUserValues,
     onDeleteLike,
     setFilterPosts,
+    onFilterPosts,
+    onFilterByDate,
     userLikesCommentsData,
-  } = usePosts()
+  } = usePosts({
+    startDate: '',
+    endDate: '',
+    sortBy,
+  })
 
   const [adsSteps, setAdsSteps] = React.useState(0)
 
-  const { isSortModal, isFilterModal } = useSelector(
-    (state: any) => state.header
-  )
-  const { searchValue } = useSelector((state: any) => state.header)
+  const { isSortModal, searchValue } = useSelector((state: any) => state.header)
+
+  useEffect(() => {
+    if (startDate && endDate && !sortBy.type) {
+      onFilterByDate({ startDate, endDate })
+    } else if (sortBy.type) {
+      onFilterPosts({ type: sortBy.type })
+    }
+  }, [startDate, endDate, sortBy.type])
 
   useEffect(() => {
     if (searchValue.length) {
-      onSearchPosts(searchValue, posts)
+      onSearchPosts(searchValue, currentItems)
     } else {
       setFilterPosts(null)
     }
@@ -57,93 +69,30 @@ export const PostsContainer = () => {
 
   let likeORCommentModal = userValues.isLikesModal || userValues.isCommentsModal
 
-  let postsCheck = filterPosts || posts
+  let postsCheck: any[] = filterPosts || currentItems
 
   const renderSteps = () => {
     switch (adsSteps) {
       case 0:
         return (
-          <Grid container pl={5}>
-            <Grid
-              item
-              md={11}
-              gap={4}
-              display="flex"
-              flexWrap="wrap"
-              position="relative"
-              justifyContent={{ xs: 'center', md: 'start' }}
-            >
-              {!postsLoading && postsCheck?.length === 0 && (
-                <Grid container md={11} justifyContent="center" mt={2}>
-                  <Typography variant="h5" color={COLORS.grey.main}>
-                    No Data Found
-                  </Typography>
-                </Grid>
-              )}
-              {postsCheck?.map((item: TAdCard, index: number) => (
-                <Box
-                  mt={1}
-                  key={index}
-                  position={'relative'}
-                  width={{ xs: '150px', md: '200px' }}
-                  height={{ xs: '150px', md: '200px' }}
-                  sx={{
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => {
-                    setAdsSteps(1)
-                    setSingleItem(item)
-                    setFilterPosts(null)
-                  }}
-                >
-                  <Box
-                    top={-5}
-                    width="40px"
-                    height="40px"
-                    bgcolor="white"
-                    position="absolute"
-                    borderRadius="100%"
-                  >
-                    <Avatar
-                      src={item?.user?.userImage}
-                      sx={{
-                        border: '4px solid white',
-                      }}
-                    />
-                  </Box>
-                  <img alt="" width="100%" height="100%" src={item.img} />
-                </Box>
-              ))}
-              <Grid item md={11} display="flex" justifyContent="center" my={2}>
-                <TableFooter
-                  isPaginationIcons
-                  onNextPage={() => console.log('nextPage')}
-                  onPreviousPage={() => console.log('prePage')}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
+          <ImageCard
+            postsCheck={postsCheck}
+            setAdsSteps={setAdsSteps}
+            postsLoading={postsLoading}
+            goToNextPage={goToNextPage}
+            setSingleItem={setSingleItem}
+            setFilterPosts={setFilterPosts}
+            goToPreviousPage={goToPreviousPage}
+          />
         )
 
       case 1:
         return (
-          <Grid container>
-            <Grid item md={12} pl={8} container>
-              <Grid item md={12} px={2}>
-                <Box width="100%" mt={5}>
-                  <Box width={50} height={50}>
-                    <Avatar src="/assets/icons/user1.svg" />
-                  </Box>
-                </Box>
-              </Grid>
-              <ViewAdDetails
-                recipe={singleItem}
-                setUserValues={setUserValues}
-                userLikesCommentsData={userLikesCommentsData}
-                onVideoClick={() => alert('you clicked on video icon')}
-              />
-            </Grid>
-          </Grid>
+          <PostDetails
+            singleItem={singleItem}
+            setUserValues={setUserValues}
+            userLikesCommentsData={userLikesCommentsData}
+          />
         )
 
       default:
@@ -154,9 +103,9 @@ export const PostsContainer = () => {
   return (
     <Layout
       isNavigation
+      isSort={adsSteps === 0}
       bgcolor={COLORS.background}
       isSearchInput={adsSteps === 0}
-      isSort={adsSteps === 0}
       navigationTitle={
         singleItem === null ? 'Manage Posts' : singleItem?.user?.name || ''
       }
@@ -175,8 +124,8 @@ export const PostsContainer = () => {
       {likeORCommentModal && (
         <LikesModal
           onDelete={onSelectLike}
-          userName={singleItem?.user?.firstName}
           open={likeORCommentModal}
+          userName={singleItem?.user?.firstName}
           isCommentsUI={!userValues.isLikesModal}
           title={userValues.isLikesModal ? 'Likes' : 'Comments'}
           data={

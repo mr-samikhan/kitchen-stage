@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 
 export const calculateAgeRange = (dateOfBirth: Timestamp) => {
@@ -109,4 +110,23 @@ export const calculatePercentageIncrease = (
   lastWeek: number
 ) => {
   return lastWeek > 0 ? ((currentWeek / lastWeek) * 100).toFixed(2) : 0
+}
+
+export function formatStartEndDate(startDate: Date, endDate: Date): string {
+  const startFormat = 'MMMM d'
+
+  const endFormat =
+    startDate.getFullYear() === endDate.getFullYear()
+      ? 'MMMM d'
+      : 'MMMM d, yyyy'
+
+  const formattedStartDate = format(startDate, startFormat)
+  const formattedEndDate = format(endDate, endFormat)
+
+  const yearSuffix =
+    startDate.getFullYear() === endDate.getFullYear()
+      ? `, ${startDate.getFullYear()}`
+      : ''
+
+  return `${formattedStartDate} - ${formattedEndDate}${yearSuffix}`
 }

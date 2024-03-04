@@ -1,7 +1,7 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import { useBreakPoints } from '@cookup/hooks'
 import { Box, Grid, Typography } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import MobileHeader from '../MobileHeader/MobileHeader'
 import { OPEN_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
 import {
@@ -11,6 +11,7 @@ import {
   CustomFilterButton,
   MuiCustomSearchInput,
 } from '@cookup/components'
+import { formatStartEndDate } from '@cookup/helpers'
 
 interface HeaderProps {
   button1Icon?: any
@@ -75,9 +76,12 @@ export const Header = (props: HeaderProps) => {
   const { mobileMode, tabMode } = useBreakPoints()
 
   const dispatch = useDispatch()
+
   const { pathname } = window.location
 
   let post_path = pathname === '/posts'
+
+  const { startDate, endDate } = useSelector((state: any) => state.user)
 
   return (
     <React.Fragment>
@@ -132,7 +136,7 @@ export const Header = (props: HeaderProps) => {
           )}
           <Grid
             item
-            md={post_path ? 6 : 4}
+            md={post_path ? 8 : 4}
             sm={title === null ? 6 : 12}
             p={{
               sm: 0,
@@ -142,12 +146,20 @@ export const Header = (props: HeaderProps) => {
             <Box display="flex" width="100%" justifyContent="center" gap={2}>
               {isSearchInput && (
                 <Box width={post_path ? '50%' : tabMode ? '100%' : '80%'}>
-                  <MuiCustomSearchInput />
+                  <MuiCustomSearchInput
+                    placeholder={post_path ? 'Search Posts' : ''}
+                  />
                 </Box>
               )}
               {isSort && (
                 <CustomFilterButton
                   onClick={() => dispatch(OPEN_SORT_MODAL())}
+                  className={startDate && endDate ? 'filter-filled' : 'filter'}
+                  value={
+                    startDate && endDate
+                      ? formatStartEndDate(startDate, endDate)
+                      : 'Today'
+                  }
                 />
               )}
               {isFilter && (

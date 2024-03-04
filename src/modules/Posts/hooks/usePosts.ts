@@ -2,7 +2,7 @@ import { Api } from '@cookup/services'
 import React, { useEffect } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 
-export const usePosts = () => {
+export const usePosts = ({ startDate, endDate, sortBy }: any) => {
   const queryClient = useQueryClient()
 
   const [userValues, setUserValues] = React.useState<any>({
@@ -82,9 +82,28 @@ export const usePosts = () => {
     setFilterPosts(data)
   }
 
-  const onFilterPosts = () => {
-    console.log('posts filter')
-  }
+  //filter mutation
+  const { mutate: onFilterPosts, isLoading: isFilterLoading } = useMutation<
+    any,
+    any,
+    any
+  >(Api.recipe.getRcipeByType, {
+    onSuccess: (data) => {
+      setFilterPosts(data)
+    },
+    onError: (error) => console.log(error),
+  })
+
+  //filter by date mutation
+  const { mutate: onFilterByDate } = useMutation<any, any, any>(
+    Api.recipe.getRecipesByDate,
+    {
+      onSuccess: (data) => {
+        setFilterPosts(data)
+      },
+      onError: (error) => console.log(error),
+    }
+  )
 
   //delete like
   const onDeleteLike = () => {
@@ -107,7 +126,9 @@ export const usePosts = () => {
     onSearchPosts,
     setSingleItem,
     onSelectRecipe,
+    onFilterByDate,
     setFilterPosts,
+    isFilterLoading,
     userLikesCommentsData,
   }
 }
