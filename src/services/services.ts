@@ -5,6 +5,8 @@ import { AdminService } from './admins.services'
 import { ImageService } from './images.services'
 import { SupportService } from './support.services'
 import { RecipeService } from './recipe.services'
+import { Dashboard } from '@mui/icons-material'
+import { DashboardService } from './dashboard.services'
 
 const Api = {
   auth: {
@@ -58,6 +60,10 @@ const Api = {
     removeCommentById: RecipeService.removeCommentById,
     getUserRecipeLikes: RecipeService.getUserRecipeLikes,
     getUserRecipeLikesAndComments: RecipeService.getUserRecipeLikesAndComments,
+  },
+  dashboard: {
+    getAllAnalytics: DashboardService.getAllAnalytics,
+    getAllCounters: DashboardService.getAllCounters,
   },
 }
 export { Api }
