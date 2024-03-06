@@ -10,6 +10,8 @@ import {
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { calculatePercentageIncrease } from '@cookup/helpers'
+import { Api } from '@cookup/services'
+import { useQuery } from 'react-query'
 
 interface User {
   createdAt: {
@@ -19,6 +21,17 @@ interface User {
 
 export const useDashboard = () => {
   let { users, usersLoading } = useGetUsers({})
+
+  const { data } = useQuery<any>(
+    ['getAllCounters'],
+    Api.dashboard.getAllCounters,
+    {
+      enabled: true,
+      refetchOnWindowFocus: false,
+    }
+  )
+
+  console.log(data, ':::::::data')
 
   const dispatch = useDispatch()
   const { pathname } = useLocation()
@@ -151,6 +164,13 @@ export const useDashboard = () => {
     totalDeactivatedUsersThisWeek,
     totalDeactivatedUsersLastWeek
   )
+
+  //new
+  useEffect(() => {
+    Api.dashboard.getAllAnalytics().then((data: any) => {
+      console.log(data, '::::::')
+    })
+  }, [])
 
   return {
     registeredUsers,
