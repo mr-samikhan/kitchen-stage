@@ -96,6 +96,7 @@ export const DASHBOARD_USERS = [
 
 export const DASHBOARD_ACTIVITES = [
   {
+    id: 1,
     counter: 159,
     percentage: +4.5,
     duration: 'last week',
@@ -103,6 +104,7 @@ export const DASHBOARD_ACTIVITES = [
     navigate: ROUTES.POSTS,
   },
   {
+    id: 2,
     counter: 98,
     percentage: -1.8,
     duration: 'last week',
@@ -110,6 +112,7 @@ export const DASHBOARD_ACTIVITES = [
     navigate: ROUTES.POSTS,
   },
   {
+    id: 3,
     counter: 159,
     percentage: 4.5,
     duration: 'last week',
@@ -117,6 +120,7 @@ export const DASHBOARD_ACTIVITES = [
     navigate: ROUTES.POSTS,
   },
   {
+    id: 4,
     counter: 159,
     percentage: 4.5,
     duration: 'last week',

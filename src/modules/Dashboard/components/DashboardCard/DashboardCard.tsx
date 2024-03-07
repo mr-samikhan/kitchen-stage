@@ -11,6 +11,7 @@ interface DashboardCardProps {
   counter?: number
   duration?: string
   titleColor?: string
+  isLoading?: boolean
   percentage?: string | number
   navigate?: string | undefined
   counterWithText?: string | number
@@ -23,6 +24,7 @@ export const DashboardCard = (props: DashboardCardProps) => {
     counter,
     navigate,
     duration,
+    isLoading,
     titleColor,
     percentage,
     counterWithText,
@@ -55,10 +57,10 @@ export const DashboardCard = (props: DashboardCardProps) => {
           )}
         </Box>
         <Typography
-          fontSize={32}
           fontWeight={700}
           textAlign="center"
           color="secondary.light"
+          fontSize={isLoading ? 15 : 32}
         >
           {counter}
         </Typography>

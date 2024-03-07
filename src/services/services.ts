@@ -62,7 +62,6 @@ const Api = {
     getUserRecipeLikesAndComments: RecipeService.getUserRecipeLikesAndComments,
   },
   dashboard: {
-    getAllAnalytics: DashboardService.getAllAnalytics,
     getAllCounters: DashboardService.getAllCounters,
   },
 }
