@@ -1,7 +1,7 @@
 import moment from 'moment'
-import { Box, Grid } from '@mui/material'
 import { Api } from '@cookup/services'
 import React, { useEffect } from 'react'
+import { Box, Grid } from '@mui/material'
 import { useSupport } from '../../hooks/hooks'
 import { useGetSupports } from '@cookup/hooks'
 import { FormProvider } from 'react-hook-form'
@@ -17,32 +17,33 @@ import {
   CustomLoader,
   ExportCSVModal,
   CustomSortModal,
-  MuiCustomSearchInput,
   CustomFilterButton,
+  MuiCustomSearchInput,
 } from '@cookup/components'
 import {
   SET_TOOL_TIP,
   SET_TAB_VALUE,
   SET_EXPORT_MODAL,
+  SET_FILTER_MODAL,
   SET_EXPORT_SUCCESS,
   SET_CONFIRM_SUSPENSION,
   SET_SINGLE_SUPPORT_DATA,
-  SET_FILTER_MODAL,
 } from '@cookup/redux'
 
 export const SupportContainer = () => {
   const {
     methods,
     onSubmit,
+    filteredData,
+    onTypeFilter,
     onSuspendUser,
-    isSuspendLoading,
+    setFilteredData,
     onSevenDaysSuspend,
   } = useSupport()
 
   const dispatch = useDispatch()
-  const [filteredData, setFilteredData] = React.useState<any>(null)
 
-  const { isFilterModal, isSortModal } = useSelector(
+  const { isFilterModal, isSortModal, searchValue } = useSelector(
     (state: any) => state.header
   )
 
@@ -50,8 +51,9 @@ export const SupportContainer = () => {
     dispatch(SET_TAB_VALUE('reports'))
   }, [])
 
-  const { tabValue, sortBy, filterBy } = useSelector((state: any) => state.user)
-  const { experience, ageRange, businessType, sortType, gender } = filterBy
+  const { tabValue, sortBy, filterBy, startDate, endDate } = useSelector(
+    (state: any) => state.user
+  )
 
   const { supportLoading, support_data, isFetching } = useGetSupports({
     value: tabValue,
@@ -67,26 +69,26 @@ export const SupportContainer = () => {
     singleSupportData,
   } = useSelector((state: any) => state.support)
 
-  //filter
-  React.useEffect(() => {
-    if (
-      experience.length ||
-      gender.length ||
-      businessType.length ||
-      ageRange.length
-    ) {
-      const filter = Api.support.filterSupportData(
-        support_data,
-        filterBy.experience,
-        filterBy.gender,
-        filterBy.ageRange,
-        ['']
-      )
-      setFilteredData(filter)
+  // filter & search
+  useEffect(() => {
+    if (sortBy.type === 'today' && !startDate && !endDate) {
+      onTypeFilter({ type: sortBy.type })
+    } else if (sortBy.type === 'lastWeek' && !startDate && !endDate) {
+      onTypeFilter({ type: sortBy.type })
+    } else if (sortBy.type === 'lastMonth' && !startDate && !endDate) {
+      onTypeFilter({ type: sortBy.type })
+    } else if (startDate && endDate) {
+      onTypeFilter({ type: 'custom', startDate, endDate })
+    } else if (searchValue) {
+      onTypeFilter({
+        type: 'search',
+        searchByKey: searchValue,
+        data: support_data,
+      })
     } else {
       setFilteredData(null)
     }
-  }, [filterBy])
+  }, [sortBy.type, startDate, endDate, searchValue])
 
   //sort
   const sortedData = Api.support.sortSupportData(
@@ -102,8 +104,6 @@ export const SupportContainer = () => {
   return (
     <Layout
       isTitle
-      // isSort
-      // isFilter
       bgcolor={COLORS.background}
       isPaginationIcons={tabValue !== 'suspended-users'}
       isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}

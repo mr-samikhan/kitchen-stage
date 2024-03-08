@@ -46,6 +46,7 @@ const Api = {
     getSortKeys: SupportService.getSortKeys,
     getSupports: SupportService.getSupportData,
     sortSupportData: SupportService.sortSupportData,
+    filterDataByType: SupportService.filterDataByType,
     filterSupportData: SupportService.filterSupportData,
   },
   image: {

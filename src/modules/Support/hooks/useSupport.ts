@@ -1,5 +1,5 @@
-import React from 'react'
 import { Api } from '@cookup/services'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useMutation } from 'react-query'
 import { useForm } from 'react-hook-form'
@@ -8,9 +8,12 @@ import { SET_CONFIRM_SUSPENSION, SET_TOOL_TIP } from '@cookup/redux'
 
 export const useSupport = () => {
   const dispatch = useDispatch()
+
   const methods = useForm<any>({
     resolver: SuspendUserResolver,
   })
+
+  const [filteredData, setFilteredData] = React.useState<any>(null)
 
   const isValid = methods.formState.isValid
 
@@ -45,6 +48,16 @@ export const useSupport = () => {
     },
   })
 
+  //mutation for filter & search
+  const { mutate: onTypeFilter, data } = useMutation<any, any, any>(
+    Api.support.filterDataByType,
+    {
+      onSuccess: (success) => {
+        setFilteredData(success)
+      },
+    }
+  )
+
   const onSubmit = (data: any) => {
     dispatch(SET_CONFIRM_SUSPENSION(true))
   }
@@ -53,10 +66,14 @@ export const useSupport = () => {
   }
 
   return {
+    data,
     isValid,
     methods,
     onSubmit,
+    filteredData,
+    onTypeFilter,
     onSuspendUser,
+    setFilteredData,
     isSuspendLoading,
     onSevenDaysSuspend,
   }
