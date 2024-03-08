@@ -83,8 +83,8 @@ export const AdminContainer = () => {
       onNextPage={goToNextPage}
       bgcolor={COLORS.background}
       onPreviousPage={goToPreviousPage}
+      isFooter={currentItems?.length > 7}
       button1Icon={mobileMode ? <Add /> : undefined}
-      isFooter={currentItems?.length > 0 ? true : false}
       onButton1Click={() => dispatch(OPEN_ADMIN_MODAL())}
     >
       <Box mt={2}>

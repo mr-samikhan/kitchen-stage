@@ -1,6 +1,7 @@
+import { Api } from './services'
 import { firestore } from '@cookup/firebase'
+import { formatPhoneNumber } from '@cookup/helpers'
 import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
-
 import {
   doc,
   query,
@@ -8,14 +9,11 @@ import {
   orderBy,
   getDocs,
   updateDoc,
+  deleteDoc,
   collection,
   DocumentData,
   DocumentSnapshot,
-  deleteDoc,
-  where,
 } from 'firebase/firestore'
-import { calculateAgeRange, formatPhoneNumber } from '@cookup/helpers'
-import { Api } from './services'
 
 type IUser = {
   name: string

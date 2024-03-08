@@ -28,7 +28,6 @@ export const UserContainer = () => {
   const { state } = useLocation()
 
   const { tabValue, sortBy, filterBy } = useSelector((state: any) => state.user)
-  const { experience, ageRange, businessType, sortType, gender } = filterBy
 
   const { isSearchFocus, isSortModal, isFilterModal, searchValue } =
     useSelector((state: any) => state.header)
@@ -53,10 +52,10 @@ export const UserContainer = () => {
       const items = [...currentItems]
       const filteredItems = items.filter(
         (item: any) =>
-          item.email.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.phone.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.status.toLowerCase().includes(searchValue.toLowerCase())
+          item?.email?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          item?.phone?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          item?.status?.toLowerCase().includes(searchValue?.toLowerCase())
       )
 
       setFilteredData(filteredItems)
@@ -103,7 +102,7 @@ export const UserContainer = () => {
       isPaginationIcons
       onNextPage={goToNextPage}
       bgcolor={COLORS.background}
-      isFooter={users?.length > 0}
+      isFooter={users?.length > 7}
       onPreviousPage={goToPreviousPage}
       isTitle={state?.type !== undefined ? false : true}
       isTabs={state?.type !== undefined ? false : true}
