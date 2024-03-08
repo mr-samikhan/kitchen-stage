@@ -12,6 +12,7 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material'
+import { auth } from '@cookup/firebase'
 
 interface CustomListProps {
   data?: any
@@ -145,14 +146,17 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                           >
                             <img src="/assets/icons/edit-icon.svg" alt="edit" />
                           </IconButton>
-                          <IconButton
-                            onClick={() => onDelete && onDelete(user)}
-                          >
-                            <img
-                              src="/assets/icons/delete-icon.svg"
-                              alt="delete"
-                            />
-                          </IconButton>
+                          {auth.currentUser &&
+                            auth?.currentUser?.email !== user?.email && (
+                              <IconButton
+                                onClick={() => onDelete && onDelete(user)}
+                              >
+                                <img
+                                  src="/assets/icons/delete-icon.svg"
+                                  alt="delete"
+                                />
+                              </IconButton>
+                            )}
                         </>
                       )}
                       {isViewMessage && (

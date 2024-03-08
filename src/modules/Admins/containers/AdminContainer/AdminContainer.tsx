@@ -7,7 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useBreakPoints, useGetAdmins, usePagination } from '@cookup/hooks'
 import { ADMINS_DATA, ADMINS_HEADER, COLORS } from '@cookup/constant'
 import { AdminFormsUI } from '../../components/AdminFormsUI/AdminFormsUI'
-import { CustomDialog, CustomList, Form, Layout } from '@cookup/components'
+import {
+  CustomDialog,
+  CustomList,
+  ExportCSVModal,
+  Form,
+  Layout,
+} from '@cookup/components'
 import {
   OPEN_ADMIN_MODAL,
   CLOSE_ADMIN_MODAL,
@@ -16,6 +22,8 @@ import {
   CLOSE_ADMIN_EDIT_SUCCESS,
   CLOSE_DELETE_ADMIN_MODAL,
   OPEN_DELETE_ADMIN_SUCCESS,
+  SET_EXPORT_MODAL,
+  SET_EXPORT_SUCCESS,
 } from '@cookup/redux'
 
 export const AdminContainer = () => {
@@ -60,10 +68,14 @@ export const AdminContainer = () => {
     7
   )
 
+  const { isExportModal, isExportSuccess } = useSelector(
+    (state: any) => state.support
+  )
+
   return (
     <Layout
       isTitle
-      isExportCSV
+      isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       showButton1
       isPaginationIcons
       button1ClassName="custom"
@@ -71,8 +83,8 @@ export const AdminContainer = () => {
       onNextPage={goToNextPage}
       bgcolor={COLORS.background}
       onPreviousPage={goToPreviousPage}
+      isFooter={currentItems?.length > 7}
       button1Icon={mobileMode ? <Add /> : undefined}
-      isFooter={currentItems?.length > 7 ? true : false}
       onButton1Click={() => dispatch(OPEN_ADMIN_MODAL())}
     >
       <Box mt={2}>
@@ -181,6 +193,37 @@ export const AdminContainer = () => {
           okButtonStyle={{
             width: 205,
             p: 2,
+          }}
+        />
+      )}
+
+      {isExportModal && (
+        <ExportCSVModal
+          csvData={[]}
+          filename="admins.csv"
+          isOpen={isExportModal}
+          record={currentItems}
+          title="Export Admin Tickets"
+          onClose={() => dispatch(SET_EXPORT_MODAL(false))}
+          onExport={() => dispatch(SET_EXPORT_SUCCESS(true))}
+        />
+      )}
+
+      {isExportSuccess && (
+        <CustomDialog
+          isOkButton
+          okButtonText="Okay"
+          textPosition="center"
+          isOpen={isExportSuccess}
+          title="Export Admin Tickets"
+          icon="/assets/icons/user_circle.svg"
+          text="Successfuly exported Admin Tickets"
+          okButtonStyle={{
+            width: 225,
+          }}
+          onConfirm={() => {
+            dispatch(SET_EXPORT_MODAL(false))
+            dispatch(SET_EXPORT_SUCCESS(false))
           }}
         />
       )}

@@ -5,12 +5,19 @@ import { SortModalUI } from '@cookup/modules'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetUsers, usePagination } from '@cookup/hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { SET_SORT_VALUE, SET_TAB_VALUE } from '@cookup/redux'
 import { COLORS, ROUTES, PERSONAL_USERS_HEADER } from '@cookup/constant'
+import {
+  SET_TAB_VALUE,
+  SET_SORT_VALUE,
+  SET_EXPORT_MODAL,
+  SET_EXPORT_SUCCESS,
+} from '@cookup/redux'
 import {
   Layout,
   SubHeader,
   CustomList,
+  CustomDialog,
+  ExportCSVModal,
   CustomSortModal,
 } from '@cookup/components'
 
@@ -21,7 +28,6 @@ export const UserContainer = () => {
   const { state } = useLocation()
 
   const { tabValue, sortBy, filterBy } = useSelector((state: any) => state.user)
-  const { experience, ageRange, businessType, sortType, gender } = filterBy
 
   const { isSearchFocus, isSortModal, isFilterModal, searchValue } =
     useSelector((state: any) => state.header)
@@ -46,10 +52,10 @@ export const UserContainer = () => {
       const items = [...currentItems]
       const filteredItems = items.filter(
         (item: any) =>
-          item.email.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.phone.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.status.toLowerCase().includes(searchValue.toLowerCase())
+          item?.email?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          item?.phone?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          item?.status?.toLowerCase().includes(searchValue?.toLowerCase())
       )
 
       setFilteredData(filteredItems)
@@ -80,6 +86,10 @@ export const UserContainer = () => {
     deactivated: 'deactivated',
   }
 
+  const { isExportModal, isExportSuccess } = useSelector(
+    (state: any) => state.support
+  )
+
   // const sortedByEmailAsc = Api.user.sortUsers(
   //   users,
   //   sortBy.sortValue !== '' ? sortBy.sortValue : '',
@@ -88,7 +98,6 @@ export const UserContainer = () => {
 
   return (
     <Layout
-      isExportCSV
       isSearchInput
       isPaginationIcons
       onNextPage={goToNextPage}
@@ -97,6 +106,7 @@ export const UserContainer = () => {
       onPreviousPage={goToPreviousPage}
       isTitle={state?.type !== undefined ? false : true}
       isTabs={state?.type !== undefined ? false : true}
+      isExportCSV={() => dispatch(SET_EXPORT_MODAL(true))}
       isNavigation={
         state?.type !== undefined && state?.type === USER_TYPES[state?.type]
           ? true
@@ -167,6 +177,37 @@ export const UserContainer = () => {
               // isBusinessFilter={tabValue === 'business' ? true : false}
             />
           </CustomSortModal>
+        )}
+
+        {isExportModal && (
+          <ExportCSVModal
+            csvData={[]}
+            filename="users.csv"
+            isOpen={isExportModal}
+            record={currentItems}
+            title="Export User Tickets"
+            onClose={() => dispatch(SET_EXPORT_MODAL(false))}
+            onExport={() => dispatch(SET_EXPORT_SUCCESS(true))}
+          />
+        )}
+
+        {isExportSuccess && (
+          <CustomDialog
+            isOkButton
+            okButtonText="Okay"
+            textPosition="center"
+            isOpen={isExportSuccess}
+            title="Export Users Tickets"
+            icon="/assets/icons/user_circle.svg"
+            text="Successfuly exported User Tickets"
+            okButtonStyle={{
+              width: 225,
+            }}
+            onConfirm={() => {
+              dispatch(SET_EXPORT_MODAL(false))
+              dispatch(SET_EXPORT_SUCCESS(false))
+            }}
+          />
         )}
       </Box>
     </Layout>

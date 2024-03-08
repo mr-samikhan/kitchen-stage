@@ -5,7 +5,7 @@ import { useMutation } from 'react-query'
 import { ROUTES } from '@cookup/constant'
 import { set, useForm } from 'react-hook-form'
 import { AppDispatch } from 'redux/store/store'
-import { loginUser, selectUser } from '@cookup/redux'
+import { getCurrentUserData, loginUser, selectUser } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { ILoginFormResolver } from 'types/FormResolvers'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -121,6 +121,40 @@ export default function useLoginForm() {
     },
   })
 
+  //verify otp mutation
+  const { mutate: onVerifyOTP_ } = useMutation<any, any, any>(
+    Api.auth.verifyOTP,
+    {
+      onSuccess: () => {
+        setPhoneStatus((prev) => ({
+          ...prev,
+          isError: false,
+          message: '',
+        }))
+        dispatch(
+          getCurrentUserData({
+            uid: auth.currentUser?.uid,
+            email: auth.currentUser?.email,
+            role: '',
+            userName: auth.currentUser?.displayName,
+          })
+        )
+        navigate(ROUTES.ROOT)
+      },
+      onError: (error) => {
+        let errorCode = ''
+        if (error.code === 'auth/invalid-verification-code') {
+          errorCode = 'Invalid verification code'
+        }
+        setPhoneStatus((prev) => ({
+          ...prev,
+          isError: true,
+          message: errorCode || error.message,
+        }))
+      },
+    }
+  )
+
   const onSubmit = async (data: any) => {
     if (PATH_CHECK) {
       onForgotPassword_(data.email)
@@ -169,11 +203,7 @@ export default function useLoginForm() {
 
   //verify otp
   const onVerifyOTP = async () => {
-    try {
-      Api.auth.verifyOTP({ confirmationObject, otp })
-    } catch (error) {
-      console.log('>>>error', error)
-    }
+    onVerifyOTP_({ confirmationObject, otp })
   }
 
   //otp

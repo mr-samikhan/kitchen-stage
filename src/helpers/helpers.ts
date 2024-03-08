@@ -130,3 +130,50 @@ export function formatStartEndDate(startDate: Date, endDate: Date): string {
 
   return `${formattedStartDate} - ${formattedEndDate}${yearSuffix}`
 }
+
+export const getStartOfDay = (date: Date) => {
+  const newDate = new Date(date)
+  newDate.setHours(0, 0, 0, 0)
+  return newDate
+}
+
+export const getEndOfDay = (date: Date) => {
+  const newDate = new Date(date)
+  newDate.setHours(23, 59, 59, 999)
+  return newDate
+}
+
+export const getCurrentWeekRange = (date: Date) => {
+  const now = new Date(date)
+  const firstDayOfWeek = new Date(
+    now.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1))
+  )
+  firstDayOfWeek.setHours(0, 0, 0, 0)
+
+  const lastDayOfWeek = new Date(firstDayOfWeek)
+  lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6)
+  lastDayOfWeek.setHours(23, 59, 59, 999)
+
+  return { start: firstDayOfWeek, end: lastDayOfWeek }
+}
+
+export const getLastWeekRange = (date: Date) => {
+  const { start: firstDayOfCurrentWeek } = getCurrentWeekRange(date)
+
+  const firstDayOfLastWeek = new Date(firstDayOfCurrentWeek)
+  firstDayOfLastWeek.setDate(firstDayOfLastWeek.getDate() - 7)
+
+  const lastDayOfLastWeek = new Date(firstDayOfLastWeek)
+  lastDayOfLastWeek.setDate(lastDayOfLastWeek.getDate() + 6)
+  lastDayOfLastWeek.setHours(23, 59, 59, 999)
+
+  return { start: firstDayOfLastWeek, end: lastDayOfLastWeek }
+}
+
+export const getCurrentMonthRange = (date: Date) => {
+  const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
+  const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+  endOfMonth.setHours(23, 59, 59, 999)
+
+  return { start: startOfMonth, end: endOfMonth }
+}

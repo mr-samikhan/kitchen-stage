@@ -3,9 +3,8 @@ import { AuthService } from './auth.service'
 import { UserService } from './user.services'
 import { AdminService } from './admins.services'
 import { ImageService } from './images.services'
-import { SupportService } from './support.services'
 import { RecipeService } from './recipe.services'
-import { Dashboard } from '@mui/icons-material'
+import { SupportService } from './support.services'
 import { DashboardService } from './dashboard.services'
 
 const Api = {
@@ -46,6 +45,7 @@ const Api = {
     getSortKeys: SupportService.getSortKeys,
     getSupports: SupportService.getSupportData,
     sortSupportData: SupportService.sortSupportData,
+    filterDataByType: SupportService.filterDataByType,
     filterSupportData: SupportService.filterSupportData,
   },
   image: {
