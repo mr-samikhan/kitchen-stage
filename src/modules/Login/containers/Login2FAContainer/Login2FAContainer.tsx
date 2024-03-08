@@ -1,4 +1,5 @@
 import React from 'react'
+import { auth } from '@cookup/firebase'
 import { COLORS } from '@cookup/constant'
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
@@ -24,6 +25,13 @@ export const Login2FAContainer = () => {
     phoneStatus,
     onResendOTP,
   } = useLoginForm()
+
+  function getLastFourDigits() {
+    const numberStr: string | undefined =
+      phone || (auth && auth?.currentUser?.phoneNumber?.toString())
+    const lastFourDigits = numberStr?.slice(-4)
+    return lastFourDigits
+  }
 
   const renderStep = () => {
     switch (step) {
@@ -93,8 +101,8 @@ export const Login2FAContainer = () => {
                 Phone Verification
               </Typography>
               <Typography my={2} variant="subtitle2" color={COLORS.grey.main}>
-                Input the six digit code sent to your phone number
-                (XXX-XXX-1234)
+                Input the six digit code sent to your phone number (XXX-XXX-
+                {getLastFourDigits()})
               </Typography>
               <Typography my={2} variant="subtitle2" color="primary">
                 Enter six digit code

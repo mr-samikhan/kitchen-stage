@@ -217,6 +217,9 @@ class Auth {
           otp.replace(/-/g, '')
         )
         const userCreds = await linkWithCredential(currentUser, credential)
+        const adminRef = doc(firestore, COLLECTIONS.ADMIN, userCreds.user.uid)
+        await updateDoc(adminRef, { phoneNumber: userCreds.user.phoneNumber })
+
         const user = userCreds.user
         console.log('>>>user', user)
         resolve('Phone number linked')
