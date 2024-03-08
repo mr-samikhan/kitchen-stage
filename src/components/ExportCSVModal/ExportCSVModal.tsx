@@ -1,11 +1,11 @@
-import React from 'react'
-import { CSVLink } from 'react-csv'
+import React, { useRef } from 'react'
 import { EXPORT_CSV_DATA } from '@cookup/constant'
 import { Box, Button, Checkbox, Modal, Paper, Typography } from '@mui/material'
 
 interface IExportProps {
   data?: {}[]
   record?: any[]
+  title?: string
   isOpen: boolean
   filename?: string
   onClose: () => void
@@ -14,37 +14,53 @@ interface IExportProps {
 }
 
 export const ExportCSVModal = (props: IExportProps) => {
-  const { isOpen, data, onClose, onExport, csvData, record, filename } =
+  const { isOpen, data, onClose, onExport, csvData, record, filename, title } =
     props || {}
 
   let isArray = data ? data : EXPORT_CSV_DATA
   const [exportData, setExportData] = React.useState([])
   const [selectedLabels, setSelectedLabels] = React.useState(isArray)
 
+  const downloadRef = useRef<any>(null)
+
   const handleCheckboxChange = (index: number) => {
     const newArray: any = [...selectedLabels]
     newArray[index].isChecked = !newArray[index].isChecked
     setSelectedLabels(newArray)
-    handleExport()
   }
 
   const handleExport = () => {
     let csvData_: any = []
+    let csvDataHeader: any = []
     record?.forEach((dataItem: any) => {
       const filteredData: any = {}
+      let selectedLabelsData: any = {}
 
       selectedLabels.forEach((item: any) => {
         if (item.isChecked) {
           filteredData[item.value] =
-            dataItem[item.value] === undefined ? '' : dataItem[item.value]
+            dataItem[item.value] === undefined || dataItem[item.value] === null
+              ? 'N/A'
+              : dataItem[item.value]
+          selectedLabelsData[item.label] = dataItem[item.label]
         }
       })
+      csvDataHeader.push(selectedLabelsData)
 
       csvData_.push(filteredData)
     })
     setExportData(csvData_)
 
-    return csvData_
+    const csvString = [
+      Object.keys(csvDataHeader[0]).join(','), // header row
+      ...csvData_.map((row: any) => Object.values(row).join(',')), // data rows
+    ].join('\n')
+    const blob = new Blob([csvString], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    downloadRef.current.href = url
+    downloadRef.current.download = filename
+    downloadRef.current.click()
+    onExport()
   }
 
   return (
@@ -83,7 +99,7 @@ export const ExportCSVModal = (props: IExportProps) => {
               fontSize={20}
               fontWeight={600}
             >
-              Export Support Tickets
+              {title || 'Export Support Tickets'}
             </Typography>
             <Typography variant="h6" fontWeight={500} fontFamily="Poppins">
               Select info you want to include in CSV
@@ -128,14 +144,19 @@ export const ExportCSVModal = (props: IExportProps) => {
             ))}
           </Box>
           <Box mt={2} display="flex" gap={2}>
-            <CSVLink
+            {/* <CSVLink
               data={exportData || []}
               filename={filename || 'support_file.csv'}
+            > */}
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ width: 205 }}
+              onClick={handleExport}
             >
-              <Button fullWidth variant="contained" sx={{ width: 205 }}>
-                Export
-              </Button>
-            </CSVLink>
+              Export
+            </Button>
+            {/* </CSVLink> */}
             <Button
               variant="outlined"
               size="medium"
@@ -145,6 +166,14 @@ export const ExportCSVModal = (props: IExportProps) => {
               Cancel
             </Button>
           </Box>
+          <a
+            ref={downloadRef}
+            style={{ display: 'none' }}
+            href="/#"
+            download={filename}
+          >
+            Download
+          </a>
         </Paper>
       </Modal>
     </React.Fragment>
