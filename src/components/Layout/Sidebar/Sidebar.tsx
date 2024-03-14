@@ -1,9 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { getInitials } from '@cookup/helpers'
 import { useBreakPoints } from '@cookup/hooks'
 import CloseIcon from '@mui/icons-material/Close'
 import { COLORS, ROUTES } from '@cookup/constant'
-import { Avatar, Box, IconButton, Typography } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Avatar, Box, IconButton, Typography } from '@mui/material'
 
 interface SidebarProps {
   sideBarOptions?: any
@@ -17,6 +19,8 @@ export const Sidebar = (props: SidebarProps) => {
 
   const navigate = useNavigate()
   const { mobileMode } = useBreakPoints()
+
+  const { user } = useSelector((state: any) => state.auth)
 
   return (
     <React.Fragment>
@@ -103,7 +107,7 @@ export const Sidebar = (props: SidebarProps) => {
                 fontWeight: 700,
               }}
             >
-              SK
+              {getInitials(user?.userName || '')}
             </Avatar>
           </IconButton>
         </Box>

@@ -96,7 +96,11 @@ class Auth {
 
   forgotPassword = async (email: string) => {
     return new Promise((resolve, reject) => {
-      sendPasswordResetEmail(auth, email)
+      const actionCodeSettings = {
+        url: '/reset-password',
+        handleCodeInApp: true,
+      }
+      sendPasswordResetEmail(auth, email, actionCodeSettings)
         .then(() => {
           resolve({ message: 'Email sent successfully' })
         })

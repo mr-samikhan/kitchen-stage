@@ -102,7 +102,13 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
 
   return (
     <React.Fragment>
-      <Grid mt={4} container display="flex" justifyContent="center">
+      <Grid
+        mt={4}
+        container
+        display="flex"
+        justifyContent="center"
+        ml={{ md: -20, sm: 0, xs: 0 }}
+      >
         <Grid item md={2} xs={4} px={3}>
           <Box display="flex" flexDirection="column" justifyContent="center">
             <Avatar

@@ -759,3 +759,10 @@ export const LIKES_DATA = [
     totalLikes: '33 Likes',
   },
 ]
+
+export const ADMIN_OPTIONS = [{ label: 'Admin', value: 'Admin' }]
+
+export const SUPER_ADMIN_OPTIONS = [
+  { label: 'Super Admin', value: 'Super Admin' },
+  { label: 'Admin', value: 'Admin' },
+]

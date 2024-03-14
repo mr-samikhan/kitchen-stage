@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { CustomTextField, Form } from '@cookup/components'
+import { ADMIN_OPTIONS, SUPER_ADMIN_OPTIONS } from '@cookup/constant'
 import { CLOSE_ADMIN_MODAL, CLOSE_EDIT_ADMIN_MODAL } from '@cookup/redux'
 
 interface AdminFormsUIProps {
@@ -13,6 +14,7 @@ export const AdminFormsUI = (props: AdminFormsUIProps) => {
   const { isValid, isLoading } = props || {}
   const dispatch = useDispatch()
 
+  const { user } = useSelector((state: any) => state.auth)
   const { isAdminEditModal } = useSelector((state: any) => state.admin)
 
   return (
@@ -22,10 +24,7 @@ export const AdminFormsUI = (props: AdminFormsUIProps) => {
           select
           fullWidth
           name="role"
-          options={[
-            { label: 'Admin', value: 'Admin' },
-            { label: 'Super Admin', value: 'Super Admin' },
-          ]}
+          options={user.role === 'Admin' ? ADMIN_OPTIONS : SUPER_ADMIN_OPTIONS}
         />
       </Box>
       <Box mt={1}>

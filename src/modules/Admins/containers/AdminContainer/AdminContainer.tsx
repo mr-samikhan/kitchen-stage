@@ -41,6 +41,7 @@ export const AdminContainer = () => {
     isValid,
     onDelete,
     isLoading,
+    adminName,
     deleteAdmin,
     delAdminName,
     onSelectUser,
@@ -59,7 +60,7 @@ export const AdminContainer = () => {
 
   let MODAL_CHECK = isOpenAdminModal || isAdminEditModal
 
-  let adminName = methods.watch('name')
+  let adminName_ = methods.watch('name') || adminName
 
   const { user } = useSelector((state: any) => state.auth)
 
@@ -128,7 +129,7 @@ export const AdminContainer = () => {
             queryClient.invalidateQueries('getAdmins')
           }}
           onClose={() => dispatch(CLOSE_ADMIN_SUCCESS())}
-          text={`Congratulations! “${adminName}” has been successfully added as an Admin. We have sent them a new invite email with a one-time usage password included.`}
+          text={`Congratulations! “${adminName_}” has been successfully added as an Admin. We have sent them a new invite email with a one-time usage password included.`}
           okButtonStyle={{
             p: 2,
             width: 205,
@@ -148,7 +149,7 @@ export const AdminContainer = () => {
           }}
           onClose={() => dispatch(CLOSE_ADMIN_EDIT_SUCCESS())}
           text={`Congratulations! “${
-            adminName || admin.userName
+            adminName_ || admin.userName
           }” has been updated successfully.`}
           okButtonStyle={{
             p: 2,

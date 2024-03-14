@@ -52,6 +52,7 @@ const CustomList: React.FC<CustomListProps> = (props) => {
   const dispatch = useDispatch()
   const { mobileMode } = useBreakPoints()
 
+  const { user: currentUser } = useSelector((state: any) => state.auth)
   const { singleSupportData } = useSelector((state: any) => state.support)
 
   const [isMessage, setIsMessage] = useState<boolean>(false)
@@ -139,6 +140,10 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                       {isActionButtons && (
                         <>
                           <IconButton
+                            disabled={
+                              currentUser?.role === 'Admin' &&
+                              user?.role === 'Super Admin'
+                            }
                             onClick={() => {
                               onSelectUser && onSelectUser(user)
                               dispatch(OPEN_EDIT_ADMIN_MODAL())
@@ -150,6 +155,10 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                             auth?.currentUser?.email !== user?.email && (
                               <IconButton
                                 onClick={() => onDelete && onDelete(user)}
+                                disabled={
+                                  currentUser?.role === 'Admin' &&
+                                  user?.role === 'Super Admin'
+                                }
                               >
                                 <img
                                   src="/assets/icons/delete-icon.svg"

@@ -18,8 +18,14 @@ export const UserAccountInfo = (props: UserAccountInfoProps) => {
 
   return (
     <React.Fragment>
-      <Grid item container justifyContent="center" mt={8}>
-        <Grid item md={4} xs={10}>
+      <Grid
+        item
+        mt={8}
+        container
+        justifyContent="center"
+        ml={{ md: -10, sm: 0, xs: 0 }}
+      >
+        <Grid item md={3} xs={10}>
           <Typography variant="subtitle2" fontWeight={600} color="primary">
             Email Address
           </Typography>
