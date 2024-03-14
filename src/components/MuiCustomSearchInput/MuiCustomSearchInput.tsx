@@ -14,18 +14,18 @@ export const MuiCustomSearchInput = (props: MuiCustomSearchInputProps) => {
 
   const { searchValue } = useSelector((state: any) => state.header)
 
-  useEffect(() => {
-    if (searchValue !== '') {
-      dispatch(SET_SEARCH_FOCUS(true))
-      setTimeout(() => {
-        dispatch(SET_SEARCH_FOCUS(false))
-      }, 500)
-    } else if (searchValue === '') {
-      setTimeout(() => {
-        dispatch(SET_SEARCH_FOCUS(false))
-      }, 500)
-    }
-  }, [searchValue])
+  // useEffect(() => {
+  //   if (searchValue !== '') {
+  //     dispatch(SET_SEARCH_FOCUS(true))
+  //     setTimeout(() => {
+  //       dispatch(SET_SEARCH_FOCUS(false))
+  //     }, 500)
+  //   } else if (searchValue === '') {
+  //     setTimeout(() => {
+  //       dispatch(SET_SEARCH_FOCUS(false))
+  //     }, 500)
+  //   }
+  // }, [searchValue])
 
   return (
     <React.Fragment>

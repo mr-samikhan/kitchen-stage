@@ -177,3 +177,15 @@ export const getCurrentMonthRange = (date: Date) => {
 
   return { start: startOfMonth, end: endOfMonth }
 }
+
+export const getInitials = (userName: string) => {
+  const parts = userName.trim().split(' ')
+
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase()
+  } else if (parts.length === 0) {
+    return 'N/A'
+  } else {
+    return parts[0][0].toUpperCase() + parts[1][0].toUpperCase()
+  }
+}

@@ -10,6 +10,7 @@ import {
   DocumentData,
   DocumentSnapshot,
 } from 'firebase/firestore'
+import { sendEmailVerification } from 'firebase/auth'
 
 interface IAdmin {
   uid: string
@@ -135,6 +136,16 @@ class Admin {
           )
           resolve('user deleted successfully')
         }
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  sendVerificationEmail = async (email: string) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        //using firebase function to send verification email
       } catch (error) {
         reject(error)
       }

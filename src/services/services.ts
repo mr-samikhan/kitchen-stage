@@ -33,6 +33,7 @@ const Api = {
     updateUser: UserService.updateUser,
     deleteUser: UserService.deleteUser,
     filterUsers: UserService.filterUsers,
+    searchUsers: UserService.searchUsers,
   },
   ads: {
     addAds: AdsService.addAds,

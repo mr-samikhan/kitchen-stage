@@ -25,6 +25,7 @@ export const useAdmins = ({ admins }: IAdmins) => {
   const queryClient = useQueryClient()
 
   const [admin, setAdmin] = React.useState<any>(null)
+  const [adminName, setAdminName] = React.useState<string | null>(null)
   const { isAdminEditModal } = useSelector((state: any) => state.admin)
   const [delAdminName, setDelAdminName] = React.useState<any | null>(null)
 
@@ -66,6 +67,7 @@ export const useAdmins = ({ admins }: IAdmins) => {
           dispatch(CLOSE_EDIT_ADMIN_MODAL())
           dispatch(OPEN_ADMIN_EDIT_SUCCESS())
         } else {
+          methods.reset()
           dispatch(CLOSE_ADMIN_MODAL())
           dispatch(OPEN_ADMIN_SUCCESS())
         }
@@ -105,6 +107,7 @@ export const useAdmins = ({ admins }: IAdmins) => {
         },
       })
     } else {
+      setAdminName(data.name)
       mutate({
         email: data.email,
         role: data.role,
@@ -125,6 +128,7 @@ export const useAdmins = ({ admins }: IAdmins) => {
     isError,
     onSubmit,
     onDelete,
+    adminName,
     isLoading,
     deleteAdmin,
     delAdminName,

@@ -112,7 +112,8 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           '&.custom-tab': {
-            width: 245,
+            width: 230,
+            // width: 245,
             borderRadius: '57px',
             background: COLORS.white,
             color: COLORS.primary.main,

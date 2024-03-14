@@ -49,16 +49,8 @@ export const UserContainer = () => {
   //filter
   React.useEffect(() => {
     if (searchValue.length) {
-      const items = [...currentItems]
-      const filteredItems = items.filter(
-        (item: any) =>
-          item?.email?.toLowerCase().includes(searchValue?.toLowerCase()) ||
-          item?.phone?.toLowerCase().includes(searchValue?.toLowerCase()) ||
-          item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
-          item?.status?.toLowerCase().includes(searchValue?.toLowerCase())
-      )
-
-      setFilteredData(filteredItems)
+      const filter = Api.user.searchUsers(users, searchValue)
+      setFilteredData(filter)
     } else {
       setFilteredData(null)
     }
@@ -159,18 +151,7 @@ export const UserContainer = () => {
           </CustomSortModal>
         )}
         {isFilterModal && (
-          <CustomSortModal
-            top={160}
-            padding="12px 0px 12px 0px"
-            title="Filter"
-            onClose={() => {
-              dispatch(
-                SET_SORT_VALUE({
-                  sortValue: '',
-                })
-              )
-            }}
-          >
+          <CustomSortModal top={160} padding="12px 0px 12px 0px" title="Filter">
             <SortModalUI
               isNewFilterUI
               // isFilterUI={tabValue === 'business' ? false : true}

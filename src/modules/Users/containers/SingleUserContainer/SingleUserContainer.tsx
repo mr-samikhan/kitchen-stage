@@ -159,26 +159,24 @@ export const SingleUserContainer = () => {
         )
       }
     >
-      <Container maxWidth="xl">
-        <Box
-          display="flex"
-          minHeight="80vh"
-          flexDirection="column"
-          justifyContent="space-between"
-        >
-          <Grid container alignItems="center" flexDirection="column" mt={4}>
-            <Grid item md={6} xs={12}>
-              <MuiCustomTab
-                className="custom-tabs"
-                labels={USER_TAB_OPTIONS}
-                width={{ xs: '100px', md: '188px' }}
-                // isBusinessType={state.type ? true : false}
-              />
-            </Grid>
-            {RenderUserSteps()}
+      <Box
+        display="flex"
+        minHeight="80vh"
+        flexDirection="column"
+        justifyContent="space-between"
+      >
+        <Grid container alignItems="center" flexDirection="column" mt={4}>
+          <Grid item md={6} xs={12} ml={-20}>
+            <MuiCustomTab
+              className="custom-tabs"
+              labels={USER_TAB_OPTIONS}
+              width={{ xs: '100px', md: '188px' }}
+              // isBusinessType={state.type ? true : false}
+            />
           </Grid>
-        </Box>
-      </Container>
+          {RenderUserSteps()}
+        </Grid>
+      </Box>
       {isUserUpdateModal && (
         <CustomDialog
           isOkButton

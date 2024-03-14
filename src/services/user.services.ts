@@ -172,6 +172,18 @@ class User {
       // )
     })
   }
+
+  searchUsers = (users: any[] | undefined, value: string) => {
+    if (!value) return users
+    return users?.filter((user) => {
+      return (
+        user?.email?.toLowerCase().includes(value?.toLowerCase()) ||
+        user?.phone?.toLowerCase().includes(value?.toLowerCase()) ||
+        user?.name?.toLowerCase().includes(value?.toLowerCase()) ||
+        user?.status?.toLowerCase().includes(value?.toLowerCase())
+      )
+    })
+  }
 }
 
 const UserService = new User()
