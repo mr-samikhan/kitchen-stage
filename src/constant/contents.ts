@@ -413,39 +413,43 @@ export const BUSINESS_USER_PROFILE_DATA = [
     key: 'Name',
     value: 'Emma Gosling',
   },
-  {
-    key: 'Type',
-    value: 'Restaurant',
-  },
+  // {
+  //   key: 'Type',
+  //   value: 'Restaurant',
+  // },
   {
     key: 'Username',
     value: 'tipsyemma',
   },
   {
-    key: 'Age Range',
-    value: '28-35',
+    key: 'Account Status',
+    value: 'Business',
   },
-  {
-    key: 'Gender',
-    value: 'Non-Binary',
-  },
-  {
-    key: 'City',
-    value: 'Costa Mesa',
-  },
-  {
-    key: 'State',
-    value: 'California',
-  },
-  {
-    key: 'Zip Code',
-    value: '92626',
-  },
-  {
-    key: 'About',
-    value:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit',
-  },
+  // {
+  //   key: 'Age Range',
+  //   value: '28-35',
+  // },
+  // {
+  //   key: 'Gender',
+  //   value: 'Non-Binary',
+  // },
+  // {
+  //   key: 'City',
+  //   value: 'Costa Mesa',
+  // },
+  // {
+  //   key: 'State',
+  //   value: 'California',
+  // },
+  // {
+  //   key: 'Zip Code',
+  //   value: '92626',
+  // },
+  // {
+  //   key: 'About',
+  //   value:
+  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit',
+  // },
 ]
 
 export const IMAGES_ARRAY = [

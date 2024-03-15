@@ -53,7 +53,7 @@ export const MuiTextField: Components['MuiTextField'] = {
       //filter
       '&.filter': {
         '& .MuiOutlinedInput-root': {
-          width: '125px',
+          width: '132px',
           fontSize: '16px',
           fontWeight: 500,
           borderRadius: '38px',
@@ -85,7 +85,7 @@ export const MuiTextField: Components['MuiTextField'] = {
       //start & end_date
       '&.start-end-date': {
         '& .MuiOutlinedInput-root': {
-          height: 48,
+          height: 58,
           fontWeight: 500,
           fontSize: '16px',
           borderRadius: '8px',

@@ -29,7 +29,8 @@ export const ImageCard = (props: ImageCardProps) => {
         <Grid
           item
           md={11}
-          gap={4}
+          rowGap={2}
+          columnGap={8}
           display="flex"
           flexWrap="wrap"
           position="relative"
@@ -76,11 +77,13 @@ export const ImageCard = (props: ImageCardProps) => {
               <img alt="" width="100%" height="100%" src={item.img} />
             </Box>
           ))}
-          <Grid item md={11} display="flex" justifyContent="center" my={2}>
+          <Grid item md={12} display="flex" justifyContent="center" my={2}>
             <TableFooter
               isPaginationIcons
               onNextPage={goToNextPage}
               onPreviousPage={goToPreviousPage}
+              isNextDisabled={postsCheck?.length < 15}
+              isPreviousDisabled={postsCheck?.length < 15}
             />
           </Grid>
         </Grid>

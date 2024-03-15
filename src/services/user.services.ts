@@ -57,7 +57,7 @@ class User {
             experience: data?.experience || '',
             dateOfBirth: data?.dateOfBirth || '',
             phone: formatPhoneNumber(data?.phone) || '',
-            status: data.status === 'active' ? 'Active' : 'Pending',
+            status: data.status === 'active' ? 'Active' : data.status,
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
             createdAt: data.createdAt,
             userImage: data?.imageUrl,
@@ -100,11 +100,9 @@ class User {
   }
 
   updateUser = async (
-    values = {
+    values: any = {
       id: '',
-      data: {
-        isSuspended: false,
-      },
+      data: {},
     }
   ) => {
     const { id, data } = values
@@ -159,7 +157,12 @@ class User {
       } else if (value === 'Invited Users') {
         return user.status === 'Pending'
       } else if (value === 'Deactivated Users') {
-        return user.status === 'Deactivated' || user.status === 'Suspended'
+        return (
+          user.status === 'Deactivated' ||
+          user.status === 'Suspended' ||
+          user.status === 'InActive' ||
+          user.status === 'suspended'
+        )
       }
       // expArray.length === 0 ||
       // (expArray.every((criteria) => user.experience === criteria) &&

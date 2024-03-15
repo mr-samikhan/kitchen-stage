@@ -77,7 +77,7 @@ const useUser = ({ user }: IUseUser) => {
 
   //delete mutation
   const { mutate: onDeleteUser, isLoading: isDelLoading } = useMutation(
-    Api.user.deleteUser,
+    Api.user.updateUser,
     {
       onSuccess: (success) => {
         dispatch(SET_DELETE_MODAL(false))
@@ -144,6 +144,7 @@ const useUser = ({ user }: IUseUser) => {
     onSuspendUser({
       id: user.id,
       data: {
+        status: 'Suspended',
         suspensionDays: data.days,
         isSuspended: true,
         suspensionDate: new Date(),
@@ -162,6 +163,7 @@ const useUser = ({ user }: IUseUser) => {
     onSuspendUser({
       id: user.id,
       data: {
+        status: 'Suspended',
         suspensionDays: 7,
         isSuspended: true,
         suspensionDate: new Date(),
@@ -177,6 +179,7 @@ const useUser = ({ user }: IUseUser) => {
     onSuspendUser({
       id: user.id,
       data: {
+        status: 'active',
         suspensionDays: 0,
         suspensionDate: null,
         isSuspended: false,
