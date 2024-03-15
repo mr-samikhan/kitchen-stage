@@ -47,8 +47,8 @@ class Admin {
             role: data.role,
             uid: data.uid,
             status: data.status === 'active' ? 'Active' : 'Pending',
-            lastLogin: formatDateToToday(data.lastLogin) || 'N/A',
             ...doc.data(),
+            lastLogin: formatDateToToday(data.lastLogin) || 'N/A',
           }
           admins?.push(admin)
         })

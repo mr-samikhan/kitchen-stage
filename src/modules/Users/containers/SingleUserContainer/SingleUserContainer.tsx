@@ -202,7 +202,12 @@ export const SingleUserContainer = () => {
           cancelButtonText="No"
           isOpen={isDeleteModal}
           icon="/assets/icons/warn-icon.svg"
-          onConfirm={() => onDeleteUser(user.id)}
+          onConfirm={() =>
+            onDeleteUser({
+              id: user.id,
+              data: { isSuspended: false, status: 'Deleted' },
+            })
+          }
           onClose={() => dispatch(SET_DELETE_MODAL(false))}
           okButtonText={isDelLoading ? 'Deleting...' : 'Yes, I Confirm'}
           text={`Are you sure you want to delete the user “${userName}”? Actions are not reversable.`}

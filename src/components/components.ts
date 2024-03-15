@@ -15,3 +15,4 @@ export { default as CustomDatePicker } from './CustomDatePicker/CustomDatePicker
 export { default as CustomFilterButton } from './CustomFilterButton/CustomFilterButton'
 export { default as MuiCustomDatePicker } from './MuiCustomDatePicker/MuiCustomDatePicker'
 export { default as MuiCustomSearchInput } from './MuiCustomSearchInput/MuiCustomSearchInput'
+export { default as GenerateVideoThumbnail } from './GenerateVideoThumbnail/GenerateVideoThumbnail'

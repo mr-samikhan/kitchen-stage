@@ -26,8 +26,6 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
     ? BUSINESS_USER_PROFILE_DATA
     : PERSONAL_USER_PROFILE_DATA
 
-  console.log(user, 'user')
-
   let userObj: any = {
     Name: `${user?.firstName} ${user?.lastName}`,
     Type: user?.type || '',
@@ -38,6 +36,7 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
     State: user?.country || '',
     ['Zip Code']: user?.zipCode || '',
     About: user?.about || '',
+    ['Account Status']: user?.status || '',
   }
 
   const handleChange = (val: any, key: string) => {
@@ -100,10 +99,12 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
     }
   }
 
+  let isActive = user.status === 'active'
+
   return (
     <React.Fragment>
       <Grid
-        mt={4}
+        mt={8}
         container
         display="flex"
         justifyContent="center"
@@ -115,8 +116,8 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
               onClick={handleFileUpload}
               src={user?.imageUrl}
               sx={{
-                width: { xs: 'auto', md: '150px' },
-                height: { xs: 'auto', md: '150px' },
+                width: { xs: 'auto', md: '180px' },
+                height: { xs: 'auto', md: '180px' },
               }}
             />
             <input
@@ -156,24 +157,51 @@ export const UserProfileInfo = (props: UserProfileInfoProps) => {
                 {userObj[item.key]} */}
               {/* {item.value} */}
               {/* </Typography> */}
-              <TextField
-                inputProps={{
-                  format: 'yyyy-MM-dd',
-                }}
-                type={isEdit && item.key === 'Age Range' ? 'date' : 'text'}
-                multiline={item.key === 'About' ? true : false}
-                rows={4}
-                disabled={!isEdit}
-                placeholder={
-                  item.key === 'Age Range'
-                    ? calculateAgeRange(userObj[item.key])
-                    : userObj[item.key]
-                }
-                onChange={(e) => handleChange(e.target.value, item.key)}
-                sx={{
-                  width: 300,
-                }}
-              />
+              {item.key !== 'Account Status' && (
+                <TextField
+                  inputProps={{
+                    format: 'yyyy-MM-dd',
+                  }}
+                  type={isEdit && item.key === 'Age Range' ? 'date' : 'text'}
+                  multiline={item.key === 'About' ? true : false}
+                  rows={4}
+                  disabled={!isEdit}
+                  placeholder={
+                    item.key === 'Age Range'
+                      ? calculateAgeRange(userObj[item.key])
+                      : userObj[item.key]
+                  }
+                  onChange={(e) => handleChange(e.target.value, item.key)}
+                  sx={{
+                    width: 300,
+                  }}
+                />
+              )}
+              {item.key === 'Account Status' && (
+                <>
+                  <Box
+                    width={230}
+                    height={50}
+                    borderRadius="7px"
+                    border={`1px solid ${
+                      isActive ? COLORS.success : COLORS.error
+                    }`}
+                    bgcolor={
+                      isActive ? COLORS.active : COLORS.transparentOrange
+                    }
+                  >
+                    <Typography
+                      variant="h5"
+                      lineHeight="50px"
+                      textAlign="center"
+                      fontFamily={isActive ? '' : 'Poppins'}
+                      color={isActive ? COLORS.success : COLORS.secondary.main}
+                    >
+                      {isActive ? 'Active' : user.status}
+                    </Typography>
+                  </Box>
+                </>
+              )}
             </Box>
           ))}
         </Grid>
