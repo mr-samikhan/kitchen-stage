@@ -42,7 +42,7 @@ export const ViewAds = (props: TViewAds) => {
           >
             {user?.userUploadedRecipes?.map((item: any, index: number) => (
               <Avatar
-                src={item}
+                src={item.thumbnail.thumbnailUrl || ''}
                 key={index}
                 variant="rounded"
                 onClick={() => {

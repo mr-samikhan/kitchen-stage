@@ -28,12 +28,21 @@ export const usePosts = ({ startDate, endDate, sortBy }: any) => {
       ? Api.recipe.removeLikedById
       : Api.recipe.removeCommentById,
     {
-      onSuccess: () => {
+      onSuccess: (userId) => {
         queryClient.invalidateQueries('getPosts')
-        getUserLikesAndComments({
-          singleRecipe: singleItem,
-          recipeId: singleItem?.id,
-        })
+
+        //remove the selected item from the list
+        userValues.isLikesModal
+          ? setSingleItem((prev: any) => ({
+              ...prev,
+              likedBy: prev?.likedBy?.filter((item: any) => item !== userId),
+            }))
+          : setSingleItem((prev: any) => ({
+              ...prev,
+              comments: prev?.comments?.filter(
+                (item: any) => item.user !== userId
+              ),
+            }))
       },
       onError: (error) => console.log(error),
     }

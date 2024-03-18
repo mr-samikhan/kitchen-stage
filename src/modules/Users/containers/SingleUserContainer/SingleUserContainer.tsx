@@ -46,7 +46,6 @@ export const SingleUserContainer = () => {
 
   const { state } = useLocation()
   const { mobileMode } = useBreakPoints()
-  console.log(user, 'user')
 
   const { isUserUpdateModal } = useSelector((state: any) => state.user)
   const {

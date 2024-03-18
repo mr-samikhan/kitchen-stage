@@ -7,6 +7,7 @@ const Collections = {
   BOOKING: 'bookings',
   DRAFT_ADS: 'draft_ads',
   SUPPORT: 'customer_support',
+  RECIPE_THUMBNAIL: 'thumbnails',
   NOTIFICATION: 'notifications',
 }
 

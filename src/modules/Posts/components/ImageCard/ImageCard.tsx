@@ -23,6 +23,7 @@ export const ImageCard = (props: ImageCardProps) => {
     goToNextPage,
     goToPreviousPage,
   } = props || {}
+
   return (
     <React.Fragment>
       <Grid container pl={5}>
@@ -60,7 +61,8 @@ export const ImageCard = (props: ImageCardProps) => {
               }}
             >
               <Box
-                top={-5}
+                top={-8}
+                left={-5}
                 width="40px"
                 height="40px"
                 bgcolor="white"
@@ -74,7 +76,13 @@ export const ImageCard = (props: ImageCardProps) => {
                   }}
                 />
               </Box>
-              <img alt="" width="100%" height="100%" src={item.img} />
+              <img
+                alt=""
+                width="100%"
+                height="100%"
+                src={item?.thumbnail?.thumbnailUrl}
+                style={{ borderRadius: '8px' }}
+              />
             </Box>
           ))}
           <Grid item md={12} display="flex" justifyContent="center" my={2}>
