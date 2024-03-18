@@ -3,7 +3,11 @@ import { ViewAdDetails } from '@cookup/modules'
 import { Avatar, Box, Grid } from '@mui/material'
 
 interface PostDetailsProps {
-  singleItem: {} | null
+  singleItem: {
+    user: {
+      userImage: string
+    }
+  } | null
   userLikesCommentsData: {}
   setUserValues: React.Dispatch<React.SetStateAction<null>>
 }
@@ -18,7 +22,7 @@ export const PostDetails = (props: PostDetailsProps) => {
           <Grid item md={12} px={2}>
             <Box width="100%" mt={5}>
               <Box width={50} height={50}>
-                <Avatar src="/assets/icons/user1.svg" />
+                <Avatar src={singleItem?.user?.userImage} />
               </Box>
             </Box>
           </Grid>

@@ -2,6 +2,7 @@ import React from 'react'
 import { COLORS } from '@cookup/constant'
 import { ChevronRight } from '@mui/icons-material'
 import { Avatar, Box, Grid, IconButton, Typography } from '@mui/material'
+import PauseCircleFilledOutlinedIcon from '@mui/icons-material/PauseCircleFilledOutlined'
 
 interface TViewDetails {
   recipe?: any
@@ -16,6 +17,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
   const {
     img,
     recipe,
+
     onVideoClick,
     setUserValues,
     isDashboardAidUI,
@@ -23,7 +25,6 @@ export const ViewAdDetails = (props: TViewDetails) => {
   } = props || {}
 
   const [isPlay, setIsPlay] = React.useState(false)
-
   const videoRef = React.useRef<HTMLVideoElement>(null)
 
   const playVideo = () => {
@@ -40,7 +41,7 @@ export const ViewAdDetails = (props: TViewDetails) => {
     } else {
       playVideo()
     }
-    setIsPlay((prev) => !prev)
+    setIsPlay(!isPlay)
   }
 
   const date = new Date(recipe.createdAt.seconds * 1000)
@@ -85,10 +86,26 @@ export const ViewAdDetails = (props: TViewDetails) => {
         height={400}
         position="relative"
       >
-        <video ref={videoRef} width="100%" height="100%">
-          <source type="video/mp4" src={recipe.videoUrl || ''} />
-          Your browser does not support the video tag.
-        </video>
+        {isPlay ? (
+          <video
+            controls={isPlay}
+            ref={videoRef}
+            width="100%"
+            height="100%"
+            autoPlay={isPlay}
+            src={recipe.videoUrl}
+            style={{ borderRadius: '8px' }}
+          />
+        ) : (
+          <img
+            alt=""
+            width="100%"
+            height="100%"
+            src={img || recipe.thumbnail?.thumbnailUrl}
+            style={{ borderRadius: '8px' }}
+          />
+        )}
+
         <Box
           position="absolute"
           sx={{
@@ -98,7 +115,13 @@ export const ViewAdDetails = (props: TViewDetails) => {
           }}
         >
           <IconButton onClick={onVideoClickHandler}>
-            <img src="/assets/icons/video-icon.svg" alt="video-icon" />
+            {isPlay ? (
+              <PauseCircleFilledOutlinedIcon
+                style={{ fontSize: 100, color: 'white' }}
+              />
+            ) : (
+              <img src="/assets/icons/video-icon.svg" alt="play-icon" />
+            )}
           </IconButton>
         </Box>
         {/* <Box

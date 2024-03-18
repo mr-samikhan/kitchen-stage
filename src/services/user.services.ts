@@ -1,6 +1,6 @@
 import { Api } from './services'
 import { firestore } from '@cookup/firebase'
-import { formatPhoneNumber } from '@cookup/helpers'
+import { formatPhoneNumber, getFileNameFromUrl } from '@cookup/helpers'
 import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
 import {
   doc,
@@ -82,12 +82,34 @@ class User {
         if (userDoc.exists()) {
           const userData = userDoc.data()
 
+          //get thubnail data
+          const thubnailQuerySnapshot = await getDocs(
+            query(collection(firestore, COLLECTIONS.RECIPE_THUMBNAIL))
+          )
+
+          const thumbnailData = thubnailQuerySnapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            }
+          })
           let userUploadedRecipes: any = await Api.recipe.getRecipe(id)
 
           resolve({
             id: userDoc.id,
             ...userData,
-            userUploadedRecipes,
+            userUploadedRecipes: userUploadedRecipes.map((item: any) =>
+              item.videoUrl === ''
+                ? { ...item }
+                : {
+                    ...item,
+                    thumbnail: thumbnailData.find(
+                      (thumbnail: any) =>
+                        thumbnail?.originalVideo ===
+                        getFileNameFromUrl(item?.videoUrl)
+                    ),
+                  }
+            ),
           })
         } else {
           throw new Error('user/not-found')

@@ -18,6 +18,7 @@ import {
   startOfWeek,
   startOfMonth,
 } from 'date-fns'
+import { getFileNameFromUrl } from '@cookup/helpers'
 
 class Recipe {
   getRecipes = async () => {
@@ -30,6 +31,18 @@ class Recipe {
             orderBy('createdAt', 'desc')
           )
         )
+
+        //get thubnail data
+        const thubnailQuerySnapshot = await getDocs(
+          query(collection(firestore, COLLECTIONS.RECIPE_THUMBNAIL))
+        )
+
+        const thumbnailData = thubnailQuerySnapshot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          }
+        })
 
         const allUsers: any = await Api.user.getUsers()
 
@@ -45,6 +58,13 @@ class Recipe {
             ingredients: data.ingredients,
             steps: data.steps,
             createdAt: data.createdAt,
+            thumbnail: data?.videoUrl
+              ? thumbnailData.find(
+                  (thumbnail: any) =>
+                    thumbnail?.originalVideo ===
+                    getFileNameFromUrl(data?.videoUrl)
+                )
+              : '',
             user: allUsers.find((user: any) => user.id === data.userId),
           }
           recipes.push(recipe)
@@ -100,7 +120,7 @@ class Recipe {
         await updateDoc(recipeRef, {
           likedBy: arrayRemove(userId),
         })
-        resolve('User ID removed from likedBy array.')
+        resolve(userId)
       } catch (error) {
         console.error('Error removing user ID: ', error)
         reject(error)
@@ -137,7 +157,7 @@ class Recipe {
                 })
               )
             )
-            resolve('Comments successfully removed.')
+            resolve(userId)
           } else {
             reject('No comments found for the specified user.')
           }

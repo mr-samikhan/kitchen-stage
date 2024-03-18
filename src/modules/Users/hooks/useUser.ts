@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import moment from 'moment'
 import { Api } from '@cookup/services'
 import { useForm } from 'react-hook-form'
@@ -113,13 +113,26 @@ const useUser = ({ user }: IUseUser) => {
   )
 
   //get user likes and comments
-  const { mutate: getUserLikesAndComments, data: userLikesCommentsData } =
-    useMutation<any, any, any>(Api.recipe.getUserRecipeLikesAndComments, {
-      onSuccess: () => {
-        queryClient.invalidateQueries('getUser')
-      },
-      onError: (error) => console.log(error),
-    })
+  let {
+    mutate: getUserLikesAndComments,
+    data: userLikesCommentsData,
+    isLoading,
+  } = useMutation<any, any, any>(Api.recipe.getUserRecipeLikesAndComments, {
+    onSuccess: () => {
+      // queryClient.invalidateQueries('getUser')
+    },
+    onError: (error) => console.log(error),
+  })
+
+  const [commentLikesData, setCommentLikesData] = React.useState(
+    userLikesCommentsData ? userLikesCommentsData : []
+  )
+
+  useEffect(() => {
+    if (!isLoading) {
+      setCommentLikesData(userLikesCommentsData)
+    }
+  }, [userLikesCommentsData])
 
   //delete user likes and comments
   const { mutate: deleteUserLikesAndComments } = useMutation<any, any, any>(
@@ -127,8 +140,21 @@ const useUser = ({ user }: IUseUser) => {
       ? Api.recipe.removeLikedById
       : Api.recipe.removeCommentById,
     {
-      onSuccess: () => {
+      onSuccess: (userId) => {
         queryClient.invalidateQueries('getUser')
+        userValues.isLikesModal
+          ? setCommentLikesData({
+              ...userLikesCommentsData,
+              userLikes: userLikesCommentsData?.userLikes?.filter(
+                (item: any) => item.userId !== userId
+              ),
+            })
+          : setCommentLikesData({
+              ...userLikesCommentsData,
+              userComments: userLikesCommentsData?.userComments?.filter(
+                (item: any) => item.userId !== userId
+              ),
+            })
       },
       onError: (error) => console.log(error),
     }
@@ -240,7 +266,7 @@ const useUser = ({ user }: IUseUser) => {
     onSelectRecipe,
     isResetLoading,
     isUpdateLoading,
-    userLikesCommentsData,
+    userLikesCommentsData: commentLikesData,
     onUpdateUser_rec,
     isSuspendLoading,
     onSubmitSuspension,

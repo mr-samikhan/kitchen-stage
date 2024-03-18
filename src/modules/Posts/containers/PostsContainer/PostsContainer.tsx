@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { COLORS } from '@cookup/constant'
-import { Box, Container } from '@mui/material'
+import { Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useGetPosts, usePagination } from '@cookup/hooks'
 import { ImageCard, LikesModal, PostDetails, usePosts } from '@cookup/modules'

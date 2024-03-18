@@ -190,3 +190,11 @@ export const getInitials = (userName: string) => {
     return parts[0][0].toUpperCase() + parts[1][0].toUpperCase()
   }
 }
+
+export function getFileNameFromUrl(url: string) {
+  const urlObj = new URL(url)
+  const pathname = urlObj.pathname
+  // Extract the last segment of the path
+  const fileName = pathname.substring(pathname.lastIndexOf('/') + 1)
+  return fileName
+}
