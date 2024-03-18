@@ -56,7 +56,7 @@ class User {
             gender: data?.gender || '',
             experience: data?.experience || '',
             dateOfBirth: data?.dateOfBirth || '',
-            phone: formatPhoneNumber(data?.phone) || '',
+            phone: formatPhoneNumber(data?.phone) || 'N/A',
             status: data.status === 'active' ? 'Active' : data.status,
             zipCode: `${data.country || ''}, ${data?.zipCode || ''}`,
             createdAt: data.createdAt,

@@ -25,6 +25,7 @@ export const calculateAgeRange = (dateOfBirth: Timestamp) => {
   return ageRange
 }
 export const formatPhoneNumber = (phoneNumber: string | undefined) => {
+  if (!phoneNumber) return 'N/A'
   const digitsOnly = phoneNumber?.replace(/\D/g, '')
 
   const formattedNumber = `+1 (${digitsOnly?.substring(
