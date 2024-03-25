@@ -5,6 +5,7 @@ const Routes = {
   POSTS: '/posts',
   USERS: '/users',
   ADMINS: '/admins',
+  SONGS: '/songs',
   GROUPS: '/groups',
   BOOKINGS: '/bookings',
   LOGIN_ACCOUNT: '/login',

@@ -38,7 +38,7 @@ export const Sidebar = (props: SidebarProps) => {
         flexDirection="column"
         justifyContent="space-between"
       >
-        <Box my={2}>
+        <Box my={1}>
           <img
             src="/assets/icons/kitchen-stage.svg"
             alt="logo"
@@ -49,7 +49,7 @@ export const Sidebar = (props: SidebarProps) => {
         <Box
           display="flex"
           flexDirection="column"
-          mb={12}
+          mb={5}
           justifyContent="space-between"
           alignItems="center"
         >

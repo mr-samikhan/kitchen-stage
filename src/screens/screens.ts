@@ -1,5 +1,6 @@
 export { default as Ads } from './Ads/Ads'
 export { default as Login } from './Login/Login'
+export { default as Songs } from './Songs/Songs'
 export { default as Users } from './Users/Users'
 export { default as Admins } from './Admins/Admins'
 export { default as Groups } from './Groups/Groups'

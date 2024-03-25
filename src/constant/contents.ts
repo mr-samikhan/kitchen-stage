@@ -57,6 +57,14 @@ export let SIDEBAR_ARRAY = [
     icon: '/assets/icons/customersupport.svg',
     activeIcon: '/assets/icons/selected-support.svg',
   },
+  {
+    active: false,
+    title: 'Songs',
+    label: 'Songs',
+    path: ROUTES.SONGS,
+    icon: '/assets/icons/music.svg',
+    activeIcon: '/assets/icons/selected-music.svg',
+  },
 ]
 
 export const DASHBOARD_USERS = [
