@@ -19,6 +19,7 @@ import {
   DashboardAds,
   ManageSettings,
   CustomerSupport,
+  Songs,
 } from '@cookup/screens'
 
 const Routes = () => {
@@ -40,6 +41,7 @@ const Routes = () => {
             <Route path={ROUTES.USERS} element={<Users />} />
             <Route path={ROUTES.SINGLE_USER} element={<SingleUser />} />
           </Route>
+          <Route path={ROUTES.SONGS} element={<Songs />} />
           <Route path={ROUTES.ADMINS} element={<Admins />} />
           <Route path={ROUTES.GROUPS} element={<Groups />} />
           <Route path={ROUTES.EDIT} element={<Editors />} />

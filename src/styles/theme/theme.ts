@@ -192,6 +192,44 @@ let theme = createTheme({
         },
       },
     },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          '& thead th': {
+            fontSize: 16,
+            fontWeight: 600,
+            color: COLORS.primary.main,
+            backgroundColor: COLORS.grey.dark,
+          },
+
+          '& tbody td': {
+            fontSize: 14,
+            fontWeight: 500,
+            color: COLORS.primary.main,
+          },
+
+          '& tbody tr td:first-child': {
+            borderRight: `1px solid #CDCDCD`,
+          },
+          '& tbody tr td:nth-child(2)': {
+            borderRight: `1px solid #CDCDCD`,
+          },
+
+          //align end for last column
+          '& tbody tr td:last-child': {
+            textAlign: 'end',
+            paddingRight: 20,
+          },
+
+          '& tbody tr:nth-of-type(odd)': {
+            backgroundColor: COLORS.row,
+          },
+          '& .MuiTableCell-root': {
+            padding: '5px 5px',
+          },
+        },
+      },
+    },
   },
 })
 

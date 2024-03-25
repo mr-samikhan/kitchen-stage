@@ -57,6 +57,14 @@ export let SIDEBAR_ARRAY = [
     icon: '/assets/icons/customersupport.svg',
     activeIcon: '/assets/icons/selected-support.svg',
   },
+  {
+    active: false,
+    title: 'Songs',
+    label: 'Songs',
+    path: ROUTES.SONGS,
+    icon: '/assets/icons/music.svg',
+    activeIcon: '/assets/icons/selected-music.svg',
+  },
 ]
 
 export const DASHBOARD_USERS = [
@@ -769,4 +777,47 @@ export const ADMIN_OPTIONS = [{ label: 'Admin', value: 'Admin' }]
 export const SUPER_ADMIN_OPTIONS = [
   { label: 'Super Admin', value: 'Super Admin' },
   { label: 'Admin', value: 'Admin' },
+]
+
+export const SONGS_DATA = [
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
 ]
