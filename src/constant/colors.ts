@@ -35,6 +35,7 @@ const Colors = {
   black: '#000000',
   transparentOrange: '#FFEEEE',
   blue: '#2378EF',
+  row: '#EBEBEB',
 }
 
 export default Colors

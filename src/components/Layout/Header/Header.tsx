@@ -80,6 +80,7 @@ export const Header = (props: HeaderProps) => {
   const { pathname } = window.location
 
   let post_path = pathname === '/posts'
+  let songs_path = pathname === '/songs'
 
   const { startDate, endDate } = useSelector((state: any) => state.user)
 
@@ -104,7 +105,14 @@ export const Header = (props: HeaderProps) => {
           navigationTitle={navigationTitle}
         />
       )}
-      {!mobileMode && (
+      {songs_path && (
+        <Grid item md={12} sm={6} p={{ md: 1, xs: 0 }} my={{ md: 2, xs: 0 }}>
+          <Typography variant="h1" textAlign="center">
+            Music
+          </Typography>
+        </Grid>
+      )}
+      {!mobileMode && !songs_path && (
         <Grid
           container
           display="flex"

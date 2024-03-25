@@ -83,7 +83,7 @@ export const Sidebar = (props: SidebarProps) => {
                     }}
                   />
                 </IconButton>
-                <Typography
+                {/* <Typography
                   mt={1}
                   fontSize={10}
                   fontWeight={600}
@@ -91,7 +91,7 @@ export const Sidebar = (props: SidebarProps) => {
                   color={COLORS.grey.main}
                 >
                   {item?.label}
-                </Typography>
+                </Typography> */}
               </Box>
             )
           })}

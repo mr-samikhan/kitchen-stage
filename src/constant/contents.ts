@@ -778,3 +778,46 @@ export const SUPER_ADMIN_OPTIONS = [
   { label: 'Super Admin', value: 'Super Admin' },
   { label: 'Admin', value: 'Admin' },
 ]
+
+export const SONGS_DATA = [
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+  {
+    title: 'My Song',
+    time: '3:00',
+    artist: 'Lorem Ipsum',
+  },
+]

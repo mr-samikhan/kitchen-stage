@@ -1,0 +1,14 @@
+.rhap_play-pause-button{
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    border-radius: 50%;
+    color: #000;
+    font-size: 20px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
