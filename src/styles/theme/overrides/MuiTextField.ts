@@ -125,6 +125,12 @@ export const MuiTextField: Components['MuiTextField'] = {
           color: COLORS.input.main,
         },
       },
+      '&.music-input': {
+        '& .MuiOutlinedInput-root': {
+          background: '#EBEBEB',
+          border: '1px solid #C5C5C5',
+        },
+      },
     },
   },
 }

@@ -1,22 +1,38 @@
-import React from 'react'
 import { Grid } from '@mui/material'
 import { Layout } from '@cookup/components'
 import { COLORS, SONGS_DATA } from '@cookup/constant'
 import {
   Hero,
   useSongs,
+  AddEditSongs,
   MuiCustomTable,
   CustomAudioPlayer,
 } from '@cookup/modules'
 
 const SongsContainer = () => {
-  const { songValues, setSongValues, onRowClick, onEdit, onDelete } = useSongs()
-  const { showModal, showPlayer, selectedIndex, singleItem } = songValues || {}
+  const {
+    onEdit,
+    methods,
+    onSubmit,
+    onDelete,
+    songValues,
+    onRowClick,
+    setSongValues,
+  } = useSongs()
+  const { showModal, showPlayer, selectedIndex, singleItem, addModal } =
+    songValues || {}
 
   return (
     <Layout bgcolor={COLORS.background}>
       <Grid container pr={{ md: 12, xs: 2 }}>
-        <Hero onAdd={() => console.log('show modal')} />
+        <Hero
+          onAdd={() =>
+            setSongValues((prev: any) => ({
+              ...prev,
+              addModal: true,
+            }))
+          }
+        />
         <Grid item md={singleItem && showPlayer ? 8 : 12} xs={12}>
           <MuiCustomTable
             onDelete={onDelete}
@@ -41,11 +57,22 @@ const SongsContainer = () => {
             <CustomAudioPlayer
               artist={singleItem.artist}
               title={singleItem.title}
-              src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+              src={singleItem?.file?.url}
             />
           </Grid>
         )}
       </Grid>
+
+      {addModal && (
+        <AddEditSongs
+          methods={methods}
+          onSubmit={onSubmit}
+          open={addModal}
+          onClose={() =>
+            setSongValues((prev: any) => ({ ...prev, addModal: false }))
+          }
+        />
+      )}
     </Layout>
   )
 }

@@ -27,3 +27,10 @@ export type IAdminsFormResolver = {
 export type IUserEmailresolver = {
   email: string
 }
+
+export type IAddSongResolver = {
+  time: string
+  title: string
+  artist: string
+  createdAt?: Date
+}
