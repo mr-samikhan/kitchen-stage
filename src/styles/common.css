@@ -1,14 +1,30 @@
 .rhap_play-pause-button{
-    background-color: #f5f5f5;
-    border: 1px solid #f5f5f5;
-    border-radius: 50%;
+    width: 80px;
+    height: 80px;
     color: #000;
-    font-size: 20px;
-    height: 40px;
-    width: 40px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
+    font-size: 20px;
+    border-radius: 50%;
+    align-items: center;
     transition: all 0.3s;
+    justify-content: center;
+    border: 1px solid #f5f5f5;
+    background: linear-gradient(38.23deg, #F23D4C 15.58%, #F98791 83%);
 }
+.rhap_container{
+    background: transparent;
+    box-shadow: none;
+}
+.rhap_main {
+    position: relative;
+}
+.rhap_current-time{
+       top:25px;
+        position:absolute;
+    }
+.rhap_total-time{
+        right: 0;
+        top:25px;
+        position:absolute;
+    }

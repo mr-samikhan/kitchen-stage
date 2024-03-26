@@ -1,10 +1,16 @@
 import React from 'react'
 import { Box } from '@mui/material'
 
-interface CustomTooltipProps {}
+interface CustomTooltipProps {
+  onEdit: () => void
+  onDelete: () => void
+}
 
 const CustomTooltip = (props: CustomTooltipProps) => {
+  const { onEdit, onDelete } = props || {}
+
   const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null)
+
   return (
     <React.Fragment>
       <Box
@@ -20,7 +26,15 @@ const CustomTooltip = (props: CustomTooltipProps) => {
               py={1}
               key={index}
               textAlign="center"
-              onClick={() => setSelectedIndex(index)}
+              onClick={(event) => {
+                event.stopPropagation()
+                if (index === 0) {
+                  onEdit()
+                } else {
+                  onDelete()
+                }
+                setSelectedIndex(index)
+              }}
               bgcolor={index === selectedIndex ? '#D9D9D9' : 'transparent'}
             >
               {item}

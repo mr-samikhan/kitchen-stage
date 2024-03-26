@@ -1,4 +1,7 @@
 import React from 'react'
+import { CustomTooltip } from '../components'
+import { CustomLoader } from '@cookup/components'
+import { ISingleItem } from '../../hooks/useSongs/useSongs'
 import {
   Table,
   TableBody,
@@ -7,26 +10,33 @@ import {
   TableHead,
   IconButton,
 } from '@mui/material'
-import { CustomTooltip } from '../components'
 
 interface MuiCustomTableProps {
   data: any[]
   showModal: boolean
-  onRowClick: () => void
+  isLoading: boolean
   onIconClick: () => void
   selectedIndex: number | null
+  onEdit: (item: ISingleItem) => void
+  onDelete: (item: ISingleItem) => void
   setSelectedIndex: (index: number) => void
+  onRowClick: (data: ISingleItem, index: number) => void
 }
 
 const MuiCustomTable = (props: MuiCustomTableProps) => {
   const {
-    showModal,
-    onIconClick,
-    onRowClick,
     data,
+    onEdit,
+    onDelete,
+    showModal,
+    isLoading,
+    onRowClick,
+    onIconClick,
     selectedIndex,
     setSelectedIndex,
   } = props || {}
+
+  if (isLoading) return <CustomLoader />
 
   return (
     <React.Fragment>
@@ -40,10 +50,19 @@ const MuiCustomTable = (props: MuiCustomTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {data.length === 0 && (
+            <TableRow>
+              <TableCell className="no-records-found" colSpan={4}>
+                No records found.
+              </TableCell>
+            </TableRow>
+          )}
           {data?.map(({ title, time, artist }, index) => (
             <TableRow
               key={index}
-              onClick={onRowClick}
+              onClick={() => {
+                onRowClick(data[index], index)
+              }}
               sx={{
                 position: 'relative',
               }}
@@ -53,14 +72,20 @@ const MuiCustomTable = (props: MuiCustomTableProps) => {
               <TableCell>{artist}</TableCell>
               <TableCell>
                 <IconButton
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation()
                     setSelectedIndex(index)
                     onIconClick()
                   }}
                 >
                   <img src="/assets/icons/three-dot.svg" alt="three-dot" />
                 </IconButton>
-                {selectedIndex === index && <CustomTooltip />}
+                {selectedIndex === index && showModal && (
+                  <CustomTooltip
+                    onEdit={() => onEdit(data[index])}
+                    onDelete={() => onDelete(data[index])}
+                  />
+                )}
               </TableCell>
             </TableRow>
           ))}

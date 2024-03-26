@@ -1,6 +1,7 @@
 export * from '../hooks/hooks'
 export { default as useGetAds } from './useGetAds'
 export { default as useGetUser } from './useGetUser'
+export { default as useGetMusic } from './useGetMusic'
 export { default as useGetUsers } from './useGetUsers'
 export { default as useGetPosts } from './useGetPosts'
 export { default as useGetAdmins } from './useGetAdmins'

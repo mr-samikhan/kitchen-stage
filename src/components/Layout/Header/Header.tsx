@@ -1,5 +1,7 @@
 import React from 'react'
+import { ROUTES } from '@cookup/constant'
 import { useBreakPoints } from '@cookup/hooks'
+import { formatStartEndDate } from '@cookup/helpers'
 import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import MobileHeader from '../MobileHeader/MobileHeader'
@@ -11,7 +13,6 @@ import {
   CustomFilterButton,
   MuiCustomSearchInput,
 } from '@cookup/components'
-import { formatStartEndDate } from '@cookup/helpers'
 
 interface HeaderProps {
   button1Icon?: any
@@ -79,8 +80,8 @@ export const Header = (props: HeaderProps) => {
 
   const { pathname } = window.location
 
-  let post_path = pathname === '/posts'
-  let songs_path = pathname === '/songs'
+  let post_path = pathname === ROUTES.POSTS
+  let songs_path = pathname === ROUTES.SONGS
 
   const { startDate, endDate } = useSelector((state: any) => state.user)
 
@@ -106,8 +107,14 @@ export const Header = (props: HeaderProps) => {
         />
       )}
       {songs_path && (
-        <Grid item md={12} sm={6} p={{ md: 1, xs: 0 }} my={{ md: 2, xs: 0 }}>
-          <Typography variant="h1" textAlign="center">
+        <Grid item md={11} sm={6} p={{ md: 1, xs: 0 }} my={{ md: 2, xs: 0 }}>
+          <Typography
+            fontSize={20}
+            color="primary"
+            fontWeight={700}
+            textAlign="center"
+            fontFamily="Poppins"
+          >
             Music
           </Typography>
         </Grid>

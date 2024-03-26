@@ -148,3 +148,11 @@ export const AdsFormResolver: any | Resolver<any> = yupResolver(
     image: yup.object().required('Image is Required'),
   })
 )
+
+export const MusicFormResolver: any | Resolver<any> = yupResolver(
+  yup.object().shape({
+    title: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    artist: yup.string().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+    file: yup.mixed().required(VALIDATION_MESSAGES.REQUIRED_FIELD),
+  })
+)

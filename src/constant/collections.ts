@@ -3,6 +3,7 @@ const Collections = {
   USER: 'users',
   ADMIN: 'admins',
   GROUP: 'groups',
+  MUSIC: 'musics',
   RECIPE: 'recipes',
   BOOKING: 'bookings',
   DRAFT_ADS: 'draft_ads',
