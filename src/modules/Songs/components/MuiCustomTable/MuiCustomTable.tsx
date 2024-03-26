@@ -1,5 +1,6 @@
 import React from 'react'
 import { CustomTooltip } from '../components'
+import { ISingleItem } from '../../hooks/useSongs/useSongs'
 import {
   Table,
   TableBody,
@@ -12,15 +13,19 @@ import {
 interface MuiCustomTableProps {
   data: any[]
   showModal: boolean
-  onRowClick: () => void
   onIconClick: () => void
   selectedIndex: number | null
+  onEdit: (item: ISingleItem) => void
+  onDelete: (item: ISingleItem) => void
   setSelectedIndex: (index: number) => void
+  onRowClick: (data: ISingleItem, index: number) => void
 }
 
 const MuiCustomTable = (props: MuiCustomTableProps) => {
   const {
     data,
+    onEdit,
+    onDelete,
     showModal,
     onRowClick,
     onIconClick,
@@ -43,7 +48,9 @@ const MuiCustomTable = (props: MuiCustomTableProps) => {
           {data?.map(({ title, time, artist }, index) => (
             <TableRow
               key={index}
-              onClick={onRowClick}
+              onClick={() => {
+                onRowClick(data[index], index)
+              }}
               sx={{
                 position: 'relative',
               }}
@@ -53,14 +60,20 @@ const MuiCustomTable = (props: MuiCustomTableProps) => {
               <TableCell>{artist}</TableCell>
               <TableCell>
                 <IconButton
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation()
                     setSelectedIndex(index)
                     onIconClick()
                   }}
                 >
                   <img src="/assets/icons/three-dot.svg" alt="three-dot" />
                 </IconButton>
-                {selectedIndex === index && <CustomTooltip />}
+                {selectedIndex === index && showModal && (
+                  <CustomTooltip
+                    onEdit={() => onEdit(data[index])}
+                    onDelete={() => onDelete(data[index])}
+                  />
+                )}
               </TableCell>
             </TableRow>
           ))}
