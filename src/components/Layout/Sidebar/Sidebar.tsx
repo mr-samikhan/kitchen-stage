@@ -4,8 +4,8 @@ import { getInitials } from '@cookup/helpers'
 import { useBreakPoints } from '@cookup/hooks'
 import CloseIcon from '@mui/icons-material/Close'
 import { COLORS, ROUTES } from '@cookup/constant'
+import { Avatar, Box, IconButton } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Avatar, Box, IconButton, Typography } from '@mui/material'
 
 interface SidebarProps {
   sideBarOptions?: any

@@ -1,5 +1,7 @@
 import React from 'react'
+import { ROUTES } from '@cookup/constant'
 import { useBreakPoints } from '@cookup/hooks'
+import { formatStartEndDate } from '@cookup/helpers'
 import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import MobileHeader from '../MobileHeader/MobileHeader'
@@ -11,7 +13,6 @@ import {
   CustomFilterButton,
   MuiCustomSearchInput,
 } from '@cookup/components'
-import { formatStartEndDate } from '@cookup/helpers'
 
 interface HeaderProps {
   button1Icon?: any
@@ -79,8 +80,8 @@ export const Header = (props: HeaderProps) => {
 
   const { pathname } = window.location
 
-  let post_path = pathname === '/posts'
-  let songs_path = pathname === '/songs'
+  let post_path = pathname === ROUTES.POSTS
+  let songs_path = pathname === ROUTES.SONGS
 
   const { startDate, endDate } = useSelector((state: any) => state.user)
 

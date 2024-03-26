@@ -1,4 +1,5 @@
 import React from 'react'
+import { CustomTooltip } from '../components'
 import {
   Table,
   TableBody,
@@ -7,7 +8,6 @@ import {
   TableHead,
   IconButton,
 } from '@mui/material'
-import { CustomTooltip } from '../components'
 
 interface MuiCustomTableProps {
   data: any[]
@@ -20,10 +20,10 @@ interface MuiCustomTableProps {
 
 const MuiCustomTable = (props: MuiCustomTableProps) => {
   const {
-    showModal,
-    onIconClick,
-    onRowClick,
     data,
+    showModal,
+    onRowClick,
+    onIconClick,
     selectedIndex,
     setSelectedIndex,
   } = props || {}
