@@ -107,8 +107,14 @@ export const Header = (props: HeaderProps) => {
         />
       )}
       {songs_path && (
-        <Grid item md={12} sm={6} p={{ md: 1, xs: 0 }} my={{ md: 2, xs: 0 }}>
-          <Typography variant="h1" textAlign="center">
+        <Grid item md={11} sm={6} p={{ md: 1, xs: 0 }} my={{ md: 2, xs: 0 }}>
+          <Typography
+            fontSize={20}
+            color="primary"
+            fontWeight={700}
+            textAlign="center"
+            fontFamily="Poppins"
+          >
             Music
           </Typography>
         </Grid>

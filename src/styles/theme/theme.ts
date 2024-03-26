@@ -206,6 +206,7 @@ let theme = createTheme({
             fontSize: 14,
             fontWeight: 500,
             color: COLORS.primary.main,
+            border: 'none',
           },
 
           '& tbody tr td:first-child': {
@@ -226,6 +227,11 @@ let theme = createTheme({
           },
           '& .MuiTableCell-root': {
             padding: '5px 5px',
+          },
+          '& .no-records-found': {
+            //center the text in td
+            textAlign: 'center !important',
+            padding: '20px 0',
           },
         },
       },

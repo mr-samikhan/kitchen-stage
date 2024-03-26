@@ -2,8 +2,9 @@ import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { COLORS } from '@cookup/constant'
 import 'react-h5-audio-player/lib/styles.css'
-import { Box, Typography } from '@mui/material'
+import { useBreakPoints } from '@cookup/hooks'
 import AudioPlayer from 'react-h5-audio-player'
+import { Box, Divider, Typography } from '@mui/material'
 import PauseOutlinedIcon from '@mui/icons-material/PauseOutlined'
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined'
 
@@ -16,6 +17,10 @@ interface CustomAudioPlayerProps {
 const CustomAudioPlayer = (props: CustomAudioPlayerProps) => {
   const { src, title, artist } = props || {}
 
+  const { mobileMode, tabMode } = useBreakPoints()
+
+  const [isPlay, setIsPlay] = React.useState(false)
+
   const classes = useStyles()
 
   const customIcons = {
@@ -27,26 +32,38 @@ const CustomAudioPlayer = (props: CustomAudioPlayerProps) => {
 
   return (
     <React.Fragment>
-      <Box my={2}>
-        <Typography variant="h3" fontWeight={700}>
-          {title}
-        </Typography>
-        <Typography
-          mt={1}
-          variant="h6"
-          fontWeight={400}
-          color={COLORS.grey.main}
-        >
-          {artist}
-        </Typography>
+      {!mobileMode && !tabMode && (
+        <Divider
+          variant="inset"
+          orientation="vertical"
+          className={classes.divider}
+        />
+      )}
+      <Box px={5}>
+        <Box my={2} ml={2}>
+          <Typography variant="h3" fontWeight={700}>
+            {title}
+          </Typography>
+          <Typography
+            mt={1}
+            variant="h6"
+            fontWeight={400}
+            color={COLORS.grey.main}
+          >
+            {artist}
+          </Typography>
+        </Box>
+        <AudioPlayer
+          src={src}
+          autoPlay={false}
+          customIcons={customIcons}
+          customVolumeControls={[]}
+          autoPlayAfterSrcChange={false}
+          customAdditionalControls={[]}
+          onPlay={() => setIsPlay(true)}
+          onPause={() => setIsPlay(false)}
+        />
       </Box>
-      <AudioPlayer
-        src={src}
-        customIcons={customIcons}
-        customVolumeControls={[]}
-        customAdditionalControls={[]}
-        // onPlay={(e) => console.log('onPlay')}
-      />
     </React.Fragment>
   )
 }
@@ -57,5 +74,12 @@ const useStyles = makeStyles((theme: any) => ({
   icon: {
     color: '#ffff',
     fontSize: 50,
+  },
+  divider: {
+    marginLeft: 0,
+    height: '100%',
+    borderRadius: '5px',
+    position: 'absolute',
+    border: '6px solid #D9D9D9',
   },
 }))

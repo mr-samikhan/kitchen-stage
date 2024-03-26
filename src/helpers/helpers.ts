@@ -198,3 +198,10 @@ export function getFileNameFromUrl(url: string) {
   const fileName = pathname.substring(pathname.lastIndexOf('/') + 1)
   return fileName
 }
+
+export function getCurrentTime() {
+  const now = new Date()
+  const hours = now.getHours()
+  const minutes = now.getMinutes()
+  return `${hours % 12 || 12}:${minutes < 10 ? '0' + minutes : minutes}`
+}

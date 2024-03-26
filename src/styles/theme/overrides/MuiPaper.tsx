@@ -12,7 +12,7 @@ export const MuiPaper: Components['MuiPaper'] = {
         width: 400,
         top: '50%',
         left: '50%',
-        padding: 20,
+        padding: 25,
         display: 'flex',
         borderRadius: 10,
         position: 'absolute',

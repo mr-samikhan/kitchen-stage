@@ -1,5 +1,6 @@
 import React from 'react'
 import { CustomTooltip } from '../components'
+import { CustomLoader } from '@cookup/components'
 import { ISingleItem } from '../../hooks/useSongs/useSongs'
 import {
   Table,
@@ -13,6 +14,7 @@ import {
 interface MuiCustomTableProps {
   data: any[]
   showModal: boolean
+  isLoading: boolean
   onIconClick: () => void
   selectedIndex: number | null
   onEdit: (item: ISingleItem) => void
@@ -27,11 +29,14 @@ const MuiCustomTable = (props: MuiCustomTableProps) => {
     onEdit,
     onDelete,
     showModal,
+    isLoading,
     onRowClick,
     onIconClick,
     selectedIndex,
     setSelectedIndex,
   } = props || {}
+
+  if (isLoading) return <CustomLoader />
 
   return (
     <React.Fragment>
@@ -45,6 +50,13 @@ const MuiCustomTable = (props: MuiCustomTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {data.length === 0 && (
+            <TableRow>
+              <TableCell className="no-records-found" colSpan={4}>
+                No records found.
+              </TableCell>
+            </TableRow>
+          )}
           {data?.map(({ title, time, artist }, index) => (
             <TableRow
               key={index}

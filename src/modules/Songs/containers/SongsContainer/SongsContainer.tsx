@@ -1,6 +1,6 @@
-import { Grid } from '@mui/material'
+import { Divider, Grid } from '@mui/material'
+import { COLORS } from '@cookup/constant'
 import { Layout } from '@cookup/components'
-import { COLORS, SONGS_DATA } from '@cookup/constant'
 import {
   Hero,
   useSongs,
@@ -8,6 +8,7 @@ import {
   MuiCustomTable,
   CustomAudioPlayer,
 } from '@cookup/modules'
+import { useGetMusic } from '@cookup/hooks'
 
 const SongsContainer = () => {
   const {
@@ -15,40 +16,39 @@ const SongsContainer = () => {
     methods,
     onSubmit,
     onDelete,
+    isLoading,
     songValues,
     onRowClick,
     setSongValues,
+    onOpenAddModal,
   } = useSongs()
+
   const { showModal, showPlayer, selectedIndex, singleItem, addModal } =
     songValues || {}
+
+  const { musics, musicLoading } = useGetMusic({})
 
   return (
     <Layout bgcolor={COLORS.background}>
       <Grid container pr={{ md: 12, xs: 2 }}>
-        <Hero
-          onAdd={() =>
-            setSongValues((prev: any) => ({
-              ...prev,
-              addModal: true,
-            }))
-          }
-        />
+        <Hero onAdd={onOpenAddModal} />
         <Grid item md={singleItem && showPlayer ? 8 : 12} xs={12}>
           <MuiCustomTable
-            onDelete={onDelete}
+            data={musics}
             onEdit={onEdit}
-            data={SONGS_DATA}
+            onDelete={onDelete}
             showModal={showModal}
             onRowClick={onRowClick}
+            isLoading={musicLoading}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={(index) =>
+              setSongValues((prev: any) => ({ ...prev, selectedIndex: index }))
+            }
             onIconClick={() =>
               setSongValues((prev: any) => ({
                 ...prev,
                 showModal: !prev.showModal,
               }))
-            }
-            selectedIndex={selectedIndex}
-            setSelectedIndex={(index) =>
-              setSongValues((prev: any) => ({ ...prev, selectedIndex: index }))
             }
           />
         </Grid>
@@ -65,6 +65,7 @@ const SongsContainer = () => {
 
       {addModal && (
         <AddEditSongs
+          isLoading={isLoading}
           methods={methods}
           onSubmit={onSubmit}
           open={addModal}

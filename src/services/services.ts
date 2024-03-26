@@ -6,6 +6,7 @@ import { ImageService } from './images.services'
 import { RecipeService } from './recipe.services'
 import { SupportService } from './support.services'
 import { DashboardService } from './dashboard.services'
+import { MusicService } from './music.services'
 
 const Api = {
   auth: {
@@ -61,6 +62,12 @@ const Api = {
     removeCommentById: RecipeService.removeCommentById,
     getUserRecipeLikes: RecipeService.getUserRecipeLikes,
     getUserRecipeLikesAndComments: RecipeService.getUserRecipeLikesAndComments,
+  },
+  music: {
+    addMusic: MusicService.addMusic,
+    getMusics: MusicService.getMusics,
+    updateMusic: MusicService.updateMusic,
+    deleteMusic: MusicService.deleteMusic,
   },
   dashboard: {
     getAllCounters: DashboardService.getAllCounters,
