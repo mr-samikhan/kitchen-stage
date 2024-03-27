@@ -35,6 +35,7 @@ export const SortModalUI = (props: SortModalUIProps) => {
   const dispatch = useDispatch()
 
   const { sortBy, filterBy } = useSelector((state: any) => state.user)
+  console.log(sortBy, 'filterBy')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(

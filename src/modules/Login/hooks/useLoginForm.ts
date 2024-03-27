@@ -5,10 +5,10 @@ import { useMutation } from 'react-query'
 import { ROUTES } from '@cookup/constant'
 import { set, useForm } from 'react-hook-form'
 import { AppDispatch } from 'redux/store/store'
-import { getCurrentUserData, loginUser, selectUser } from '@cookup/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { ILoginFormResolver } from 'types/FormResolvers'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { getCurrentUserData, loginUser, selectUser } from '@cookup/redux'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   LoginFormResolver,
   ForgotPasswordFormResolver,
@@ -37,16 +37,19 @@ export default function useLoginForm() {
   const [confirmationObject, setConfirmationObject] = React.useState<any>({})
   const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
 
+  const queryParams = new URLSearchParams(location.search)
+  const [searchParams] = useSearchParams()
+
+  let oobCode_: string | null = searchParams.get('oobCode')
+
   useEffect(() => {
-    if (oobCode) {
+    if (oobCode_ || queryParams.get('mode') === 'resetPassword') {
       navigate(ROUTES.RESET_PASSWORD)
     } else {
       if (auth.currentUser && auth.currentUser?.phoneNumber) {
         return navigate(ROUTES.ROOT)
       } else if (auth.currentUser && auth.currentUser?.phoneNumber === null) {
         return navigate(ROUTES.LOGIN_2FA)
-      } else {
-        return navigate(ROUTES.LOGIN_ACCOUNT)
       }
     }
   }, [])

@@ -88,6 +88,11 @@ const userSlice = createSlice({
     SET_END_DATE: (state, action: PayloadAction<any>) => {
       state.endDate = action.payload
     },
+    CLEAR_USER_VALUES: (state) => {
+      state.startDate = ''
+      state.endDate = ''
+      state.sortBy = { sortValue: '', sortType: 'ascending' }
+    },
   },
 })
 
@@ -98,6 +103,7 @@ export const {
   SET_START_DATE,
   SET_END_DATE,
   SET_FILTER_TYPE,
+  CLEAR_USER_VALUES,
   USER_RESET_PASSWORD,
   USER_ACCOUNT_UPDATED,
 } = userSlice.actions

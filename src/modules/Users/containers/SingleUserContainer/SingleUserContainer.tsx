@@ -1,9 +1,9 @@
 import React from 'react'
 import moment from 'moment'
 import useUser from '../../hooks/useUser'
-import { Delete } from '@mui/icons-material'
+import { ArrowBack, Delete } from '@mui/icons-material'
 import { FormProvider } from 'react-hook-form'
-import { Box, Container, Grid } from '@mui/material'
+import { Box, Container, Grid, IconButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useBreakPoints, useGetUser } from '@cookup/hooks'
 import { LIKES_DATA, USER_TAB_OPTIONS } from '@cookup/constant'
@@ -173,6 +173,7 @@ export const SingleUserContainer = () => {
               // isBusinessType={state.type ? true : false}
             />
           </Grid>
+
           {RenderUserSteps()}
         </Grid>
       </Box>

@@ -29,9 +29,8 @@ class Auth {
     try {
       let adminData: IUser | any = null
       let { user } = await signInWithEmailAndPassword(auth, email, password)
-      console.log('>>>user', user)
       await updateDoc(doc(firestore, COLLECTIONS.ADMIN, user.uid), {
-        lastLogin: user.metadata.lastSignInTime,
+        lastLogin: new Date(),
       })
 
       adminData = await this.checkAdminStatus(user)
@@ -97,16 +96,16 @@ class Auth {
   forgotPassword = async (email: string) => {
     return new Promise((resolve, reject) => {
       const actionCodeSettings = {
-        url: '/reset-password',
-        handleCodeInApp: true,
+        url: 'https://kitchen-stage.web.app',
+        continueUrl: 'https://kitchen-stage.web.app/reset_password',
+        handleCodeInApp: false,
       }
       sendPasswordResetEmail(auth, email, actionCodeSettings)
         .then(() => {
           resolve({ message: 'Email sent successfully' })
         })
         .catch((error) => {
-          const err = getErrorMessage(error)
-          reject(err)
+          reject(error.code || error.message)
         })
     })
   }

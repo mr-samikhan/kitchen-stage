@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CustomFilterButton } from '@cookup/components'
 import { OPEN_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
 
@@ -14,6 +14,8 @@ export const SubHeader = (props: SubHeaderProps) => {
 
   const dispatch = useDispatch()
 
+  const { sortBy } = useSelector((state: any) => state.user)
+
   return (
     <Box display="flex" gap={2} justifyContent="flex-end">
       {isSort && (
@@ -21,8 +23,15 @@ export const SubHeader = (props: SubHeaderProps) => {
       )}
       {isFilter && (
         <CustomFilterButton
-          placeholder="Filter"
+          sx={
+            sortBy?.sortValue && {
+              '& .MuiOutlinedInput-root': {
+                width: 'auto !important',
+              },
+            }
+          }
           icon="/assets/icons/filter_alt.svg"
+          placeholder={sortBy?.sortValue || 'Filter'}
           onClick={() => dispatch(SET_FILTER_MODAL(true))}
         />
       )}
