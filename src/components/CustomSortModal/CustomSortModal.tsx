@@ -45,7 +45,6 @@ export const CustomSortModal = (props: CustomSortModalProps) => {
 
   const onSelectValues = (item: ISortItem) => {
     dispatch(SET_SORT_VALUE(item))
-    console.log(item)
   }
 
   let CHECK = mobileMode || tabMode

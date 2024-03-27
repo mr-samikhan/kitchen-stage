@@ -3,6 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 
 interface CustomFilterButtonProps {
+  sx?: any
   icon?: string
   value?: string | Date
   className?: string
@@ -11,10 +12,12 @@ interface CustomFilterButtonProps {
 }
 
 export const CustomFilterButton = (props: CustomFilterButtonProps) => {
-  const { placeholder, onClick, className, value, icon } = props || {}
+  const { placeholder, onClick, className, value, icon, sx } = props || {}
 
   return (
     <TextField
+      disabled
+      sx={sx}
       value={value}
       variant="outlined"
       className={className || 'filter'}

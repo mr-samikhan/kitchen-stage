@@ -10,7 +10,6 @@ import {
   DocumentData,
   DocumentSnapshot,
 } from 'firebase/firestore'
-import { sendEmailVerification } from 'firebase/auth'
 
 interface IAdmin {
   uid: string

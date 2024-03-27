@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ROUTES } from '@cookup/constant'
 import { useBreakPoints } from '@cookup/hooks'
 import { formatStartEndDate } from '@cookup/helpers'
 import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import MobileHeader from '../MobileHeader/MobileHeader'
-import { OPEN_SORT_MODAL, SET_FILTER_MODAL } from '@cookup/redux'
+import {
+  CLEAR_USER_VALUES,
+  OPEN_SORT_MODAL,
+  SET_FILTER_MODAL,
+} from '@cookup/redux'
 import {
   MuiCustomTab,
   NavigationBar,
@@ -80,10 +84,14 @@ export const Header = (props: HeaderProps) => {
 
   const { pathname } = window.location
 
+  useEffect(() => {
+    dispatch(CLEAR_USER_VALUES())
+  }, [pathname])
+
   let post_path = pathname === ROUTES.POSTS
   let songs_path = pathname === ROUTES.SONGS
 
-  const { startDate, endDate } = useSelector((state: any) => state.user)
+  const { startDate, endDate, sortBy } = useSelector((state: any) => state.user)
 
   return (
     <React.Fragment>
@@ -168,12 +176,13 @@ export const Header = (props: HeaderProps) => {
               )}
               {isSort && (
                 <CustomFilterButton
+                  sx={sortBy?.title ? titleStyle : ''}
                   onClick={() => dispatch(OPEN_SORT_MODAL())}
                   className={startDate && endDate ? 'filter-filled' : 'filter'}
                   value={
                     startDate && endDate
                       ? formatStartEndDate(startDate, endDate)
-                      : 'Today'
+                      : sortBy?.title || 'Today'
                   }
                 />
               )}
@@ -215,3 +224,8 @@ export const Header = (props: HeaderProps) => {
 }
 
 export default Header
+const titleStyle = {
+  '& .MuiOutlinedInput-root': {
+    width: '160px !important',
+  },
+}

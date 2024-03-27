@@ -95,6 +95,7 @@ export const UserContainer = () => {
       onNextPage={goToNextPage}
       bgcolor={COLORS.background}
       isFooter={users?.length > 7}
+      onGoBack={() => navigate(-1)}
       onPreviousPage={goToPreviousPage}
       isTitle={state?.type !== undefined ? false : true}
       isTabs={state?.type !== undefined ? false : true}

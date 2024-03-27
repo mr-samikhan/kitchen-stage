@@ -137,7 +137,9 @@ const CustomList: React.FC<CustomListProps> = (props) => {
                           : iconPosition || 'flex-end'
                       }
                     >
-                      {isActionButtons && (
+                      {isActionButtons &&
+                      currentUser?.role === 'Admin' &&
+                      user?.role === 'Super Admin' ? null : (
                         <>
                           <IconButton
                             disabled={

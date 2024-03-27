@@ -23,8 +23,10 @@ const App = () => {
     ? ''
     : localStorage.setItem('oobCode', oobCode ? oobCode : '')
 
+  const queryParams = new URLSearchParams(location.search)
+
   useEffect(() => {
-    if (oobCode) {
+    if (oobCode || queryParams.get('mode') === 'resetPassword') {
       navigate(ROUTES.RESET_PASSWORD)
     } else {
       const unsubscribe = auth.onAuthStateChanged((user) => {
