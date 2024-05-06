@@ -36,38 +36,95 @@ export const formatPhoneNumber = (phoneNumber: string | undefined) => {
   return formattedNumber
 }
 
-export const formatDateToToday = (dateString: any) => {
-  if (!dateString) return 'N/A'
-  dateString = dateString?.seconds * 1000
-  const date = new Date(dateString)
+// export const formatDateToToday = (dateString: any) => {
+//   if (!dateString) return 'N/A'
+//   dateString = dateString?.seconds * 1000
+//   const date = new Date(dateString)
+//   const now = new Date()
+
+//   now.setHours(0, 0, 0, 0)
+
+//   const givenDate = new Date(dateString)
+//   givenDate.setHours(0, 0, 0, 0)
+
+//   const diff = now.getTime() - givenDate.getTime()
+//   const diffDays = diff / (1000 * 60 * 60 * 24)
+
+//   let dayIndicator
+//   if (diffDays === 0) {
+//     dayIndicator = 'Today'
+//   } else if (diffDays === 1) {
+//     dayIndicator = 'Yesterday'
+//   } else {
+//     dayIndicator = givenDate.toLocaleDateString()
+//   }
+
+//   let hours = date.getHours()
+//   const minutes = date.getMinutes()
+
+//   const ampm = hours >= 12 ? 'PM' : 'AM'
+//   hours = hours % 12
+//   hours = hours ? hours : 12
+//   const minutesFormatted = minutes < 10 ? '0' + minutes : minutes
+
+//   return `${dayIndicator} ${hours}:${minutesFormatted} ${ampm}`
+// }
+
+export const formatDateToPST = (firebaseTimestamp: any) => {
+  if (!firebaseTimestamp) return 'N/A'
+
+  const timestampInMillis = firebaseTimestamp?.seconds * 1000
+  const dateInPST = new Date(timestampInMillis)
+
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles', // PST timezone
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  })
+
+  const formattedDateParts = formatter.formatToParts(dateInPST)
+
+  const dayIndicator = `${formattedDateParts[2].value}/${formattedDateParts[0].value}/${formattedDateParts[4].value}`
+  const time = `${formattedDateParts[6].value}:${formattedDateParts[8].value} ${formattedDateParts[10].value}`
+
   const now = new Date()
+  const todayFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles', // PST timezone
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
 
-  now.setHours(0, 0, 0, 0)
+  const todayParts = todayFormatter.formatToParts(now)
+  const todayDayIndicator = `${todayParts[2].value}/${todayParts[0].value}/${todayParts[4].value}`
 
-  const givenDate = new Date(dateString)
-  givenDate.setHours(0, 0, 0, 0)
+  const givenDate = new Date(
+    Date.UTC(
+      Number(formattedDateParts[4].value),
+      Number(formattedDateParts[0].value) - 1,
+      Number(formattedDateParts[2].value)
+    )
+  )
 
-  const diff = now.getTime() - givenDate.getTime()
-  const diffDays = diff / (1000 * 60 * 60 * 24)
-
-  let dayIndicator
-  if (diffDays === 0) {
-    dayIndicator = 'Today'
-  } else if (diffDays === 1) {
-    dayIndicator = 'Yesterday'
+  let dayLabel
+  if (dayIndicator === todayDayIndicator) {
+    dayLabel = 'Today'
   } else {
-    dayIndicator = givenDate.toLocaleDateString()
+    const yesterdayDate = new Date(now)
+    yesterdayDate.setDate(now.getDate() - 1)
+    const yesterdayDayIndicator = todayFormatter
+      .format(yesterdayDate)
+      .replace(/\//g, '')
+
+    dayLabel =
+      dayIndicator === yesterdayDayIndicator ? 'Yesterday' : dayIndicator
   }
 
-  let hours = date.getHours()
-  const minutes = date.getMinutes()
-
-  const ampm = hours >= 12 ? 'PM' : 'AM'
-  hours = hours % 12
-  hours = hours ? hours : 12
-  const minutesFormatted = minutes < 10 ? '0' + minutes : minutes
-
-  return `${dayIndicator} ${hours}:${minutesFormatted} ${ampm}`
+  return `${dayLabel} ${time}`
 }
 
 export const generateWeekGap = () => {
@@ -202,4 +259,29 @@ export function getCurrentTime() {
   const hours = now.getHours()
   const minutes = now.getMinutes()
   return `${hours % 12 || 12}:${minutes < 10 ? '0' + minutes : minutes}`
+}
+
+export function convertToPacificTime(firebaseTimestamp: Timestamp) {
+  if (!firebaseTimestamp) return 'N/A'
+  const seconds = firebaseTimestamp?.seconds * 1000
+
+  const date = new Date(seconds)
+
+  // Create an Intl.DateTimeFormat object for Pacific time zone (PST/PDT)
+  const pacificTimeFormat = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles', // PST/PDT timezone
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+  })
+
+  // Format the date using the Pacific time format
+  const formattedDate = pacificTimeFormat.format(date)
+
+  // Return the formatted date
+  return formattedDate
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import moment from 'moment'
+import { Box, Grid } from '@mui/material'
 import useUser from '../../hooks/useUser'
-import { ArrowBack, Delete } from '@mui/icons-material'
+import { Delete } from '@mui/icons-material'
 import { FormProvider } from 'react-hook-form'
-import { Box, Container, Grid, IconButton } from '@mui/material'
+import { USER_TAB_OPTIONS } from '@cookup/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { useBreakPoints, useGetUser } from '@cookup/hooks'
-import { LIKES_DATA, USER_TAB_OPTIONS } from '@cookup/constant'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled'
 import {
@@ -33,7 +33,6 @@ import {
   SuspensionAlert,
   UserAccountInfo,
   UserProfileInfo,
-  UserUploadedMedia,
 } from '@cookup/modules'
 
 export const SingleUserContainer = () => {
@@ -72,7 +71,6 @@ export const SingleUserContainer = () => {
     isResetLoading,
     setUserValues,
     onSelectRecipe,
-    isUpdateLoading,
     onUpdateUser_rec,
     onSubmitSuspension,
     onSevenDaysSuspend,
@@ -158,7 +156,22 @@ export const SingleUserContainer = () => {
         )
       }
     >
-      <Box
+      <Box display="flex" minHeight="80vh" flexDirection="column">
+        <Grid container justifyContent="center">
+          <Grid item md={6}>
+            <Box maxWidth={575}>
+              <MuiCustomTab
+                className="custom-tabs"
+                labels={USER_TAB_OPTIONS}
+                width={{ xs: '100px', md: '188px' }}
+                // isBusinessType={state.type ? true : false}
+              />
+            </Box>
+          </Grid>
+          {RenderUserSteps()}
+        </Grid>
+      </Box>
+      {/* <Box
         display="flex"
         minHeight="80vh"
         flexDirection="column"
@@ -176,7 +189,7 @@ export const SingleUserContainer = () => {
 
           {RenderUserSteps()}
         </Grid>
-      </Box>
+      </Box> */}
       {isUserUpdateModal && (
         <CustomDialog
           isOkButton

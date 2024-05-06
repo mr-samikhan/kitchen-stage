@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { firestore } from '@cookup/firebase'
-import { formatDateToToday } from '@cookup/helpers'
+import { formatDateToPST } from '@cookup/helpers'
 import { COLLECTIONS, getErrorMessage } from '@cookup/constant'
 import {
   query,
@@ -17,7 +17,7 @@ interface IAdmin {
   role: string
   status?: string
   userName: string
-  lastLogin?: string
+  lastLogin?: any
   phoneNumber?: string
 }
 
@@ -47,7 +47,7 @@ class Admin {
             uid: data.uid,
             status: data.status === 'active' ? 'Active' : 'Pending',
             ...doc.data(),
-            lastLogin: formatDateToToday(data.lastLogin) || 'N/A',
+            lastLogin: formatDateToPST(data.lastLogin) || 'N/A',
           }
           admins?.push(admin)
         })
@@ -80,7 +80,7 @@ class Admin {
         }
 
         const { data } = await axios.post(
-          'https://us-central1-kitchen-stage.cloudfunctions.net/updateAdmin',
+          `${import.meta.env.VITE_FIREBASE_URL}/updateAdmin`,
           {
             email: email,
             role: role,
@@ -108,7 +108,7 @@ class Admin {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await axios.post(
-          'https://us-central1-kitchen-stage.cloudfunctions.net/createAdmin',
+          `${import.meta.env.VITE_FIREBASE_URL}/createAdmin`,
           { email, role, userName, password: 'Abcd@123', status }
         )
         resolve(data)
@@ -129,9 +129,11 @@ class Admin {
           reject('permission-error')
         } else {
           await axios.post(
-            'https://us-central1-kitchen-stage.cloudfunctions.net/deleteAdmin',
+            `${import.meta.env.VITE_FIREBASE_URL}/deleteAdmin`,
             null,
-            { params: { id: uid } }
+            {
+              params: { id: uid },
+            }
           )
           resolve('user deleted successfully')
         }
