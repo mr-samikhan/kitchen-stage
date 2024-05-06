@@ -65,6 +65,7 @@ export default function useLoginForm() {
       : PATH_CHECK
       ? ForgotPasswordFormResolver
       : LoginFormResolver,
+    mode: 'onChange',
   })
   const isError = methods.formState.isValid
 
