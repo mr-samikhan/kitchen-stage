@@ -1,9 +1,9 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { ROUTES } from '@cookup/constant'
-import { Login2FAContainer } from '@cookup/modules'
-import { ProtectedRoute } from './components/components'
-import { Route, Routes as ReactRoutes } from 'react-router-dom'
+import React from "react";
+import { useSelector } from "react-redux";
+import { ROUTES } from "@cookup/constant";
+import { Login2FAContainer } from "@cookup/modules";
+import { ProtectedRoute } from "./components/components";
+import { Route, Routes as ReactRoutes } from "react-router-dom";
 import {
   Ads,
   Login,
@@ -20,10 +20,12 @@ import {
   ManageSettings,
   CustomerSupport,
   Songs,
-} from '@cookup/screens'
+} from "@cookup/screens";
 
 const Routes = () => {
-  const { isAuthenticated, isLoading } = useSelector((state: any) => state.auth)
+  const { isAuthenticated, isLoading } = useSelector(
+    (state: any) => state.auth
+  );
   return (
     <React.Fragment>
       <ReactRoutes>
@@ -56,7 +58,7 @@ const Routes = () => {
         </ReactRoutes>
       </ProtectedRoute>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;

@@ -29,13 +29,14 @@ import {
 } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBAsqQOb1pnieK6BXwH_xxEYjbi_e4EFyE',
-  authDomain: 'kitchen-stage.firebaseapp.com',
-  projectId: 'kitchen-stage',
-  storageBucket: 'kitchen-stage.appspot.com',
-  messagingSenderId: '14757585250',
-  appId: '1:14757585250:web:48742c4e088a9066240c3b',
-  measurementId: 'G-7RJNTKC6HD',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  measurementId: import.meta.env.VITE_FIREBASE_MESUREMENT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
 }
 
 const app = initializeApp(firebaseConfig)

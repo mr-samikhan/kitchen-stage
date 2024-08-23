@@ -1,26 +1,26 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { getInitials } from '@cookup/helpers'
-import { useBreakPoints } from '@cookup/hooks'
-import CloseIcon from '@mui/icons-material/Close'
-import { COLORS, ROUTES } from '@cookup/constant'
-import { Avatar, Box, IconButton } from '@mui/material'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React from "react";
+import { useSelector } from "react-redux";
+import { getInitials } from "@cookup/helpers";
+import { useBreakPoints } from "@cookup/hooks";
+import CloseIcon from "@mui/icons-material/Close";
+import { COLORS, ROUTES } from "@cookup/constant";
+import { Avatar, Box, IconButton } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface SidebarProps {
-  sideBarOptions?: any
-  toggleSidebar?: () => void
+  sideBarOptions?: any;
+  toggleSidebar?: () => void;
 }
 
 export const Sidebar = (props: SidebarProps) => {
-  const { sideBarOptions, toggleSidebar } = props || {}
+  const { sideBarOptions, toggleSidebar } = props || {};
 
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
-  const navigate = useNavigate()
-  const { mobileMode } = useBreakPoints()
+  const navigate = useNavigate();
+  const { mobileMode } = useBreakPoints();
 
-  const { user } = useSelector((state: any) => state.auth)
+  const { user } = useSelector((state: any) => state.auth);
 
   return (
     <React.Fragment>
@@ -60,11 +60,11 @@ export const Sidebar = (props: SidebarProps) => {
                   onClick={() => navigate(item.path)}
                   sx={{
                     zIndex: 10000,
-                    width: '56px',
-                    height: '56px',
+                    width: "56px",
+                    height: "56px",
                     borderRadius: 2,
-                    position: 'relative',
-                    bgcolor: 'transparent',
+                    position: "relative",
+                    bgcolor: "transparent",
                     // bgcolor: item.active ? 'secondary.light' : 'trasparent',
                   }}
                 >
@@ -75,11 +75,11 @@ export const Sidebar = (props: SidebarProps) => {
                     style={{
                       width: 21,
                       height: 21,
-                      top: item.active && '50%',
-                      left: item.active && '50%',
+                      top: item.active && "50%",
+                      left: item.active && "50%",
                       zIndex: item.active && 10000,
-                      position: item.active && 'absolute',
-                      transform: item.active && 'translate(-50%, -50%)',
+                      position: item.active && "absolute",
+                      transform: item.active && "translate(-50%, -50%)",
                     }}
                   />
                 </IconButton>
@@ -93,7 +93,7 @@ export const Sidebar = (props: SidebarProps) => {
                   {item?.label}
                 </Typography> */}
               </Box>
-            )
+            );
           })}
         </Box>
         <Box>
@@ -107,13 +107,13 @@ export const Sidebar = (props: SidebarProps) => {
                 fontWeight: 700,
               }}
             >
-              {getInitials(user?.userName || '')}
+              {getInitials(user?.userName || "")}
             </Avatar>
           </IconButton>
         </Box>
       </Box>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

@@ -1,63 +1,63 @@
-import { Api } from '@cookup/services'
-import { auth } from '@cookup/firebase'
-import React, { useEffect } from 'react'
-import { useMutation } from 'react-query'
-import { ROUTES } from '@cookup/constant'
-import { set, useForm } from 'react-hook-form'
-import { AppDispatch } from 'redux/store/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { ILoginFormResolver } from 'types/FormResolvers'
-import { getCurrentUserData, loginUser, selectUser } from '@cookup/redux'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { Api } from "@cookup/services";
+import { auth } from "@cookup/firebase";
+import React, { useEffect } from "react";
+import { useMutation } from "react-query";
+import { ROUTES } from "@cookup/constant";
+import { set, useForm } from "react-hook-form";
+import { AppDispatch } from "redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { ILoginFormResolver } from "types/FormResolvers";
+import { getCurrentUserData, loginUser, selectUser } from "@cookup/redux";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   LoginFormResolver,
   ForgotPasswordFormResolver,
   ResetPasswordFormResolver,
-} from '@cookup/utils'
+} from "@cookup/utils";
 
 export default function useLoginForm() {
-  const navigate = useNavigate()
-  const { pathname, state: oobCode } = useLocation()
+  const navigate = useNavigate();
+  const { pathname, state: oobCode } = useLocation();
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
-  const user = useSelector(selectUser)
+  const user = useSelector(selectUser);
 
-  const [step, setStep] = React.useState(0)
-  const [otp, setOtp] = React.useState('')
-  const [phone, setPhone] = React.useState('')
+  const [step, setStep] = React.useState(0);
+  const [otp, setOtp] = React.useState("");
+  const [phone, setPhone] = React.useState("");
   const [phoneStatus, setPhoneStatus] = React.useState({
     isError: false,
     isSuccess: false,
-    message: '',
+    message: "",
     recaptcha: false,
-  })
-  const [isSnackBar, setIsSnackBar] = React.useState(false)
-  const [isPasswordSent, setIsPasswordSent] = React.useState(false)
-  const [confirmationObject, setConfirmationObject] = React.useState<any>({})
-  const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false)
+  });
+  const [isSnackBar, setIsSnackBar] = React.useState(false);
+  const [isPasswordSent, setIsPasswordSent] = React.useState(false);
+  const [confirmationObject, setConfirmationObject] = React.useState<any>({});
+  const [isPasswordResetModal, setIsPasswordResetModal] = React.useState(false);
 
-  const queryParams = new URLSearchParams(location.search)
-  const [searchParams] = useSearchParams()
+  const queryParams = new URLSearchParams(location.search);
+  const [searchParams] = useSearchParams();
 
-  let oobCode_: string | null = searchParams.get('oobCode')
+  let oobCode_: string | null = searchParams.get("oobCode");
 
   useEffect(() => {
-    if (oobCode_ || queryParams.get('mode') === 'resetPassword') {
-      navigate(ROUTES.RESET_PASSWORD)
+    if (oobCode_ || queryParams.get("mode") === "resetPassword") {
+      navigate(ROUTES.RESET_PASSWORD);
     } else {
       if (auth.currentUser && auth.currentUser?.phoneNumber) {
-        return navigate(ROUTES.ROOT)
+        return navigate(ROUTES.ROOT);
       } else if (auth.currentUser && auth.currentUser?.phoneNumber === null) {
-        return navigate(ROUTES.LOGIN_2FA)
+        return navigate(ROUTES.LOGIN_2FA);
       }
     }
-  }, [])
+  }, []);
 
   //forgot password screen
-  let PATH_CHECK = pathname === ROUTES.FORGOT_PASSWORD
-  let RESET_PATH_CHECK = pathname === ROUTES.RESET_PASSWORD
-  let LOGIN_PATH_CHECK = pathname === ROUTES.LOGIN_ACCOUNT
+  let PATH_CHECK = pathname === ROUTES.FORGOT_PASSWORD;
+  let RESET_PATH_CHECK = pathname === ROUTES.RESET_PASSWORD;
+  let LOGIN_PATH_CHECK = pathname === ROUTES.LOGIN_ACCOUNT;
 
   const methods = useForm<ILoginFormResolver>({
     resolver: RESET_PATH_CHECK
@@ -65,26 +65,26 @@ export default function useLoginForm() {
       : PATH_CHECK
       ? ForgotPasswordFormResolver
       : LoginFormResolver,
-    mode: 'onChange',
-  })
-  const isError = methods.formState.isValid
+    mode: "onChange",
+  });
+  const isError = methods.formState.isValid;
 
   const onForgotPassword: any = () => {
-    methods.reset()
-    navigate(ROUTES.FORGOT_PASSWORD)
-  }
+    methods.reset();
+    navigate(ROUTES.FORGOT_PASSWORD);
+  };
 
   const onResetPassword: any = () => {
-    methods.reset()
-    setIsPasswordSent(false)
-    navigate(ROUTES.LOGIN_ACCOUNT)
-  }
+    methods.reset();
+    setIsPasswordSent(false);
+    navigate(ROUTES.LOGIN_ACCOUNT);
+  };
 
   const onResetSuccess: any = () => {
-    methods.reset()
-    setIsPasswordResetModal(false)
-    navigate(ROUTES.LOGIN_ACCOUNT)
-  }
+    methods.reset();
+    setIsPasswordResetModal(false);
+    navigate(ROUTES.LOGIN_ACCOUNT);
+  };
 
   //mutation forgot_password
   const { isLoading, mutate: onForgotPassword_ } = useMutation(
@@ -93,14 +93,14 @@ export default function useLoginForm() {
       onSuccess: () => setIsPasswordSent(true),
       onError: (error) => alert(error),
     }
-  )
+  );
 
   //mutation confirm password reset
   const { isLoading: isResetConfirm, mutate: onConfirmResetPassword } =
     useMutation(Api.auth.confirmPasswordReset, {
       onSuccess: () => setIsPasswordResetModal(true),
       onError: (error) => alert(error),
-    })
+    });
 
   //send otp mutation
   const { mutate: onSendOTP_ } = useMutation<any, any, any>(Api.auth.sendOTP, {
@@ -108,22 +108,22 @@ export default function useLoginForm() {
       setPhoneStatus((prev) => ({
         ...prev,
         isError: false,
-        message: '',
-      }))
-      setStep(1)
+        message: "",
+      }));
+      setStep(1);
     },
     onError: (error) => {
-      let errorCode = ''
-      if (error.code === 'auth/invalid-phone-number') {
-        errorCode = 'Invalid phone number'
+      let errorCode = "";
+      if (error.code === "auth/invalid-phone-number") {
+        errorCode = "Invalid phone number";
       }
       setPhoneStatus((prev) => ({
         ...prev,
         isError: true,
         message: errorCode || error.message,
-      }))
+      }));
     },
-  })
+  });
 
   //verify otp mutation
   const { mutate: onVerifyOTP_ } = useMutation<any, any, any>(
@@ -133,42 +133,42 @@ export default function useLoginForm() {
         setPhoneStatus((prev) => ({
           ...prev,
           isError: false,
-          message: '',
-        }))
+          message: "",
+        }));
         dispatch(
           getCurrentUserData({
             uid: auth.currentUser?.uid,
             email: auth.currentUser?.email,
-            role: '',
+            role: "",
             userName: auth.currentUser?.displayName,
           })
-        )
-        navigate(ROUTES.ROOT)
+        );
+        navigate(ROUTES.ROOT);
       },
       onError: (error) => {
-        let errorCode = ''
-        if (error.code === 'auth/invalid-verification-code') {
-          errorCode = 'Invalid verification code'
+        let errorCode = "";
+        if (error.code === "auth/invalid-verification-code") {
+          errorCode = "Invalid verification code";
         }
         setPhoneStatus((prev) => ({
           ...prev,
           isError: true,
           message: errorCode || error.message,
-        }))
+        }));
       },
     }
-  )
+  );
 
   const onSubmit = async (data: any) => {
     if (PATH_CHECK) {
-      onForgotPassword_(data.email)
+      onForgotPassword_(data.email);
     } else if (RESET_PATH_CHECK) {
       onConfirmResetPassword({
         newPassword: data.password,
-        oobCode: localStorage.getItem('oobCode') as string,
-      })
+        oobCode: localStorage.getItem("oobCode") as string,
+      });
     } else {
-      const { email, password } = data || {}
+      const { email, password } = data || {};
       if (email && password) {
         try {
           await dispatch(
@@ -176,22 +176,22 @@ export default function useLoginForm() {
               email,
               password,
             })
-          )
-          navigate(ROUTES.LOGIN_2FA)
+          );
+          navigate(ROUTES.LOGIN_2FA);
         } catch (error: any) {
-          if (error?.message === 'auth/not-admin') {
-            setIsSnackBar(true)
+          if (error?.message === "auth/not-admin") {
+            setIsSnackBar(true);
           } else {
-            console.error(error)
+            console.error(error);
           }
         }
       } else if (LOGIN_PATH_CHECK) {
-        setIsSnackBar(true)
+        setIsSnackBar(true);
       } else {
-        setIsPasswordResetModal(true)
+        setIsPasswordResetModal(true);
       }
     }
-  }
+  };
 
   //send otp
   const onSendOTP = async () => {
@@ -200,25 +200,25 @@ export default function useLoginForm() {
         ...prev,
         isError: true,
         message: `Mobile number wasn’t entered properly. Please try again`,
-      }))
+      }));
 
-    onSendOTP_({ phone, setConfirmationObject })
-  }
+    onSendOTP_({ phone, setConfirmationObject });
+  };
 
   //verify otp
   const onVerifyOTP = async () => {
-    onVerifyOTP_({ confirmationObject, otp })
-  }
+    onVerifyOTP_({ confirmationObject, otp });
+  };
 
   //otp
   const onOTPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
-    let cleanedValue = value.replace(/\D/g, '')
+    const { value } = event.target;
+    let cleanedValue = value.replace(/\D/g, "");
     if (cleanedValue.length > 3) {
-      cleanedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(3, 6)}`
+      cleanedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(3, 6)}`;
     }
-    setOtp(cleanedValue)
-  }
+    setOtp(cleanedValue);
+  };
 
   //resent otp
   const onResendOTP = async () => {
@@ -227,8 +227,8 @@ export default function useLoginForm() {
       setConfirmationObject,
       setClearCaptcha: () =>
         setPhoneStatus((prev) => ({ ...prev, recaptcha: true })),
-    })
-  }
+    });
+  };
 
   return {
     otp,
@@ -256,5 +256,5 @@ export default function useLoginForm() {
     setIsPasswordSent,
     isPasswordResetModal,
     setIsPasswordResetModal,
-  }
+  };
 }
